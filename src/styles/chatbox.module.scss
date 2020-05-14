@@ -1,0 +1,28 @@
+$background: #264445;
+$background-client: #467f81;
+$color: white;
+
+.box {
+    display: table;
+    position: sticky;
+    background-color: $background;
+    color: $color;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 6px;
+    max-width: 400px;
+    min-width: 200px;
+    padding: 8px 8px 10px 10px;
+    shape-outside: 5px;
+}
+
+.box-client {
+    @extend .box;
+    background-color: $background-client;
+    left: 100%;
+}
+
+.box-server {
+    right: 100%;
+    @extend .box;
+}
