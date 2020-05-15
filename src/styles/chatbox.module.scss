@@ -1,12 +1,10 @@
-$background: #264445;
-$background-client: #467f81;
-$color: white;
+@import 'global';
 
 .box {
     display: table;
     position: sticky;
-    background-color: $background;
-    color: $color;
+    background-color: $default-chatbox;
+    color: $chatbox-text-color;
     border-radius: 10px;
     overflow: hidden;
     margin: 6px;
@@ -18,7 +16,7 @@ $color: white;
 
 .box-client {
     @extend .box;
-    background-color: $background-client;
+    background-color: $client-chatbox;
     left: 100%;
 }
 

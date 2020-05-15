@@ -2,22 +2,15 @@ import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
-import Header from "./header"
 import MessageInput from "./messageinput"
-import "../styles/layout.css"
+import "../styles/layout.module.scss"
 
 const Layout = ({ children }) => {
 
   return (
     <>
-      <Header siteTitle="Rosana"/>
-        <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer>
-      <MessageInput/>
+      {children}
+      {/* <MessageInput/> */}
     </>
   )
 }

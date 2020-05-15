@@ -1,0 +1,22 @@
+$color1: #829FD9;
+$color2: #027368;
+$color3: #BABF2A;
+$color4: #8C8303;
+$color5: #594302;
+$gray: #bdbdbd;
+$text-dark: black;
+$white: white;
+
+$font1: Montserrat, sans-serif;
+$header-background-color: $color2;
+$header-text-color: $white;
+$default-chatbox: $gray;
+$client-chatbox: $color2;
+$chatbox-text-color: $text-dark;
+$background-chat: $white;
+$chat-input-blackground: $white;
+$chat-internal-blackground: $gray;
+
+.container {
+    font-family: $font1;
+}
