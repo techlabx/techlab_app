@@ -1,7 +1,6 @@
 import React from "react"
 import styles from "../styles/messageinput.module.scss"
 import logo from "../images/interface.png"
-
 class Input extends React.Component {
 
     constructor (props) {
