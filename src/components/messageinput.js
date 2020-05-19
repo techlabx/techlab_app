@@ -17,14 +17,15 @@ class Input extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        this.props.onSubmit(this.state.message)
+        this.props.onSubmit(this.state.message);
+        this.setState({ message: '' });
     }
 
     render() {
         return (
             <React.Fragment>
                 <form className={styles.input} onSubmit={this.handleSubmit}>
-                    <input className={styles.textinput} value={this.state.username} onChange={this.handleChange}/>
+                    <input className={styles.textinput} value={this.state.message} onChange={this.handleChange}/>
                     <img src={logo} className={styles.send} autoFocus onClick={this.handleSubmit}/>      
                 </form>
             </React.Fragment>

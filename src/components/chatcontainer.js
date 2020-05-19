@@ -34,8 +34,7 @@ class ChatContainer extends React.Component {
         )
     }
 
-    render() { 
-
+    render() {
         return <div className={styles.container}>
             <Header siteTitle="SQR-20"/>
             {this.state.messages.map(this.renderMessage)}
