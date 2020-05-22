@@ -1,68 +1,34 @@
-import ContactSupportIcon from "@material-ui/icons/ContactSupport"
-import HomeIcon from "@material-ui/icons/Home"
-import IconButton from "@material-ui/core/IconButton"
-import InfoIcon from "@material-ui/icons/Info"
 import React from "react"
-import styled from "styled-components"
-
-const Container = styled.div`
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  position: fixed;
-`
-
-const NavbarLayout = styled.div`
-  && {
-    height: 60px;
-  }
-  display: flex;
-  justify-content: center;
-  padding: 5px;
-`
-
-const IconBox = styled.div`
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
-const StyledIconButton = styled(IconButton)`
-  && {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-`
-
-const IconLabel = styled.span`
-  font-size: 12px;
-`
+import IconButton from "@material-ui/core/IconButton"
+import HomeIcon from "@material-ui/icons/Home"
+import ContactSupportIcon from "@material-ui/icons/ContactSupport"
+import InfoIcon from "@material-ui/icons/Info"
+import styles from "../styles/navbar.module.scss";
 
 const Navbar = () => {
   return (
-    <Container>
-      <NavbarLayout>
-        <IconBox>
-          <StyledIconButton>
+    <div className={styles.container}>
+      <div className={styles.navbarLayout}>
+        <div className={styles.iconBox}>
+          <IconButton classname={styles.iconButton}>
             <InfoIcon fontSize="large" />
-          </StyledIconButton>
-          <IconLabel>Info</IconLabel>
-        </IconBox>
-        <IconBox>
-          <StyledIconButton>
+          </IconButton>
+          <span className={styles.iconLabel}>Info</span>
+        </div>
+        <div className={styles.iconBox}>
+          <IconButton classname={styles.iconButton}>
             <HomeIcon fontSize="large" />
-          </StyledIconButton>
-          <IconLabel>Inicio</IconLabel>
-        </IconBox>
-        <IconBox>
-          <StyledIconButton>
+          </IconButton>
+          <span className={styles.iconLabel}>Inicio</span>
+        </div>
+        <div className={styles.iconBox}>
+          <IconButton classname={styles.iconButton}>
             <ContactSupportIcon fontSize="large" />
-          </StyledIconButton>
-          <IconLabel>Ajuda</IconLabel>
-        </IconBox>
-      </NavbarLayout>
-    </Container>
+          </IconButton>
+          <span className={styles.iconLabel}>Ajuda</span>
+        </div>
+      </div>
+    </div>
   )
 }
 

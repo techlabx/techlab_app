@@ -1,4 +1,3 @@
-import PropTypes, { symbol } from "prop-types";
 import React from "react";
 import styles from "../styles/header.module.scss";
 import IconButton from "@material-ui/core/IconButton";
@@ -36,13 +35,5 @@ const Header = ({ title, lastPage }) => (
   </div>
   </header>
 )
-
-Header.propTypes = {
-  title: PropTypes.string,
-}
-
-Header.defaultProps = {
-  title: ``,
-}
 
 export default Header

@@ -1,0 +1,32 @@
+.container {
+  max-width: 100%;
+  max-height: 50px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  background-color: #F9F9F9;
+  align-items: center;
+}
+
+.navbarLayout {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.iconBox {
+  cursor: pointer;
+  display: block;
+}
+
+.iconButton {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.iconLabel {
+  font-size: 12px;
+}

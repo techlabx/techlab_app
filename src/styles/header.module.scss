@@ -1,27 +1,29 @@
-@import 'global';
-
 .header {
     margin-bottom: 1.45rem;
     position: fixed;
     margin: 0;
     padding: 0;
     left: 0;
+    top: 0;
     right: 0;
     max-width: 100%;
-    max-height: 10%;
+    max-height: 40px;
     font-size: 14px;
     display: flex;
     justify-content: space-between;
     overflow: hidden;
+    align-items: center;
     color: #418694;
     background-color: #F9F9F9;
     font-family: Verdana;
+    font-size: 10px;
 
     .left {
         margin: 0;
         display: block;
         float: left;
         justify-content: flex-start;
+        object-fit: contain;
     }
     
     .right {
@@ -31,5 +33,6 @@
         display: block;
         float: right;
         justify-content: flex-end;
+        object-fit: contain;
     }
 }

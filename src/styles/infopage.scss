@@ -13,3 +13,10 @@ $white: white;
     height: 100%;
     background-color: $white;
 }
+
+.pageWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    align-items: flex-strecth;
+}
