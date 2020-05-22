@@ -1,5 +1,4 @@
-import React from "react"
-import { Link } from "gatsby"
+import React, { Fragment } from "react"
 import ChatContainer from "../components/chatcontainer"
 
 const IndexPage = () => (

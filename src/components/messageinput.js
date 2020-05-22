@@ -1,12 +1,12 @@
 import React from "react"
 import styles from "../styles/messageinput.module.scss"
 import logo from "../images/interface.png"
-class Input extends React.Component {
+class MessageInput extends React.Component {
 
     constructor (props) {
         super (props);
         this.state = {
-            message: ''
+            message: 'Digite sua mensagem'
         }
     }
 
@@ -16,20 +16,30 @@ class Input extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        this.props.onSubmit(this.state.message);
+        if (this.props.blocked === false) {
+            this.props.onSubmit(this.state.message);
+        }
         this.setState({ message: '' });
+    }
+
+    handleDefaultEscape = event => {
+        this.setState({ message: '' });
+    }
+
+    returnToDefault = event => {
+        if (this.state.message === '') this.setState({ message: 'Digite sua mensagem' });
     }
 
     render() {
         return (
             <React.Fragment>
-                <form className={styles.input} onSubmit={this.handleSubmit}>
-                    <input className={styles.textinput} value={this.state.message} onChange={this.handleChange}/>
-                    <img src={logo} className={styles.send} autoFocus onClick={this.handleSubmit}/>      
+                <form className={styles.input} onSubmit={this.state.message !== '' ? this.handleSubmit: () => {}}>
+                    <input className={styles.textinput} value={this.state.message} onChange={this.handleChange} onClick={this.handleDefaultEscape} onBlur={this.returnToDefault}/>
+                    <img src={logo} className={styles.send} onClick={this.state.message !== ''  && this.state.message !== 'Digite sua mensagem'? this.handleSubmit: ()=>{}}/>      
                 </form>
             </React.Fragment>
         );
     }
 }
 
-export default Input
+export { MessageInput }

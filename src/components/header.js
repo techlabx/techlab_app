@@ -2,7 +2,7 @@ import PropTypes, { symbol } from "prop-types"
 import React from "react"
 import styles from "../styles/header.module.scss"
 
-const Header = ({ siteTitle }) => (
+const ChatTopBar = ({ siteTitle }) => (
   <header
     className={styles.header}
   >
@@ -16,12 +16,12 @@ const Header = ({ siteTitle }) => (
   </header>
 )
 
-Header.propTypes = {
+ChatTopBar.propTypes = {
   siteTitle: PropTypes.string,
 }
 
-Header.defaultProps = {
+ChatTopBar.defaultProps = {
   siteTitle: ``,
 }
 
-export default Header
+export default ChatTopBar
