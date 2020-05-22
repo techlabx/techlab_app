@@ -13,7 +13,7 @@ const IconBox = styled.div`
 `
 
 const Title = styled.h1`
-  font: 'Verdana";
+  font-family: Roboto;
   font-size: 10;
 `
 

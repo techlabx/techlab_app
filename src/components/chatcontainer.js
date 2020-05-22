@@ -85,7 +85,7 @@ class ChatContainer extends React.Component {
             blocked: false,
             messages: [...this.state.messages, response_server],
         })
-
+        
         this.scrollToBottom();
     }
 
