@@ -17,33 +17,10 @@ class ChatContainer extends React.Component {
             messages: [
                 {
                     direction: "server",
-                    message: "Nas próximas próximas perguntas, você realizará uma autoavaliação a respeito da sua saúde em geral. Serão 24 afirmativas, e você deve selecionar sim ou não para cada afirmativa. Não existe resposta certa ou errada, por isso pedimos que você responda da forma que você julgar melhor. Caso tenha alguma dúvida, você pode nos mandar uma mensagem pelo XXX."
+                    message: "Nas próximas próximas perguntas, você realizará uma autoavaliação a respeito da sua saúde em geral. Serão 24 afirmativas, e você deve selecionar sim ou não para cada afirmativa. Não existe resposta certa ou errada, por isso pedimos que você responda da forma que você julgar melhor. Caso tenha alguma dúvida, você pode nos mandar uma mensagem pelo XXX. (Iniciar, Sair)"
                 }
             ], 
             blocked: false,
-            SRQ20: [
-                "Nas próximas próximas perguntas, você realizará uma autoavaliação a respeito da sua saúde em geral. Serão 24 afirmativas, e você deve selecionar sim ou não para cada afirmativa. Não existe resposta certa ou errada, por isso pedimos que você responda da forma que você julgar melhor. Caso tenha alguma dúvida, você pode nos mandar uma mensagem pelo XXX.",
-                "Você tem dores de cabeça freqüente",
-                "Tem falta de apetite?",
-                "Dorme mal?",
-                "Assusta-se com facilidade?",
-                "Tem tremores nas mãos? ",
-                "Sente-se nervoso (a), tenso (a) ou preocupado (a)?",
-                "Tem má digestão?",
-                "Tem dificuldades de pensar com clareza?",
-                "Tem se sentido triste ultimamente?",
-                "Tem chorado mais do que costume?",
-                "Encontra dificuldades para realizar com satisfação suas atividades diárias?",
-                "Tem dificuldades para tomar decisões?",
-                "Tem dificuldades no serviço (seu trabalho é penoso, lhe causa- sofrimento?)",
-                "É incapaz de desempenhar um papel útil em sua vida?",
-                "Tem perdido o interesse pelas coisas? ",
-                "Você se sente uma pessoa inútil, sem préstimo?",
-                "Tem tido idéia de acabar com a vida?",
-                "Sente-se cansado (a) o tempo todo?",
-                "Você se cansa com facilidade?",
-                "Têm sensações desagradáveis no estomago?"
-            ]
         }
     }
 
