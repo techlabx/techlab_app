@@ -1,4 +1,5 @@
 import FormSelectionList from "../components/FormSelection/FormSelectionList"
+import Header from "../components/Header"
 import ImageWithDescription from "../components/ImageWithDescription"
 import { Link } from "gatsby"
 import Navbar from "../components/Navbar"
@@ -8,7 +9,6 @@ import styles from "../styles/FormSelectionPage.module.scss"
 
 const Layout = styled.div`
   // max-width: 900px;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-stretch;
@@ -17,11 +17,14 @@ const Layout = styled.div`
 
 const FormSelectionPage = () => {
   return (
-    <Layout>
-      <ImageWithDescription />
-      <FormSelectionList />
+    <>
+      <Header title="Formulários" />
+      <Layout>
+        <ImageWithDescription />
+        <FormSelectionList />
+      </Layout>
       <Navbar />
-    </Layout>
+    </>
   )
 }
 
