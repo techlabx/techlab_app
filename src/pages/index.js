@@ -3,7 +3,9 @@ import { Link } from "gatsby"
 import ChatContainer from "../components/chatcontainer"
 
 const IndexPage = () => (
-  <ChatContainer/>
+  <div>
+    <Link to="/info/">Informações</Link>
+  </div>
 )
 
 export default IndexPage

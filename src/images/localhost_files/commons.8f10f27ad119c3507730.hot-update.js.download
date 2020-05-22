@@ -1,0 +1,29 @@
+webpackHotUpdate("commons",{
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./src/styles/header.module.scss":
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--14-oneOf-0-1!./node_modules/postcss-loader/src??postcss-4!./node_modules/sass-loader/dist/cjs.js??ref--14-oneOf-0-3!./src/styles/header.module.scss ***!
+  \*******************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(true);
+// imports
+
+
+// module
+exports.push([module.i, ".header-module--container--3Shvt {\n  font-family: Montserrat, sans-serif; }\n\n.header-module--header--FApqg {\n  background: #027368;\n  margin-bottom: 1.45rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  max-width: 100%;\n  max-height: 10%;\n  font-size: 14px;\n  display: flex;\n  justify-content: space-between;\n  overflow: hidden;\n  color: white;\n  background-color: #333;\n  -o-object-fit: contain;\n     object-fit: contain; }\n  .header-module--header--FApqg .header-module--left--Nf8jX {\n    margin: 0;\n    width: 10;\n    height: inherit;\n    display: block;\n    float: left;\n    justify-content: flex-start; }\n  .header-module--header--FApqg .header-module--arrow--aonKr {\n    -o-object-fit: contain;\n       object-fit: contain;\n    width: 20;\n    height: 20;\n    max-width: 10;\n    max-height: 10;\n    overflow: hidden; }\n  .header-module--header--FApqg .header-module--right--3K8Cd {\n    margin: 0;\n    max-width: 25%;\n    height: 100%;\n    display: block;\n    float: right;\n    justify-content: flex-end; }\n", "", {"version":3,"sources":["C:/Users/pedro/graduacao/techlab_app/src/styles/C:/Users/pedro/graduacao/techlab_app/src/styles/C:/Users/pedro/graduacao/techlab_app/src/styles/global.scss","C:/Users/pedro/graduacao/techlab_app/src/styles/C:/Users/pedro/graduacao/techlab_app/src/styles/C:/Users/pedro/graduacao/techlab_app/src/styles/header.module.scss"],"names":[],"mappings":"AAmBA;EACI,oCAX0B,EAAA;;ACP9B;EAEI,oBDHY;ECIZ,uBAAsB;EACtB,gBAAe;EACf,OAAM;EACN,QAAO;EACP,SAAQ;EACR,gBAAe;EACf,gBAAe;EACf,gBAAe;EACf,cAAa;EACb,+BAA8B;EAC9B,iBAAgB;EAChB,aDTS;ECUT,uBAAsB;EACtB,uBAAmB;KAAnB,oBAAmB,EAAA;EAhBvB;IAmBQ,UAAS;IACT,UAAS;IACT,gBAAe;IACf,eAAc;IACd,YAAW;IACX,4BAA2B,EAAA;EAxBnC;IA4BQ,uBAAmB;OAAnB,oBAAmB;IACnB,UAAS;IACT,WAAU;IACV,cAAa;IACb,eAAc;IACd,iBAAgB,EAAA;EAjCxB;IAqCQ,UAAS;IACT,eAAc;IACd,aAAY;IACZ,eAAc;IACd,aAAY;IACZ,0BAAyB,EAAA","file":"header.module.scss","sourcesContent":["$color1: #829FD9;\r\n$color2: #027368;\r\n$color3: #BABF2A;\r\n$color4: #8C8303;\r\n$color5: #594302;\r\n$gray: #bdbdbd;\r\n$text-dark: black;\r\n$white: white;\r\n\r\n$font1: Montserrat, sans-serif;\r\n$header-background-color: $color2;\r\n$header-text-color: $white;\r\n$default-chatbox: $gray;\r\n$client-chatbox: $color2;\r\n$chatbox-text-color: $text-dark;\r\n$background-chat: $white;\r\n$chat-input-blackground: $white;\r\n$chat-internal-blackground: $gray;\r\n\r\n.container {\r\n    font-family: $font1;\r\n}","@import 'global';\r\n\r\n.header {\r\n    \r\n    background: $header-background-color;    \r\n    margin-bottom: 1.45rem;\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n    right: 0;\r\n    max-width: 100%;\r\n    max-height: 10%;\r\n    font-size: 14px;\r\n    display: flex;\r\n    justify-content: space-between;\r\n    overflow: hidden;\r\n    color: $header-text-color;\r\n    background-color: #333;\r\n    object-fit: contain;\r\n\r\n    .left {\r\n        margin: 0;\r\n        width: 10;\r\n        height: inherit;\r\n        display: block;\r\n        float: left;\r\n        justify-content: flex-start;\r\n    }\r\n    \r\n    .arrow {\r\n        object-fit: contain;\r\n        width: 20;\r\n        height: 20;\r\n        max-width: 10;\r\n        max-height: 10;\r\n        overflow: hidden;\r\n    }\r\n\r\n    .right {\r\n        margin: 0;\r\n        max-width: 25%;\r\n        height: 100%;\r\n        display: block;\r\n        float: right;\r\n        justify-content: flex-end;\r\n    }\r\n   \r\n}"],"sourceRoot":""}]);
+
+// exports
+exports.locals = {
+	"container": "header-module--container--3Shvt",
+	"header": "header-module--header--FApqg",
+	"left": "header-module--left--Nf8jX",
+	"arrow": "header-module--arrow--aonKr",
+	"right": "header-module--right--3K8Cd"
+};
+
+/***/ })
+
+})
+//# sourceMappingURL=commons.8f10f27ad119c3507730.hot-update.js.map
