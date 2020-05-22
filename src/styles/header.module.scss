@@ -1,22 +1,36 @@
 @import 'global';
 
 .header {
-    
-    background: $header-background-color;    
     margin-bottom: 1.45rem;
     position: fixed;
+    margin: 0;
+    padding: 0;
+    left: 0;
     top: 0;
-    padding-left: 10px;
-    color: $text-dark;
-    z-index: 2;
-    width: 100%;
-    color: $header-text-color;
-    max-width: inherit;
-    text-align: left;
+    right: 0;
+    max-width: 100%;
+    max-height: 10%;
     font-size: 14px;
-
-    .div {
-        margin: 0 auto;
-        max-width: 960;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    color: #418694;
+    background-color: #F9F9F9;
+    font-family: Verdana;
+    z-index: 2;
+    .left {
+        margin: 0;
+        display: block;
+        float: left;
+        justify-content: flex-start;
+    }
+    
+    .right {
+        margin: 0;
+        max-width: 25%;
+        height: 100%;
+        display: block;
+        float: right;
+        justify-content: flex-end;
     }
 }
