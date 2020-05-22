@@ -3,24 +3,24 @@ import styled from "styled-components"
 
 const ImageBox = styled.div`
   position: relative;
+  && {
+    height: 50%;
+  }
 `
 
 const TextBox = styled.div`
   position: absolute;
-  top: 39%;
+  top: 30%;
   left: 25%;
   width: 75%;
   height: 60%;
-  background-color: #2c95c9;
+  background: rgba(44, 149, 201, 0.5);
   box-sizing: border-box;
-  opacity: 0.5;
-  border-top-left-radius: 10px;
+  border-radius: 10px 0 0 10px;
   padding: 2%;
 `
 
 const TextTitle = styled.span`
-  opacity: 1;
-
   color: white;
   font-size: 18px;
   font-weight: bold;
