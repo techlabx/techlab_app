@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React, { Fragment, useReducer } from "react"
 import styles from "../styles/chatcontainer.module.scss"
 import Header from "./header"
 import { MessageInput } from "./messageinput"
@@ -71,14 +71,20 @@ class ChatContainer extends React.Component {
 
             console.log(res.data)
 
-            const response_server = {
-                direction: "server",
-                message: res.data.question
-            }
+            const response_server = [
+                {
+                    direction: "server",
+                    message: res.data.question
+                },
+                {
+                    direction: "server",
+                    message: "Opções: " + res.data.options.reduce((acc, cur) => acc + ' ' + cur)
+                }
+            ]
 
             this.setState({
                 blocked: false,
-                messages: [...this.state.messages, response_server],
+                messages: [...this.state.messages, ...response_server],
             })
             
             this.scrollToBottom();
