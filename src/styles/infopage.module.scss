@@ -1,0 +1,51 @@
+$color1: #829FD9;
+$color2: #027368;
+$color3: #BABF2A;
+$color4: #8C8303;
+$color5: #594302;
+$gray: #bdbdbd;
+$text-dark: black;
+$white: white;
+
+.container {
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    background-color: whitesmoke;
+    background-image: url("../images/talking.jpg");
+    display: inline-block;
+    padding: 0;
+    object-fit: fill;
+}
+
+.text {
+    border-radius: 50px 0px 0px 50px;
+    margin: 0 auto;
+    padding: 0;
+    width: 90%;
+    height: 40%;
+    background-color: lightblue;
+    display: block;
+    float: right;
+    overflow: hidden;
+    font-family: Verdana;
+    text-align: center;
+    
+    p {
+        padding-right: 40px;
+        padding-left: 20px;
+        text-align: justify;
+    }
+}
+
+.backgroundImage {
+    color: blue;
+}
+
+.pageWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    align-items: flex-strecth;
+}

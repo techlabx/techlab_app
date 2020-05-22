@@ -10,22 +10,25 @@ const Navbar = () => {
     <div className={styles.container}>
       <div className={styles.navbarLayout}>
         <div className={styles.iconBox}>
-          <IconButton classname={styles.iconButton}>
-            <InfoIcon fontSize="large" />
-          </IconButton>
-          <span className={styles.iconLabel}>Info</span>
+          <a href="/info">
+            <IconButton classname={styles.iconButton}>
+              <InfoIcon fontSize="large" />
+            </IconButton>
+          </a>
         </div>
         <div className={styles.iconBox}>
-          <IconButton classname={styles.iconButton}>
-            <HomeIcon fontSize="large" />
-          </IconButton>
-          <span className={styles.iconLabel}>Inicio</span>
+          <a href="/">
+            <IconButton classname={styles.iconButton}>
+              <HomeIcon fontSize="large" />
+            </IconButton>
+          </a>
         </div>
         <div className={styles.iconBox}>
-          <IconButton classname={styles.iconButton}>
-            <ContactSupportIcon fontSize="large" />
-          </IconButton>
-          <span className={styles.iconLabel}>Ajuda</span>
+          <a href="/">
+            <IconButton classname={styles.iconButton}>
+              <ContactSupportIcon fontSize="large" />
+            </IconButton>
+          </a>
         </div>
       </div>
     </div>

@@ -1,11 +1,19 @@
 import React from "react"
 import styles from "../styles/infopage.scss"
 
-class InfoContainer extends React.Component {
-    render() {
-        return <div className={styles.container}>
-        </div>
-    }
-}
+const InfoContainer = (props) => (
+    <div className={styles.container}>
+        {props.children}
+    </div>
+)
 
-export default InfoContainer 
+const TextContainer = (props) => (
+    <div className={styles.textContainer}>
+        {props.children}
+    </div>
+)
+
+export default {
+    InfoContainer,
+    TextContainer
+}
