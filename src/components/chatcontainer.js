@@ -4,6 +4,7 @@ import Header from "./header"
 import { MessageInput } from "./messageinput"
 import ChatBox from "../components/chatbox"
 import Navbar from "./NavBar"
+import axios from 'axios'
 
 class ChatContainer extends React.Component {
 
@@ -12,6 +13,7 @@ class ChatContainer extends React.Component {
     constructor (props) {
         super (props);
         this.state = {
+            sessionId: undefined,
             messages: [
                 {
                     direction: "server",
@@ -49,16 +51,23 @@ class ChatContainer extends React.Component {
         this.messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
 
+    componentDidMount = async () => {
+        
+        console.log('starting composition')
+        const res = await axios.post(`http://${this.props.chatAddr}/questionarios/SRQ-20/begin`)
+        
+        console.log(res.data)
+        this.setState({
+            sessionId: res.data
+        })
+        
+    }
+
     addMessage = messageText => { 
         
         const message = {
             direction: "client",
             message: messageText
-        }
-
-        const response_server = {
-            direction: this.state.messages.length % 2 ? "client" : "server",
-            message: this.state.SRQ20[(this.state.messages.length-this.state.messages.length%2)/2]
         }
 
         this.setState({
@@ -75,25 +84,35 @@ class ChatContainer extends React.Component {
 
     }
 
-    getServerResponse = messageText => {
-        const response_server = {
-            direction: this.state.messages.length % 2 ? "client" : "server",
-            message: this.state.SRQ20[(this.state.messages.length-this.state.messages.length%2)/2]
-        }
+    getServerResponse = async (messageText) => {
 
-        this.setState({
-            blocked: false,
-            messages: [...this.state.messages, response_server],
-        })
         
-        this.scrollToBottom();
+        axios.put(`http://${this.props.chatAddr}/questionarios/SRQ-20/${this.state.sessionId}/proxima`, {
+            answer: messageText
+        })
+        .then ((res) => {
+
+            console.log(res.data)
+
+            const response_server = {
+                direction: "server",
+                message: res.data.question
+            }
+
+            this.setState({
+                blocked: false,
+                messages: [...this.state.messages, response_server],
+            })
+            
+            this.scrollToBottom();
+        })
     }
 
 
 
-    renderMessage = message => {
+    renderMessage = (message, index) => {
         return (
-            <ChatBox text={message.message} direction={message.direction}/>
+            <ChatBox key={index} text={message.message} direction={message.direction}/>
         )
     }
 

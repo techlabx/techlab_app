@@ -11,19 +11,19 @@ const Navbar = () => {
     <div className={styles.container}>
       <div className={styles.layout}>
         <div className={styles.iconBox}>
-          <div classNmae={styles.IconButton}>
+          <div className={styles.IconButton}>
             <InfoIcon fontSize="large" />
           </div>
           <div className={styles.iconLabel}>Info</div>
         </div>
         <div className={styles.iconBox}>
-          <div classNmae={styles.IconButton}>
+          <div className={styles.IconButton}>
             <HomeIcon fontSize="large" />
           </div>
           <div className={styles.iconLabel}>Inicio</div>
         </div>
         <div className={styles.iconBox}>
-          <div classNmae={styles.IconButton}>
+          <div className={styles.IconButton}>
             <ContactSupportIcon fontSize="large" />
           </div>
           <div className={styles.iconLabel}>Ajuda</div>

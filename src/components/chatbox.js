@@ -9,7 +9,6 @@ import React from "react"
 import styles from "../styles/chatbox.module.scss"
 
 const ChatBox = (props) => {
-  console.log(styles)
   return (
     <>
       <div className={props.direction == 'client' ? styles.boxClient : styles.boxServer }
