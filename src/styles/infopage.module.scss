@@ -7,45 +7,59 @@ $gray: #bdbdbd;
 $text-dark: black;
 $white: white;
 
-.container {
-    margin: 0 auto;
-    padding: 20px;
-    width: 100%;
-    height: 100%;
-    background-color: whitesmoke;
-    background-image: url("../images/talking.jpg");
-    display: inline-block;
-    padding: 0;
-    object-fit: fill;
-}
 
-.text {
-    border-radius: 50px 0px 0px 50px;
-    margin: 0 auto;
-    padding: 0;
-    width: 90%;
-    height: 40%;
-    background-color: lightblue;
-    display: block;
-    float: right;
-    overflow: hidden;
-    font-family: Verdana;
-    text-align: center;
-    
-    p {
-        padding-right: 40px;
-        padding-left: 20px;
-        text-align: justify;
-    }
-}
-
-.backgroundImage {
-    color: blue;
-}
-
-.pageWrapper {
+.PageWrapper {
+    position: fixed;
     display: flex;
     flex-direction: column;
-    padding: 5px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
     align-items: flex-strecth;
+    background-color: whitesmoke;
+}
+
+.Content {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.InfoContainer {
+    background-size: cover;
+    padding-bottom: 10px;
+    float: right;
+    display: block;
+}
+
+.TextBox {
+    border-radius: 50px 0px 0px 50px;
+    margin-left: 2.5%;
+    height: 100%;
+    width: 100%;
+    padding: 5px;
+    background-color: whitesmoke;
+}
+
+.ContainerText {
+    text-align: center;
+    display: block;
+    font-family: Verdana;
+    margin-left: 2.5%;
+    margin-right: 5%;
+
+    h2 {
+        padding-top: 5px;
+        margin: 0;
+    }
+    p {
+        padding: 8px;
+        text-align: justify;
+    }
 }

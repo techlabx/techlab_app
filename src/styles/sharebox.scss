@@ -1,0 +1,22 @@
+.ShareBox {
+    display: block;
+    flex-direction: column;
+    margin-bottom: 40px;
+    bottom: 0;
+    width: 100%;
+    color: grey;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    font-family: Verdana;
+}
+
+.ButtonsContainer{
+    display: block;
+    color: grey;
+}
+
+.ShareButton {
+    cursor: pointer;
+    display: block;
+}

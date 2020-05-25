@@ -11,21 +11,21 @@ const Navbar = () => {
       <div className={styles.navbarLayout}>
         <div className={styles.iconBox}>
           <a href="/info">
-            <IconButton classname={styles.iconButton}>
+            <IconButton className={styles.iconButton}>
               <InfoIcon fontSize="large" />
             </IconButton>
           </a>
         </div>
         <div className={styles.iconBox}>
           <a href="/">
-            <IconButton classname={styles.iconButton}>
+            <IconButton className={styles.iconButton}>
               <HomeIcon fontSize="large" />
             </IconButton>
           </a>
         </div>
         <div className={styles.iconBox}>
           <a href="/">
-            <IconButton classname={styles.iconButton}>
+            <IconButton className={styles.iconButton}>
               <ContactSupportIcon fontSize="large" />
             </IconButton>
           </a>
