@@ -63,7 +63,6 @@ class ChatContainer extends React.Component {
 
     getServerResponse = async (messageText) => {
 
-        
         axios.put(`http://${this.props.chatAddr}/questionarios/SRQ-20/${this.state.sessionId}/proxima`, {
             answer: messageText
         })
@@ -71,16 +70,21 @@ class ChatContainer extends React.Component {
 
             console.log(res.data)
 
-            const response_server = [
+            let response_server = [
                 {
                     direction: "server",
                     message: res.data.question
-                },
-                {
-                    direction: "server",
-                    message: "Opções: " + res.data.options.reduce((acc, cur) => acc + ' ' + cur)
                 }
             ]
+
+            if (res.data.options === []) {
+                response_server.push({
+                    direction: "server",
+                    message: "Opções: " + res.data.options.reduce((acc, cur) => acc + ', ' + cur)
+                })
+            } 
+            
+            if (res.data.question === "") { return }
 
             this.setState({
                 blocked: false,
@@ -102,7 +106,7 @@ class ChatContainer extends React.Component {
     render() {
         return (
             <Fragment> 
-                <Header title="SQR20"/>
+                <Header title="SRQ-20"/>
                 <div className={styles.container}>
                     {/* <Header siteTitle="SQR-20"/> */}
                     {this.state.messages.map(this.renderMessage)}
