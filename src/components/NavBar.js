@@ -6,7 +6,7 @@ import React from "react"
 import styled from "styled-components"
 import styles from "../styles/navbar.module.scss"
 
-const Navbar = () => {
+const NavBar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.layout}>
@@ -33,4 +33,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default NavBar
