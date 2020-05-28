@@ -1,9 +1,28 @@
-import React, { Fragment } from "react"
-import ChatContainer from "../components/chatcontainer"
+import FormSelectionList from "../components/FormSelection/FormSelectionList"
+import ImageWithDescription from "../components/ImageWithDescription"
+import { Link } from "gatsby"
+import NavBar from "../components/NavBar"
+import React from "react"
+import styled from "styled-components"
+import styles from "../styles/FormSelectionPage.module.scss"
 
-const IndexPage = () => {
-  const chatAPIAddr = '34.72.227.11'; 
-  return (<ChatContainer chatAddr={chatAPIAddr}/>)
+const Layout = styled.div`
+  // max-width: 900px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-stretch;
+  margin: 0;
+`
+
+const FormSelectionPage = () => {
+  return (
+    <Layout>
+      <ImageWithDescription />
+      <FormSelectionList />
+      <NavBar />
+    </Layout>
+  )
 }
 
-export default IndexPage
+export default FormSelectionPage

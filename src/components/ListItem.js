@@ -1,5 +1,6 @@
-import React from "react"
-import styled from "styled-components"
+import React          from "react"
+import styled         from "styled-components"
+import { navigate }   from '@reach/router'
 
 const StyledListItem = styled.button`
   width: 100%;
@@ -17,8 +18,23 @@ const StyledListItem = styled.button`
   font-size: 18px;
 `
 
-const ListItem = ({ key, children, ...props }) => (
-  <StyledListItem key={key}>{children}</StyledListItem>
-)
+class ListItem extends React.Component {
+  
+  constructor(props) {
+    super(props);
+  }
+
+  onClick = () => {
+    navigate(`/formpage?form=${this.props.name}`)
+  }
+
+  render = () => {
+    console.log(this.props);
+    return (
+      <StyledListItem onClick={this.onClick} key={this.props.name}>{this.props.children}</StyledListItem>
+    )
+  }
+
+}
 
 export default ListItem

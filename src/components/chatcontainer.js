@@ -28,16 +28,11 @@ class ChatContainer extends React.Component {
         this.messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
 
-    componentDidMount = async () => {
-        
-        console.log('starting composition')
-        const res = await axios.post(`http://${this.props.chatAddr}/questionarios/SRQ-20/begin`)
-        
-        console.log(res.data)
+    componentDidMount = async () => {        
+        const res = await axios.post(`http://${this.props.chatAddr}/questionarios/${this.props.form}/begin`)
         this.setState({
             sessionId: res.data
         })
-        
     }
 
     addMessage = messageText => { 
@@ -63,10 +58,9 @@ class ChatContainer extends React.Component {
 
     getServerResponse = async (messageText) => {
 
-        axios.put(`http://${this.props.chatAddr}/questionarios/SRQ-20/${this.state.sessionId}/proxima`, {
+        axios.put(`http://${this.props.chatAddr}/questionarios/${this.props.form}/${this.state.sessionId}/proxima`, {
             answer: messageText
-        })
-        .then ((res) => {
+        }).then ((res) => {
 
             console.log(res.data)
 
@@ -106,7 +100,7 @@ class ChatContainer extends React.Component {
     render() {
         return (
             <Fragment> 
-                <Header title="SRQ-20"/>
+                <Header title={this.props.form}/>
                 <div className={styles.container}>
                     {/* <Header siteTitle="SQR-20"/> */}
                     {this.state.messages.map(this.renderMessage)}
