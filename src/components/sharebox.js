@@ -1,49 +1,67 @@
 import React from 'react';
-import styles from '../styles/sharebox.scss'
+import styles from '../styles/sharebox.module.scss'
 import IconButton from '@material-ui/core/IconButton';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import FacebookIcon from '@material-ui/icons/Facebook';
 
+var contactPhone = "(16) 3373-8905"
+
+var whatsappShare = {
+    buttonColor: '#0CC243',
+    url: "https://api.whatsapp.com/send",
+    payload: {
+        url: "blah",
+        text: "bleh"
+    }
+}
+
+var facebookShare = {
+    buttonColor: '#4267B2',
+    url: "https://facebook.com/sharer/sharer.php?",
+    payload: {
+        url: "bla",
+        title: "bleh"
+    }
+}
+
 const ShareButton = (props) => (
-    <div className={styles.ShareButton}>
-        <IconButton>
+    <div className={styles.ShareButton} style={{backgroundColor: props.color}}>
+        <IconButton style={{width: '100%'}}>
             {props.children}
         </IconButton>
     </div>
 )
-
-const Container = (props) => (
-    <div className={styles.ShareBox}>
-      {props.children}
-    </div>
-)
-
-const ButtonsContainer = (props) => (
-    <div className={styles.ButtonsContainer}>
-      {props.children}
-    </div>
-)
-
 const WhatsappShareButton = () => (
-    <ShareButton>
-        <WhatsAppIcon/>
-    </ShareButton>
+    <a
+    href={whatsappShare.url+"?text="+whatsappShare.payload.text}
+    onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+    target="_blank">
+        <ShareButton color={whatsappShare.buttonColor}>
+            <WhatsAppIcon/>
+        </ShareButton>
+    </a>
 )
 
 const FacebookShareButton = () => (
-    <ShareButton>
-        <FacebookIcon/>
-    </ShareButton>
+    <a
+    href={facebookShare.url+"?u="+facebookShare.payload.url+"&t="+facebookShare.payload.title}
+    onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+    target="_blank">
+        <ShareButton color={facebookShare.buttonColor}>
+            <FacebookIcon/>
+        </ShareButton>
+    </a>
 )
 
 const ShareBox = () => (
-    <Container>
-        <p>Nos compatilhe nas redes</p>
-        <ButtonsContainer>
+    <div className={styles.sharebox}>
+        <h1>Nos compatilhe nas redes</h1>
+        <div className={styles.ButtonsContainer}>
             <WhatsappShareButton/>
             <FacebookShareButton/>
-        </ButtonsContainer>
-    </Container>
+            </div>
+        <p>Dúvidas? Escreva para nosso e-mail ou entre em contato pelo telefone {contactPhone}</p>
+    </div>
 )
 
 export default ShareBox

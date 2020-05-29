@@ -1,0 +1,28 @@
+.sharebox {
+    display: flex;
+    flex-direction: column;
+    bottom: 0;
+    width: 100%;
+    background-color: grey;
+    font-family: Verdana;
+    text-align: center;
+    h1 {
+        font-size: 15px;
+    }
+}
+
+.ButtonsContainer{
+    text-align: center;
+    display: block;
+    color: #C4C4C4;
+}
+
+.ShareButton {
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: block;
+}
