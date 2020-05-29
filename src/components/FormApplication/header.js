@@ -1,6 +1,6 @@
 import PropTypes, { symbol } from "prop-types";
 import React from "react";
-import styles from "../styles/header.module.scss";
+import styles from "../../styles/header.module.scss";
 import IconButton from "@material-ui/core/IconButton";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import styled from "styled-components";

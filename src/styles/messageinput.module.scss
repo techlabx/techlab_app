@@ -27,6 +27,20 @@
     border: 0px none;
 }
 
+.buttoninput {
+    background-color: $color2;
+    color: $white; 
+    border-radius: 19px;
+    height: 36px;
+    margin: 10px;
+    margin-left: 5px;
+    width: 100%;
+    padding: 8px 8px 10px 20px;
+    outline: none;
+    font-size: $default-font-size;
+    border: 0px none;
+}
+
 .send {
     filter: invert(80%);
 

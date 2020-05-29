@@ -1,5 +1,5 @@
 import FormSelectionList from "../components/FormSelection/FormSelectionList"
-import ImageWithDescription from "../components/ImageWithDescription"
+import ImageWithDescription from "../components/FormSelection/ImageWithDescription"
 import { Link } from "gatsby"
 import NavBar from "../components/NavBar"
 import React from "react"

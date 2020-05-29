@@ -1,5 +1,5 @@
 import React, { Fragment }    from "react"
-import ChatContainer          from "../components/chatcontainer"
+import ChatContainer          from "../components/FormApplication/chatcontainer"
 import { Location }           from "@reach/router"
 import queryString            from 'query-string'
 

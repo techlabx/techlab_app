@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components"
+import terapia from "../../images/terapia.jpg"
 
 const ImageBox = styled.div`
   position: relative;
@@ -34,7 +35,7 @@ const StyledImage = styled.img`
 const ImageWithDescription = () => {
   return (
     <ImageBox>
-      <StyledImage src="terapia.jpg"></StyledImage>
+      <StyledImage src={terapia}></StyledImage>
       <TextBox>
         <TextTitle>Questionário Sobre Saúde Mental</TextTitle>
       </TextBox>
