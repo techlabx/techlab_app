@@ -16,6 +16,7 @@ const Layout = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #f7f5f5;
 `
 
 const IconBox = styled.div`
@@ -36,10 +37,6 @@ const Title = styled.span`
   font-size: 24px;
   padding: 12px;
 `
-
-// const UnStyledLink = styled(Link)`
-//   color: inherit;
-// `
 
 const Header = ({ title }) => {
   return (

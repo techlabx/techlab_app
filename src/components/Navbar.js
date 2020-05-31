@@ -20,6 +20,7 @@ const Bar = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  background-color: #faf7f7;
 `
 
 const NavbarLayout = styled.div`
@@ -29,6 +30,7 @@ const NavbarLayout = styled.div`
   display: flex;
   justify-content: center;
   padding: 5px;
+  background-color: #faf7f7;
 `
 
 const IconBox = styled.div`
