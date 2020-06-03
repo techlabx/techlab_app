@@ -1,28 +1,29 @@
+@import 'global';
+
+$sharebox-height: 100%;
+$sharebox-color: grey;
+$button-horizontal-margin: 40px;
+$button-vertical-margin: 10px;
+
 .sharebox {
+    height: $sharebox-height;
+
     display: flex;
     flex-direction: column;
-    bottom: 0;
-    width: 100%;
-    background-color: grey;
-    font-family: Verdana;
+    font-family: $font;
     text-align: center;
+    background-color: $sharebox-color;
+
     h1 {
         font-size: 15px;
     }
 }
 
-.ButtonsContainer{
-    text-align: center;
-    display: block;
-    color: #C4C4C4;
-}
-
 .ShareButton {
-    margin-left: 40px;
-    margin-right: 40px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border-radius: 12px;
-    cursor: pointer;
     display: block;
+    margin-left: $button-horizontal-margin;
+    margin-right: $button-horizontal-margin;
+    margin-top: $button-vertical-margin;
+    margin-bottom: $button-vertical-margin;
+    border-radius: 12px;
 }

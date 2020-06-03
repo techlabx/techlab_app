@@ -8,7 +8,7 @@ import styles from "../styles/navbar.module.scss";
 const Navbar = () => {
   return (
     <div className={styles.container}>
-      <div className={styles.navbarLayout}>
+      <div className={styles.navbar}>
         <div className={styles.iconBox}>
           <a href="/info">
             <IconButton className={styles.iconButton}>
