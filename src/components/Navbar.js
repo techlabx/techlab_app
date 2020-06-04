@@ -12,6 +12,7 @@ const Container = styled.div`
     bottom: 0;
     height: 50px;
     width: 100%;
+    max-width: 768px;
   }
 `
 

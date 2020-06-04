@@ -17,8 +17,17 @@ const StyledListItem = styled.button`
   font-size: 18px;
 `
 
+const Text = styled.span`
+  max-width: 430px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
+
 const ListItem = ({ key, children, ...props }) => (
-  <StyledListItem key={key}>{children}</StyledListItem>
+  <StyledListItem key={key}>
+    <Text>{children}</Text>
+  </StyledListItem>
 )
 
 export default ListItem

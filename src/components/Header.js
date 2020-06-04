@@ -8,7 +8,7 @@ const HeaderContainer = styled.div`
   && {
     width: 100%;
     positioin: fixed;
-    height: 7%;
+    height: 8%;
   }
 `
 
@@ -35,7 +35,9 @@ const StyledIconButton = styled(IconButton)`
 `
 const Title = styled.span`
   font-size: 24px;
+  font-weight: bold;
   padding: 12px;
+  color: #418694;
 `
 
 const Header = ({ title }) => {

@@ -18,7 +18,7 @@ const Layout = styled.div`
 const FormSelectionPage = () => {
   return (
     <>
-      <Header title="Formulários" />
+      <Header title="Questionários" />
       <Layout>
         <ImageWithDescription />
         <FormSelectionList />
