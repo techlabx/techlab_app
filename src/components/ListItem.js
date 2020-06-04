@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 const StyledListItem = styled.button`
   width: 100%;
-  background-color: orange;
+  background-color: #fc9332;
   height: 50px;
   margin-top: 10px;
   border: none;

@@ -7,8 +7,10 @@ import styled from "styled-components"
 const HeaderContainer = styled.div`
   && {
     width: 100%;
+    top: 0;
     positioin: fixed;
     height: 8%;
+    max-height: 53px;
   }
 `
 

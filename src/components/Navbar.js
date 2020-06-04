@@ -10,9 +10,10 @@ const Container = styled.div`
   && {
     position: fixed;
     bottom: 0;
-    height: 50px;
+    height: 7%;
     width: 100%;
-    max-width: 768px;
+    max-height: 50px;
+    max-width: 800px;
   }
 `
 

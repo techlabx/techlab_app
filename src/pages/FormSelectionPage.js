@@ -8,7 +8,8 @@ import styled from "styled-components"
 import styles from "../styles/FormSelectionPage.module.scss"
 
 const Layout = styled.div`
-  // max-width: 900px;
+  max-height: 100%;
+  height: 85%;
   display: flex;
   flex-direction: column;
   align-items: flex-stretch;
