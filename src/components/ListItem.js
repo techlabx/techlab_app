@@ -1,4 +1,5 @@
 import React from "react"
+import { navigate } from "@reach/router"
 import styled from "styled-components"
 
 const StyledListItem = styled.button`
@@ -24,10 +25,15 @@ const Text = styled.span`
   white-space: nowrap;
 `
 
-const ListItem = ({ key, children, ...props }) => (
-  <StyledListItem key={key}>
-    <Text>{children}</Text>
-  </StyledListItem>
-)
+const ListItem = ({ key, nome, children, ...props }) => {
+  return (
+    <StyledListItem
+      key={key}
+      onClick={() => navigate(`/formpage?form=${nome}`)}
+    >
+      <Text>{children}</Text>
+    </StyledListItem>
+  )
+}
 
 export default ListItem
