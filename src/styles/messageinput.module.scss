@@ -1,30 +1,53 @@
-@import 'global';
+@import "global";
 
 .input {
-    background-color: $chat-input-blackground;
-    position: fixed;
-    display: inline-flex;
-    bottom: 0;
-    z-index: 2;
-    width: 100%;
-    max-width: inherit;
-    text-align: center;
+  background-color: $chat-input-blackground;
+  position: fixed;
+  display: inline-flex;
+  bottom: 0;
+  z-index: 2;
+  width: 100%;
+  margin: auto 0;
+  max-width: inherit;
+  margin-bottom: 60px;
+  text-align: center;
 }
 
 .textinput {
-    background-color: $chat-internal-blackground;
-    border-radius: 15px;
-    height: 15px;
-    margin: 10px;
-    width: 100%;
-    padding: 8px 8px 10px 10px;
-    shape-outside: 5px;
+  background-color: $chat-internal-blackground;
+  color: $input-text-color;
+  border-radius: 19px;
+  height: 19px;
+  margin: 10px;
+  margin-left: 5px;
+  width: 100%;
+  padding: 8px 8px 10px 20px;
+  outline: none;
+  font-size: $default-font-size;
+  border: 0px none;
+}
+
+.buttoninput {
+  background-color: $color2;
+  color: $white;
+  border-radius: 19px;
+  height: 36px;
+  margin: 10px;
+  margin-left: 5px;
+  width: 100%;
+  padding: 8px 8px 10px 20px;
+  outline: none;
+  font-size: $default-font-size;
+  border: 0px none;
 }
 
 .send {
-    filter: invert(30%);
-    margin: auto;
-    margin-right: 10px;
-    width: 37px;
-    height: 37px;
-}   
+  filter: invert(80%);
+
+  margin: auto;
+  margin-left: 10px;
+  margin-right: 20px;
+  width: 37px;
+  max-width: 50px;
+  height: 37px;
+}

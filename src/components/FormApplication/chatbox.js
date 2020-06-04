@@ -6,13 +6,15 @@
  */
 
 import React from "react"
-import styles from "../styles/chatbox.module.scss"
+import styles from "../../styles/chatbox.module.scss"
 
-const ChatBox = (props) => {
-  console.log(styles)
+const ChatBox = props => {
   return (
     <>
-      <div className={props.direction == 'client' ? styles.boxClient : styles.boxServer }
+      <div
+        className={
+          props.direction == "client" ? styles.boxClient : styles.boxServer
+        }
       >
         {props.text}
       </div>

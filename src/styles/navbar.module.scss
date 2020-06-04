@@ -1,0 +1,44 @@
+@import "global";
+
+.container {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.layout {
+  & {
+    height: 60px;
+  }
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  font-family: Roboto;
+  background-color: white;
+}
+
+.icon-box {
+  filter: invert(80%);
+  cursor: pointer;
+  display: flex;
+  margin-right: 3px;
+  margin-left: 3px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon-button {
+  & {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.icon-label {
+  color: $input-text-color;
+  font-family: $font1;
+  font-size: $default-font-size;
+}
