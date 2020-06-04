@@ -58,7 +58,7 @@ const ImageWithDescription = () => {
       <Overlay />
       {/* <StyledImage src="terapia.jpg"></StyledImage> */}
       <TextBox>
-        <TextTitle>Questionário Sobre Saúde Mental</TextTitle>
+        <TextTitle>Questionários Sobre Saúde Mental</TextTitle>
       </TextBox>
     </ImageBox>
   )
