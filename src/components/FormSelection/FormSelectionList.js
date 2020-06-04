@@ -1,11 +1,25 @@
+import React, { useEffect, useState } from "react"
+
 import ListItem from "../ListItem"
-import React from "react"
-import styled from "styled-components"
+import axios from "axios"
 
 const FormSelectionList = () => {
-  const formsData = [{ name: "C-SSRRS" }, { name: "SRQ-20" }]
-  const listItems = formsData.map(form => (
-    <ListItem key={form.name}>{form.name}</ListItem>
+  const [forms, setForms] = useState([])
+
+  useEffect(() => {
+    if (forms.length === 0) {
+      getForms()
+    }
+  }, [])
+
+  const getForms = async () => {
+    const response = await axios.get(`http://34.72.227.11/questionarios/lista`)
+    const data = response.data
+    setForms(data)
+  }
+
+  const listItems = forms.map(form => (
+    <ListItem key={form.nome}>{form.nome}</ListItem>
   ))
 
   return <div>{listItems}</div>
