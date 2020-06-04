@@ -2,6 +2,7 @@ import Button from "../components/Button"
 import EmailIcon from "@material-ui/icons/Email"
 import LoginField from "../components/LoginField"
 import React from "react"
+import { navigate } from "gatsby"
 import styled from "styled-components"
 import styles from "../styles/LoginPage.module.scss"
 
@@ -11,6 +12,9 @@ const OuterBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url("login.png");
+  background-position: center;
+  background-size: cover;
 `
 
 const InnerBox = styled.div`
@@ -21,11 +25,13 @@ const InnerBox = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    z-index: 2;
+    margin-top: 150px;
   }
 `
 
 const Title = styled.span`
-  color: black;
+  color: #418694;
   font-size: 50px;
   margin-bottom: 20px;
   border-sizing: border-box;
@@ -65,21 +71,37 @@ const BottomText = styled.span`
 const CreateAccountLink = styled.a`
   font-size: 16px;
   font-weight: bold;
-  color: red;
+  color: #418694;
   cursor: pointer;
+`
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(236, 121, 15, 0.3);
+  z-index: 1;
 `
 
 const LoginPage = () => {
   return (
     <OuterBox>
+      <Overlay />
       <InnerBox>
         <Title>Login</Title>
         <InputBox>
           <LoginField height="25px" width="50%" placeholder="Usuário" />
-          <LoginField height="25px" width="50%" placeholder="Senha" />
+          <LoginField
+            height="25px"
+            width="50%"
+            type="password"
+            placeholder="Senha"
+          />
         </InputBox>
         <ButtonBox>
-          <Button height="50px" width="56%" backgroundColor="#158bc2">
+          <Button height="50px" width="56%" backgroundColor="#418694">
             Entrar
           </Button>
           <Button
@@ -94,7 +116,9 @@ const LoginPage = () => {
         </ButtonBox>
         <BottomTextBox>
           <BottomText>Não tem uma conta? </BottomText>
-          <CreateAccountLink>Faça o cadastro</CreateAccountLink>
+          <CreateAccountLink onClick={() => navigate("/SignUpPage")}>
+            Faça o cadastro
+          </CreateAccountLink>
         </BottomTextBox>
       </InnerBox>
     </OuterBox>

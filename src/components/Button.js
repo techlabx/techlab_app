@@ -10,6 +10,7 @@ const StyledButton = styled.button`
   height: ${props => (props.height ? props.height : `90px`)};
   width: ${props => (props.width ? props.width : `200px`)};
   border-radius: 15px;
+  border: 0px;
   background-color: ${props =>
     props.backgroundColor ? props.backgroundColor : "white"};
   color: white;

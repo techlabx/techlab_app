@@ -2,7 +2,8 @@ import React from "react"
 import styled from "styled-components"
 
 const Field = styled.input`
-  border: 3px solid orange;
+  border: ${props =>
+    props.borderColor ? props.borderColor : `3px solid #FC9332`};
   border-radius: 15px;
   background-color: #d5edf5;
   box-shadow: 0px 3px 5px gray;
@@ -18,9 +19,17 @@ const Field = styled.input`
   }
 `
 
-const LoginField = ({ height, width, placeholder }) => {
+const LoginField = ({ height, width, placeholder, borderColor, type }) => {
   console.log(height, width, placeholder)
-  return <Field height={height} width={width} placeholder={placeholder} />
+  return (
+    <Field
+      height={height}
+      width={width}
+      placeholder={placeholder}
+      borderColor={borderColor}
+      type={type}
+    />
+  )
 }
 
 export default LoginField
