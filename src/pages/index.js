@@ -1,10 +1,8 @@
 import FormSelectionList from "../components/FormSelection/FormSelectionList"
 import ImageWithDescription from "../components/FormSelection/ImageWithDescription"
-import { Link } from "gatsby"
 import NavBar from "../components/NavBar"
 import React from "react"
 import styled from "styled-components"
-import styles from "../styles/FormSelectionPage.module.scss"
 
 const Layout = styled.div`
   // max-width: 900px;
@@ -16,10 +14,13 @@ const Layout = styled.div`
 `
 
 const FormSelectionPage = () => {
+  
+  const chatAPIAddr = process.env.CHAT_API_ADDR;
+  
   return (
     <Layout>
       <ImageWithDescription />
-      <FormSelectionList />
+      <FormSelectionList apiAddr={chatAPIAddr}/>
       <NavBar />
     </Layout>
   )

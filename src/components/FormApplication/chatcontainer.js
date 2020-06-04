@@ -1,8 +1,9 @@
-import React, { Fragment, useReducer } from "react"
+import React, { Fragment } from "react"
 import styles from "../../styles/chatcontainer.module.scss"
 import Header from "./header"
 import { MessageInput } from "./messageinput"
 import ChatBox from "./chatbox"
+import ButtonBox from "./buttonbox"
 import Navbar from "../NavBar"
 import axios from 'axios'
 
@@ -17,7 +18,8 @@ class ChatContainer extends React.Component {
             messages: [
                 {
                     direction: "server",
-                    message: "Nas próximas próximas perguntas, você realizará uma autoavaliação a respeito da sua saúde em geral. Serão 24 afirmativas, e você deve selecionar sim ou não para cada afirmativa. Não existe resposta certa ou errada, por isso pedimos que você responda da forma que você julgar melhor. Caso tenha alguma dúvida, você pode nos mandar uma mensagem pelo XXX."
+                    message: "Nas próximas próximas perguntas, você realizará uma autoavaliação a respeito da sua saúde em geral. Serão 24 afirmativas, e você deve selecionar sim ou não para cada afirmativa. Não existe resposta certa ou errada, por isso pedimos que você responda da forma que você julgar melhor. Caso tenha alguma dúvida, você pode nos mandar uma mensagem pelo XXX.",
+                    button: false
                 }
             ], 
             options: ['Iniciar', 'Sair'],
@@ -42,7 +44,8 @@ class ChatContainer extends React.Component {
 
         const message = {
             direction: "client",
-            message: messageText
+            message: messageText,
+            button: false
         }
 
         this.setState({
@@ -64,28 +67,45 @@ class ChatContainer extends React.Component {
 
         let response_server = [{
                 direction: "server",
-                message: res.data.question}]
+                message: res.data.question,
+                button: false
+            }]
         
-        console.log(res.data)
-
         if (res.data.options) {
             this.setState({options: res.data.options}) 
-        }
-        else this.setState({options: []})
+        } else this.setState({options: []})
         
         if (res.data.question === "" || res.data.question === undefined) { 
+            
+            let messages = res.data.result.split('\n')
+            let messagesObject = Array()
+
+            for (const idx in messages) {
+                messagesObject.push({
+                    direction: "server",
+                    message: messages[idx],
+                    button: false
+                })
+            }
+
+            messagesObject.push({
+                direction: "server",
+                message: "Clique aqui para ir para a aba de acolhimento",
+                button: true
+            })
+
             this.setState({
                 blocked: true,
-                messages: res.data.result ?  [...this.state.messages, {
-                    direction: "server",
-                    message: res.data.result
-                }] : this.state.messages  
+                messages: [...this.state.messages, ...messagesObject]  
             })
+
         } else {
+            
             this.setState({
                 blocked: false,
                 messages: [...this.state.messages, ...response_server],
             })
+
         }
         
         this.scrollToBottom();
@@ -93,7 +113,11 @@ class ChatContainer extends React.Component {
     }
 
     renderMessage = (message, index) => {
-        return (
+        if (message.button) {
+            return (
+                <ButtonBox key={index} text={message.message} direction={message.direction}/>
+            )
+        } else return (
             <ChatBox key={index} text={message.message} direction={message.direction}/>
         )
     }

@@ -24,3 +24,9 @@
     right: 100%;
     @extend .box;
 }
+
+.box-server-button {
+    right: 100%;
+    @extend .box;
+    background-color: $color2;
+}

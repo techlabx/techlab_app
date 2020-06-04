@@ -1,15 +1,45 @@
 import ListItem from "../ListItem"
 import React from "react"
-import styled from "styled-components"
+import axios from "axios";
 
-const FormSelectionList = () => {
-  const formsData = [{ name: "SRQ-20" }, { name: "Columbia" }]
-  const listItems = formsData.map(form => {
-    return (
-    <ListItem key={form.name} name={form.name}>{form.name}</ListItem>
-    )})
+class FormSelectionList extends React.Component {
 
-  return <div>{listItems}</div>
+  constructor(props) {
+    super(props);
+    this.state = {
+      formsData: []
+    }
+  }
+
+  fetchAPI = () => {
+
+    console.log(this.props.apiAddr);
+    console.log(`trying to fetch http://${this.props.apiAddr}/questionarios/lista`)
+    axios.get(`http://${this.props.apiAddr}/questionarios/lista`).then(res => {
+      console.log(res.data)
+      this.setState({
+          formsData: res.data
+      })
+    })
+  }
+
+  componentDidMount = () => {
+    this.fetchAPI();
+  }
+
+  // componentDidUpdate = () => {
+  //   console.log('updating')
+  //   this.fetchAPI();
+  // }
+  
+  render = () => {
+    const listItems = this.state.formsData.map(form => {
+      return (
+      <ListItem key={form.nome} name={form.nome}>{form.nome}</ListItem>
+      )})
+  
+    return <div>{listItems}</div>
+  }
 }
 
 export default FormSelectionList

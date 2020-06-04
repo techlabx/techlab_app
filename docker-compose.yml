@@ -1,0 +1,9 @@
+version: '3.3'
+
+services:
+  gatsby:
+    build:
+      context: .
+    command: node node_modules/.bin/gatsby develop -H 0.0.0.0 -p 3000
+    ports:
+      - 80:3000

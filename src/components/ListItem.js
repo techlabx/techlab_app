@@ -19,10 +19,6 @@ const StyledListItem = styled.button`
 `
 
 class ListItem extends React.Component {
-  
-  constructor(props) {
-    super(props);
-  }
 
   onClick = () => {
     navigate(`/formpage?form=${this.props.name}`)

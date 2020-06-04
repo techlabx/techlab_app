@@ -1,10 +1,10 @@
-import React, { Fragment }    from "react"
+import React                  from "react"
 import ChatContainer          from "../components/FormApplication/chatcontainer"
 import { Location }           from "@reach/router"
 import queryString            from 'query-string'
 
 const IndexPage = () => {
-  const chatAPIAddr = '34.72.227.11'; 
+  const chatAPIAddr = process.env.CHAT_API_ADDR;
   return (
     <Location>
       {({ location, navigate }) => {

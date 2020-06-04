@@ -1,4 +1,4 @@
-import React, { Fragment, Children } from "react"
+import React, { Fragment } from "react"
 import styles from "../../styles/messageinput.module.scss"
 import logo from "../../images/interface.png"
 
