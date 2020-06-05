@@ -15,6 +15,9 @@ const IndexPage = () => {
                 ? queryString.parse(location.search).form
                 : "SRQ-20"
             }
+            descricao={
+              queryString.parse(location.search).descricao
+            }
             chatAddr={chatAPIAddr}
           />
         )

@@ -1,3 +1,6 @@
 #!/bin/bash
-ts-node node_modules/.bin/gatsby build
-ts-node node_modules/.bin/gatsby serve -H 0.0.0.0
+# gatsby build
+# gatsby serve
+
+npm rebuild node-sass
+gatsby develop --port 8000

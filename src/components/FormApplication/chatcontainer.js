@@ -18,8 +18,7 @@ class ChatContainer extends React.Component {
       messages: [
         {
           direction: "server",
-          message:
-            "Nas próximas próximas perguntas, você realizará uma autoavaliação a respeito da sua saúde em geral. Serão 24 afirmativas, e você deve selecionar sim ou não para cada afirmativa. Não existe resposta certa ou errada, por isso pedimos que você responda da forma que você julgar melhor. Caso tenha alguma dúvida, você pode nos mandar uma mensagem pelo XXX.",
+          message: this.props.descricao,
           button: false,
         },
       ],
@@ -67,7 +66,7 @@ class ChatContainer extends React.Component {
         answer: messageText,
       }
     )
-
+    
     let response_server = [
       {
         direction: "server",
@@ -76,6 +75,8 @@ class ChatContainer extends React.Component {
       },
     ]
 
+    console.log(res.data)
+    
     if (res.data.options) {
       this.setState({ options: res.data.options })
     } else this.setState({ options: [] })

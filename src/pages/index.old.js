@@ -1,15 +1,12 @@
 import FormSelectionList from "../components/FormSelection/FormSelectionList"
-import Header from "../components/Header"
 import ImageWithDescription from "../components/FormSelection/ImageWithDescription"
-import { Link } from "gatsby"
-import Navbar from "../components/NavbarLala"
+import NavBar from "../components/NavBar"
 import React from "react"
 import styled from "styled-components"
-import styles from "../styles/FormSelectionPage.module.scss"
 
 const Layout = styled.div`
-  max-height: 100%;
-  height: 85%;
+  // max-width: 900px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-stretch;
@@ -17,15 +14,14 @@ const Layout = styled.div`
 `
 
 const FormSelectionPage = () => {
+  const chatAPIAddr = process.env.CHAT_API_ADDR
+
   return (
-    <>
-      <Header title="Questionários" />
-      <Layout>
-        <ImageWithDescription />
-        <FormSelectionList />
-      </Layout>
-      <Navbar />
-    </>
+    <Layout>
+      <ImageWithDescription />
+      <FormSelectionList apiAddr={chatAPIAddr} />
+      <NavBar />
+    </Layout>
   )
 }
 

@@ -2,8 +2,11 @@ version: '3.3'
 
 services:
   gatsby:
-    build:
-      context: .
-    command: node node_modules/.bin/gatsby develop -H 0.0.0.0 -p 3000
+    image: node:11
+    volumes:
+      - .:/app
+    environment: 
+      - PATH=/app/node_modules/.bin:$PATH
+    command: /bin/bash -c 'cd /app && ./run.sh'
     ports:
-      - 80:3000
+      - 8000:8000

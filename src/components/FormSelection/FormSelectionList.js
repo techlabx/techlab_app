@@ -18,12 +18,13 @@ const FormSelectionList = () => {
       `http://${chatAPIAddr}/questionarios/lista`
     )
     const data = response.data
+    console.log(data)
     setForms(data)
   }
 
   const listItems = forms.map((form, index) => {
     return (
-      <ListItem key={index} nome={form.nome}>
+      <ListItem key={index} apelido={form.apelido} nome={form.nome} descricao={form.descricao}>
         {form.nome}
       </ListItem>
     )

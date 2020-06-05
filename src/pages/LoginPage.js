@@ -4,7 +4,6 @@ import LoginField from "../components/Login/LoginField"
 import React from "react"
 import { navigate } from "gatsby"
 import styled from "styled-components"
-import styles from "../styles/LoginPage.module.scss"
 
 const OuterBox = styled.div`
   height: 100%;

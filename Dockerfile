@@ -1,7 +1,7 @@
 # base image
 FROM node:11
 
-COPY . /app/
+# COPY . /app/
 
 # set working directory
 WORKDIR /app
@@ -10,10 +10,10 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 # install and cache app dependencies using yarn
-RUN yarn --pure-lockfile
+# RUN npm i
 
 # Copy all frontend stuff to new "app" folder
 
-CMD ["./run.sh"]
+# CMD ["./run.sh"]
 
-EXPOSE 9000
+# EXPOSE 8000

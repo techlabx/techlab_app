@@ -25,11 +25,12 @@ const Text = styled.span`
   white-space: nowrap;
 `
 
-const ListItem = ({ key, nome, children, ...props }) => {
+const ListItem = ({nome, apelido, descricao, children, ...props }) => {
+  console.log(apelido)
   return (
     <StyledListItem
-      key={key}
-      onClick={() => navigate(`/formpage?form=${nome}`)}
+      key={apelido}
+      onClick={() => navigate(`/formpage?form=${apelido}&descricao=${descricao}`)}
     >
       <Text>{children}</Text>
     </StyledListItem>
