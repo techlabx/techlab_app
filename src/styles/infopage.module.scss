@@ -2,9 +2,10 @@
 
 $text-margin: 25px;
 $box-margin: 10px;
+$textbox-opacity: 0.8;
 
 :export {
-    TextBoxOpacity: 0.8;
+    TextBoxOpacity: $textbox-opacity;
     BackgroundWhite: $white-background;
     Blue: $blue;
     Orange: $orange;
@@ -23,6 +24,8 @@ $box-margin: 10px;
 
 .Content {
     display: flex;
+    bottom: 0;
+    height: 100%;
     flex-direction: column;
     overflow-x: hidden;
     margin-top: $nav-height;
@@ -50,7 +53,6 @@ $box-margin: 10px;
     display: block;
     text-align: center;
     font-family: $font;
-    
 
     h2 {
         padding-top: 5px;

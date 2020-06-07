@@ -55,7 +55,7 @@ const InfoPage = () => (
       <InfoContainer boxColor={styles.Orange}/>
       <InfoContainer/>
       <ShareBox/>
-    </div>ty~5
+    </div>
     <Navbar/>
   </div>
 )
