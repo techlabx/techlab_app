@@ -34,8 +34,7 @@ const ShareButton = (props) => (
 const WhatsappShareButton = () => (
     <a
     href={whatsappShare.url+"?text="+whatsappShare.payload.text}
-    onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
-    target="_blank">
+    target="_blank" rel="noopener noreferrer">
         <ShareButton color={whatsappShare.buttonColor}>
             <WhatsAppIcon/>
         </ShareButton>
@@ -45,8 +44,7 @@ const WhatsappShareButton = () => (
 const FacebookShareButton = () => (
     <a
     href={facebookShare.url+"?u="+facebookShare.payload.url+"&t="+facebookShare.payload.title}
-    onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
-    target="_blank">
+    target="_blank" rel="noopener noreferrer">
         <ShareButton color={facebookShare.buttonColor}>
             <FacebookIcon/>
         </ShareButton>

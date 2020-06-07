@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar"
 import ShareBox from "../components/sharebox"
 import styles from "../styles/infopage.module.scss"
 import bgImg from "../images/infopage_background.jpg"
+import chroma from "chroma-js"
 
 const sampleText = `
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam laoreet elementum vehicula. Sed sodales eu massa ut luctus. Suspendisse ultrices ante ut bibendum pulvinar. Donec lorem diam, luctus eu dapibus at, tincidunt vitae lorem. Sed venenatis finibus diam et facilisis. Fusce et erat malesuada, consequat lorem in, ultrices libero. Vestibulum quis pretium tortor, sit amet efficitur augue.
@@ -11,22 +12,24 @@ const sampleText = `
   
 const sampleTitle= `
   Lorem ipsum?
-`
+`;
+
+const textBoxOpacity = parseFloat(styles.TextBoxOpacity);
 
 const Container = (props) => (
-  <div className={styles.InfoContainer} style={{backgroundImage: `url(${props.image})`}}>
+  <div className={styles.InfoContainer} style={{backgroundImage: `url(${props.bgImage})`}}>
     {props.children}
   </div>
-)
+);
 
 const TextBox = (props) => (
-  <div className={styles.TextBox} style={{backgroundColor: props.boxColor}}>
+  <div className={styles.TextBox} style={{ backgroundColor: chroma(props.boxColor).alpha(textBoxOpacity) }}>
     {props.children}
   </div>
-)
+);
 
 const InfoContainer = (props) => (
-  <Container image={props.image}>
+  <Container bgImage={props.bgImage}>
     <TextBox boxColor={props.boxColor}>
       <div className={styles.ContainerText}>
         <h2>{props.title}</h2>
@@ -34,18 +37,25 @@ const InfoContainer = (props) => (
       </div>
     </TextBox>
   </Container>
-) 
+);
+
+InfoContainer.defaultProps = {
+  title: sampleTitle,
+  text: sampleText,
+  boxColor: styles.BackgroundWhite,
+  bgImage: null
+};
 
 const InfoPage = () => (
   <div className={styles.PageWrapper}>
     <Header title="Sobre o Gapsi" lastPage="/"/>
     <div className={styles.Content}>
-      <InfoContainer title={sampleTitle} text={sampleText} boxColor='rgba(72, 127, 128, 0.8)' image={bgImg}/>
-      <InfoContainer title={sampleTitle} text={sampleText}/>
-      <InfoContainer title={sampleTitle} text={sampleText} boxColor='rgba(241, 156, 77, 0.8)'/>
-      <InfoContainer title={sampleTitle} text={sampleText}/>
+      <InfoContainer boxColor={styles.Blue} bgImage={bgImg}/>
+      <InfoContainer/>
+      <InfoContainer boxColor={styles.Orange}/>
+      <InfoContainer/>
       <ShareBox/>
-    </div>
+    </div>ty~5
     <Navbar/>
   </div>
 )

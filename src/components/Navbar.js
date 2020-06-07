@@ -5,34 +5,28 @@ import ContactSupportIcon from "@material-ui/icons/ContactSupport"
 import InfoIcon from "@material-ui/icons/Info"
 import styles from "../styles/navbar.module.scss";
 
-const Navbar = () => {
-  return (
-    <div className={styles.container}>
-      <div className={styles.navbar}>
-        <div className={styles.iconBox}>
-          <a href="/info">
-            <IconButton className={styles.iconButton}>
-              <InfoIcon fontSize="large" />
-            </IconButton>
-          </a>
-        </div>
-        <div className={styles.iconBox}>
-          <a href="/">
-            <IconButton className={styles.iconButton}>
-              <HomeIcon fontSize="large" />
-            </IconButton>
-          </a>
-        </div>
-        <div className={styles.iconBox}>
-          <a href="/">
-            <IconButton className={styles.iconButton}>
-              <ContactSupportIcon fontSize="large" />
-            </IconButton>
-          </a>
-        </div>
-      </div>
-    </div>
-  )
-}
+const NavButton = (props) => (
+  <div className={styles.iconBox}>
+    <a href={props.destUrl}>
+      <IconButton className={styles.iconButton}>
+        {props.children}
+      </IconButton>
+    </a>
+  </div>
+)
+
+const Navbar = () => (
+  <div className={styles.navbar}>
+    <NavButton destUrl='/info'>
+      <InfoIcon fontSize='large'/>
+    </NavButton>
+    <NavButton destUrl='/'>
+      <HomeIcon fontSize='large'/>
+    </NavButton>
+    <NavButton destUrl='/'>
+      <ContactSupportIcon fontSize='large'/>
+    </NavButton>
+  </div>
+)
 
 export default Navbar

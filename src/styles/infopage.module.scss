@@ -3,6 +3,13 @@
 $text-margin: 25px;
 $box-margin: 10px;
 
+:export {
+    TextBoxOpacity: 0.8;
+    BackgroundWhite: $white-background;
+    Blue: $blue;
+    Orange: $orange;
+}
+
 .PageWrapper {
     position: fixed;
     display: flex;
@@ -43,6 +50,7 @@ $box-margin: 10px;
     display: block;
     text-align: center;
     font-family: $font;
+    
 
     h2 {
         padding-top: 5px;

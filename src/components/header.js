@@ -15,12 +15,8 @@ const GoBackArrow = (props) => (
 
 const Header = ({ title, lastPage }) => (
   <header className={styles.header}>
-    <div>
-      <GoBackArrow to={lastPage} />
-    </div>
-    <div>
-      <h1>{title}</h1>
-  </div>
+    <GoBackArrow to={lastPage} />
+    <h1>{title}</h1>
   </header>
 )
 
