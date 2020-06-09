@@ -1,0 +1,60 @@
+@import 'global';
+
+.PageWrapper {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  background-color: $white-background;
+}
+
+.Content {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  margin-top: $nav-height;
+  margin-bottom: $nav-height;
+  font-family: $font;
+}
+
+.Header {
+  position: fixed;
+  width: 100%;
+  height: $nav-height;
+  
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  align-items: center;
+  background-color: $white-background;
+  font-family: $font;
+  font-weight: bold;
+  font-size: 10px;
+  color: $blue;
+}
+
+.Navbar {
+  max-width: 100%;
+  max-height: $nav-height;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  align-items: center;
+  
+  background-color: $white-background;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+}
+
+.IconBox {
+  display: block;
+  float: left;
+  font-size: large;
+}

@@ -1,6 +1,5 @@
 import React from "react"
-import Header from "../components/header"
-import Navbar from "../components/Navbar"
+import UiWrapper from "../components/ui-wrapper"
 import ShareBox from "../components/sharebox"
 import styles from "../styles/infopage.module.scss"
 import bgImg from "../images/infopage_background.jpg"
@@ -47,17 +46,13 @@ InfoContainer.defaultProps = {
 };
 
 const InfoPage = () => (
-  <div className={styles.PageWrapper}>
-    <Header title="Sobre o Gapsi" lastPage="/"/>
-    <div className={styles.Content}>
-      <InfoContainer boxColor={styles.Blue} bgImage={bgImg}/>
-      <InfoContainer/>
-      <InfoContainer boxColor={styles.Orange}/>
-      <InfoContainer/>
-      <ShareBox/>
-    </div>
-    <Navbar/>
-  </div>
+  <UiWrapper pageTitle='Sobre o Gapsi' lastPage='/'>
+    <InfoContainer boxColor={styles.Blue} bgImage={bgImg}/>
+    <InfoContainer/>
+    <InfoContainer boxColor={styles.Orange}/>
+    <InfoContainer/>
+    <ShareBox/>
+  </UiWrapper>
 )
 
 export default InfoPage

@@ -4,62 +4,62 @@ import IconButton from '@material-ui/core/IconButton';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import FacebookIcon from '@material-ui/icons/Facebook';
 
-var contactPhone = "(16) 3373-8905"
+const HeaderText = `
+Nos compartilhe nas redes sociais
+`;
 
-var whatsappShare = {
-    buttonColor: '#0CC243',
-    url: "https://api.whatsapp.com/send",
-    payload: {
-        url: "blah",
-        text: "bleh"
-    }
-}
+const ContentText = `
+Dúvidas? Escreva para nosso e-mail ou entre em contato pelo telefone (16) 3373-8905
+`;
 
-var facebookShare = {
-    buttonColor: '#4267B2',
-    url: "https://facebook.com/sharer/sharer.php?",
-    payload: {
-        url: "bla",
-        title: "bleh"
-    }
-}
+const appUrl = "https://gapsi.icmc.usp.br/";
 
-const ShareButton = (props) => (
-    <div className={styles.ShareButton} style={{backgroundColor: props.color}}>
-        <IconButton style={{width: '100%'}}>
-            {props.children}
+const Buttons = [
+  { Id: 'whatsapp-share',
+    Icon: <WhatsAppIcon/>,
+    Color: '#0CC243',
+    Endpoint: 'https://api.whatsapp.com/send',
+    DefaultText: "O Grupo de Apoio Psicopedagógico do ICMC/USP - São Carlos acolhe estudantes e direciona-os a um atendimento especial. Venha nos conhecer!",
+    get Url(){ return this.Endpoint+'?text='+encodeURI(appUrl+'\n'+this.DefaultText); }
+  },
+  { Id: 'facebook-share',
+    Icon: <FacebookIcon/>,
+    Color: '#4267B2',
+    Endpoint: 'https://www.facebook.com/sharer/sharer.php',
+    DefaultText: "O Grupo de Apoio Psicopedagógico do ICMC/USP - São Carlos acolhe estudantes e direciona-os a um atendimento especial. Venha nos conhecer!",
+    get Url(){ return this.Endpoint+'?u='+encodeURI(appUrl); }
+  }
+];
+
+class ShareButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.button = props.myButton;
+  };
+  render() { 
+    const button = this.button; return (
+      <div className={styles.ShareButton} style={{backgroundColor: button.Color}}>
+        <a href={button.Url} target='_blank' rel='noopener noreferrer'>
+          <IconButton style={{width: '100%'}}>
+            {button.Icon}
         </IconButton>
-    </div>
-)
-const WhatsappShareButton = () => (
-    <a
-    href={whatsappShare.url+"?text="+whatsappShare.payload.text}
-    target="_blank" rel="noopener noreferrer">
-        <ShareButton color={whatsappShare.buttonColor}>
-            <WhatsAppIcon/>
-        </ShareButton>
-    </a>
-)
-
-const FacebookShareButton = () => (
-    <a
-    href={facebookShare.url+"?u="+facebookShare.payload.url+"&t="+facebookShare.payload.title}
-    target="_blank" rel="noopener noreferrer">
-        <ShareButton color={facebookShare.buttonColor}>
-            <FacebookIcon/>
-        </ShareButton>
-    </a>
-)
+          </a>
+      </div>
+  )};
+};
 
 const ShareBox = () => (
-    <div className={styles.sharebox}>
-        <h1>Nos compatilhe nas redes</h1>
-        <div className={styles.ButtonsContainer}>
-            <WhatsappShareButton/>
-            <FacebookShareButton/>
-            </div>
-        <p>Dúvidas? Escreva para nosso e-mail ou entre em contato pelo telefone {contactPhone}</p>
+  <div className={styles.sharebox}>
+    <h1>{HeaderText}</h1>
+    <div className={styles.ButtonsContainer}>
+      {Buttons.map((v, i) => {; return(
+        <ShareButton myButton={v} key={i}>
+          {v.Icon}
+        </ShareButton>
+      )})}
     </div>
-)
+    <p>{ContentText}</p>
+  </div>
+);
 
-export default ShareBox
+export default ShareBox;
