@@ -67,7 +67,7 @@ class MessageInput extends React.Component {
     } else {
       return (
         <Fragment>
-          <input
+          {/* <input
             className={styles.textinput}
             value={this.state.message}
             onChange={this.handleChange}
@@ -83,7 +83,7 @@ class MessageInput extends React.Component {
                 ? this.handleSubmit
                 : () => {}
             }
-          />
+          /> */}
         </Fragment>
       )
     }

@@ -4,6 +4,7 @@ import LoginField from "../components/Login/LoginField"
 import React from "react"
 import { navigate } from "gatsby"
 import styled from "styled-components"
+import loginImage from "../images/login.png"
 
 const OuterBox = styled.div`
   height: 100%;
@@ -27,6 +28,20 @@ const InnerBox = styled.div`
     z-index: 2;
     margin-top: 150px;
   }
+`
+
+const StyledImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;  
+  max-width: 100%;
+  max-heigh: 100%;
+  width: 100%;
+  transform: scale(1.4);
+  overlay: hidden;
+  z-index: 0;
 `
 
 const Title = styled.span`
@@ -88,6 +103,7 @@ const LoginPage = () => {
   return (
     <OuterBox>
       <Overlay />
+      <StyledImage src={loginImage}></StyledImage>
       <InnerBox>
         <Title>Login</Title>
         <InputBox>

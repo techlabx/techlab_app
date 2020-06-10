@@ -7,6 +7,7 @@ import { MessageInput } from "./messageinput"
 import Navbar from "../NavBar"
 import axios from "axios"
 import styles from "../../styles/chatcontainer.module.scss"
+import { navigate } from "gatsby"
 
 class ChatContainer extends React.Component {
   messagesEndRef = React.createRef()
@@ -17,12 +18,25 @@ class ChatContainer extends React.Component {
       sessionId: undefined,
       messages: [
         {
-          direction: "server",
-          message: this.props.descricao,
-          button: false,
-        },
+            direction: "server",
+            button: false,
+            message: "Olá XX (nome do aluno),"
+        },{
+            direction: "server",
+            button: false,
+            message: "A seguir, você irá preencher o questionário XX (nome do questionário). Antes de iniciá-lo, gostaríamos de saber se você teria interesse em enviar suas respostas diretamente para o banco de dados o APOIA USP. Queremos esclarecer que esses dados serão sigilosos e restritos aos funcionário do serviço."
+        },{
+            direction: "server",
+            button: false,
+            message: "Se você desejar compartilhar seus dados entenderemos que, caso haja necessidade, o serviço poderá entrar em contato com você através do seu e-mail USP fornecido na inscrição"
+        },{
+            direction: "server",
+            button: false,
+            message: "Se você desejar NÃO compartilhar seus dados, isso não trará nenhum prejuízo para você, contudo, não conseguiremos entrar em contato para oferecer nosso serviço de Atenção Psicossocia"
+        }
       ],
-      options: ["Iniciar", "Sair"],
+      options: ["Li e aceito", "Li e não aceito"],
+      messageNumber: 0,
       blocked: false,
     }
   }
@@ -40,33 +54,65 @@ class ChatContainer extends React.Component {
     })
   }
 
+  componentDidUpdate = () => {
+    this.scrollToBottom()
+  }
+  
   addMessage = messageText => {
     this.scrollToBottom()
+
+    console.log(messageText)
+    if (messageText == "Sair") {
+      navigate('/')
+      return
+    } 
 
     const message = {
       direction: "client",
       message: messageText,
       button: false,
     }
-
+    
+    if (this.state.messageNumber === 0) {
+      if (messageText === "Li e aceito") {
+        this.setState({
+          blocked: false,
+          messages: [...this.state.messages, message, {
+            direction: "server",
+            message: this.props.descricao,
+            button: false,
+          }],
+          options: ["Iniciar", "Sair"],
+        })      
+      } else {
+        navigate('/')
+        return
+      }
+    } else {
+      
+      this.setState({
+        messages: [...this.state.messages, message],
+        blocked: true,
+      })
+      this.getServerResponse(messageText)
+    
+    }
     this.setState({
-      blocked: true,
-      messages: [...this.state.messages, message],
+      messageNumber:this.state.messageNumber+1
     })
-
-    this.getServerResponse(messageText)
-
     this.scrollToBottom()
+    
   }
 
   getServerResponse = async messageText => {
+
     let res = await axios.put(
       `http://${this.props.chatAddr}/questionarios/${this.props.form}/${this.state.sessionId}/proxima`,
       {
         answer: messageText,
       }
     )
-    
+
     let response_server = [
       {
         direction: "server",
@@ -93,6 +139,12 @@ class ChatContainer extends React.Component {
         })
       }
 
+      messagesObject.push({
+        direction: "server",
+        message: "Se desejar, você pode marcar uma conversa com a gente! Só clicar no botão abaixo que você será redirecionado para a página de acolhimento.",
+        button: false,
+      })
+      
       messagesObject.push({
         direction: "server",
         message: "Clique aqui para ir para a aba de acolhimento",
