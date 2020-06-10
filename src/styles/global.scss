@@ -2,9 +2,16 @@
 
 $blue: #418694;
 $orange: #F2A157;
+
+:export {
+    Blue: $blue;
+    Orange: $orange;
+}
+
 $white-background: #F9F9F9;
 $white-header: #8C8303;
 
 $font: Roboto;
 $header-font-size: 10px;
 $nav-height: 40px;
+

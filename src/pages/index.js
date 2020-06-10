@@ -1,10 +1,16 @@
 import React from "react"
 import { Link } from "gatsby"
+import UiWrapper from "../components/ui-wrapper"
 
 const IndexPage = () => (
-  <div>
-    <Link to="/info/">Informações</Link>
-  </div>
-)
+  <UiWrapper pageTitle="" lastPage=''>
+    <>
+    <Link to="/info">Informações</Link>
+    </>
+    <>
+    <Link to="/acolhimento">Acolhimentos</Link>
+    </>
+  </UiWrapper>
+);
 
 export default IndexPage

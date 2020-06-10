@@ -7,11 +7,9 @@ $textbox-opacity: 0.8;
 :export {
     TextBoxOpacity: $textbox-opacity;
     BackgroundWhite: $white-background;
-    Blue: $blue;
-    Orange: $orange;
 }
 
-.InfoContainer {
+.ContentContainer {
     display: block;
     background-size: cover;
     padding-bottom: 20px;
@@ -28,7 +26,7 @@ $textbox-opacity: 0.8;
     background-color: $white-background;
 }
 
-.ContainerText {
+.Text {
     display: block;
     text-align: center;
     font-family: $font;

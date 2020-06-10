@@ -15,12 +15,12 @@ const NavbarIcons = [
 
 const GoBackArrow = ({to}) => (
   <div>
-      <a href={to}>
-        <IconButton>
-          <ArrowBackIcon fontSize="large" />
-        </IconButton>
-      </a>
-    </div>
+    <a href={to}>
+      <IconButton>
+        <ArrowBackIcon fontSize="large" />
+      </IconButton>
+    </a>
+  </div>
 )
 
 const Header = ({ title, lastPage }) => (
