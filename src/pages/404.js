@@ -1,14 +1,7 @@
 import React from "react"
-import { navigate } from "@reach/router"
 
-const FormSelectionPage = () => {
-navigate("/index")
-  return (
-    <>
-        <div/>
-    </>
-  )
-}
+const p404 = () => (
+    <p>404 not found bro</p>
+)
 
-export default FormSelectionPage
-
+export default p404

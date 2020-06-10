@@ -1,11 +1,8 @@
-import FormSelectionList from "../components/FormSelection/FormSelectionList"
-import Header from "../components/Header"
-import ImageWithDescription from "../components/FormSelection/ImageWithDescription"
-import { Link } from "gatsby"
-import Navbar from "../components/NavBar"
 import React from "react"
 import styled from "styled-components"
-import styles from "../styles/FormSelectionPage.module.scss"
+import FormSelectionList from "../components/FormSelection/FormSelectionList"
+import UiWrapper from "../components/ui-wrapper"
+import ImageWithDescription from "../components/FormSelection/ImageWithDescription"
 
 const Layout = styled.div`
   max-height: 100%;
@@ -18,14 +15,12 @@ const Layout = styled.div`
 
 const FormSelectionPage = () => {
   return (
-    <>
-      <Header title="Questionários" />
+    <UiWrapper pageTitle='Questionários' lastPage='/'>
       <Layout>
         <ImageWithDescription />
         <FormSelectionList />
       </Layout>
-      <Navbar />
-    </>
+    </UiWrapper>
   )
 }
 

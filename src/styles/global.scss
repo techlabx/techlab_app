@@ -25,3 +25,13 @@ $chat-internal-blackground: $gray2;
 .container {
   font-family: $font1;
 }
+@use 'https://fonts.googleapis.com/css2?family=Roboto&display=swap';
+
+$blue: #418694;
+$orange: #F2A157;
+$white-background: #F9F9F9;
+$white-header: #8C8303;
+
+$font: Roboto;
+$header-font-size: 10px;
+$nav-height: 40px;

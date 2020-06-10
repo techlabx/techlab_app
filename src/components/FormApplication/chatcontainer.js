@@ -8,6 +8,7 @@ import Navbar from "../NavBar"
 import axios from "axios"
 import styles from "../../styles/chatcontainer.module.scss"
 import { navigate } from "gatsby"
+import UiWrapper from "../../components/ui-wrapper"
 
 class ChatContainer extends React.Component {
   messagesEndRef = React.createRef()
@@ -186,8 +187,7 @@ class ChatContainer extends React.Component {
 
   render() {
     return (
-      <Fragment>
-        <Header title={this.props.form} />
+      <UiWrapper pageTitle={this.props.form} lastPage='/'>
         <div className={styles.container}>
           {/* <Header siteTitle="SQR-20"/> */}
           {this.state.messages.map(this.renderMessage)}
@@ -199,8 +199,7 @@ class ChatContainer extends React.Component {
           blocked={this.state.blocked}
           onSubmit={this.addMessage}
         />
-        <Navbar />
-      </Fragment>
+      </UiWrapper>
     )
   }
 }

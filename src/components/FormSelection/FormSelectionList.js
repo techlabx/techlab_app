@@ -14,6 +14,7 @@ const FormSelectionList = () => {
   }, [])
 
   const getForms = async () => {
+    console.log(`http://${chatAPIAddr}/questionarios/lista`)
     const response = await axios.get(
       `http://${chatAPIAddr}/questionarios/lista`
     )
