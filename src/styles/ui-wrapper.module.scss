@@ -4,7 +4,6 @@
   width: 100%;
   height: 100%;
   position: fixed;
-  display: flex;
   flex-direction: column;
   right: 0;
   bottom: 0;
@@ -13,11 +12,13 @@
 
 .Content {
   display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
+  height: 100%;
   margin-top: $nav-height;
   margin-bottom: $nav-height;
   font-family: $font;
+
+  flex-direction: column;
+  overflow-x: hidden;
 }
 
 .Header {

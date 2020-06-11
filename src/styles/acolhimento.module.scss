@@ -1,1 +1,35 @@
 @import 'global';
+
+.SearchContainer {
+    width: 100%;
+    background-color: $white-background;
+    height: 100px;
+    max-height: 100px;
+    display: inline-block;
+    overflow: visible;
+    z-index: 9999;
+}
+
+.Search {
+    width: 100%;
+    align-items: center;
+    overflow: visible;
+    justify-content: center;
+    align-items: center;
+}
+
+.Dropdown{
+    width: 75%;
+
+    float: left;
+    display: block;
+}
+
+.Button {
+    width: 25%;
+    height: 100px;
+    max-height: 100px;
+
+    float: right;
+    display: block;
+}

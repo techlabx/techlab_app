@@ -1,17 +1,16 @@
 @use 'https://fonts.googleapis.com/css2?family=Roboto&display=swap';
 
 $blue: #418694;
-$orange: #F2A157;
-
-:export {
-    Blue: $blue;
-    Orange: $orange;
-}
-
+$orange: #EC790f;
 $white-background: #F9F9F9;
-$white-header: #8C8303;
 
 $font: Roboto;
+:export {
+    BackgroundWhite: $white-background;
+    Blue:  $blue;
+    Orange: $orange;
+    Font: $font;
+}
+
 $header-font-size: 10px;
 $nav-height: 40px;
-
