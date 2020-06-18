@@ -1,10 +1,11 @@
 import Button from "../components/Button"
 import EmailIcon from "@material-ui/icons/Email"
-import LoginField from "../components/Login/LoginField"
+import InputField from "../components/Login/InputField"
 import React from "react"
+import loginImage from "../images/login.png"
 import { navigate } from "gatsby"
 import styled from "styled-components"
-import loginImage from "../images/login.png"
+import styles from "../styles/LoginPage.module.scss"
 
 const OuterBox = styled.div`
   height: 100%;
@@ -35,11 +36,10 @@ const StyledImage = styled.img`
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;  
+  bottom: 0;
   max-width: 100%;
-  max-heigh: 100%;
+  max-height: 100%;
   width: 100%;
-  transform: scale(1.4);
   overlay: hidden;
   z-index: 0;
 `
@@ -107,8 +107,8 @@ const LoginPage = () => {
       <InnerBox>
         <Title>Login</Title>
         <InputBox>
-          <LoginField height="25px" width="50%" placeholder="Usuário" />
-          <LoginField
+          <InputField height="25px" width="50%" placeholder="Usuário" />
+          <InputField
             height="25px"
             width="50%"
             type="password"
@@ -131,7 +131,7 @@ const LoginPage = () => {
         </ButtonBox>
         <BottomTextBox>
           <BottomText>Não tem uma conta? </BottomText>
-          <CreateAccountLink onClick={() => navigate("/SignUpPage")}>
+          <CreateAccountLink onClick={() => navigate("/signup")}>
             Faça o cadastro
           </CreateAccountLink>
         </BottomTextBox>
