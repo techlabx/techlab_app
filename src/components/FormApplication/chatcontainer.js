@@ -17,25 +17,7 @@ class ChatContainer extends React.Component {
     super(props)
     this.state = {
       sessionId: undefined,
-      messages: [
-        {
-            direction: "server",
-            button: false,
-            message: "Olá XX (nome do aluno),"
-        },{
-            direction: "server",
-            button: false,
-            message: "A seguir, você irá preencher o questionário XX (nome do questionário). Antes de iniciá-lo, gostaríamos de saber se você teria interesse em enviar suas respostas diretamente para o banco de dados o APOIA USP. Queremos esclarecer que esses dados serão sigilosos e restritos aos funcionário do serviço."
-        },{
-            direction: "server",
-            button: false,
-            message: "Se você desejar compartilhar seus dados entenderemos que, caso haja necessidade, o serviço poderá entrar em contato com você através do seu e-mail USP fornecido na inscrição"
-        },{
-            direction: "server",
-            button: false,
-            message: "Se você desejar NÃO compartilhar seus dados, isso não trará nenhum prejuízo para você, contudo, não conseguiremos entrar em contato para oferecer nosso serviço de Atenção Psicossocia"
-        }
-      ],
+      messages: [],
       options: ["Li e aceito", "Li e não aceito"],
       messageNumber: 0,
       blocked: false,
@@ -50,8 +32,16 @@ class ChatContainer extends React.Component {
     const res = await axios.post(
       `http://${this.props.chatAddr}/questionarios/${this.props.form}/begin`
     )
+
     this.setState({
-      sessionId: res.data,
+      sessionId: res.data.session_id,
+      messages: res.data.intro.map(msg => {
+        return {
+          direction: "server",
+          message: msg,
+          button: false,
+        }
+      })
     })
   }
 
