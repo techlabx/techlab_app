@@ -9,6 +9,7 @@ const StyledButton = styled.button`
   box-shadow: 0px 3px 5px gray;
   height: ${props => (props.height ? props.height : `90px`)};
   width: ${props => (props.width ? props.width : `200px`)};
+  max-width: 320px;
   border-radius: 15px;
   border: 0px;
   background-color: ${props =>

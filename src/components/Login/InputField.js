@@ -9,6 +9,7 @@ const Field = styled.input`
   box-shadow: 0px 3px 5px gray;
   height: ${props => (props.height ? props.height : `90px`)};
   width: ${props => (props.width ? props.width : `200px`)};
+  max-width: 320px;
   padding: 10px;
   font-size: 18px;
   margin-bottom: 10px;
@@ -19,8 +20,7 @@ const Field = styled.input`
   }
 `
 
-const LoginField = ({ height, width, placeholder, borderColor, type }) => {
-  console.log(height, width, placeholder)
+const InputField = ({ height, width, placeholder, borderColor, type }) => {
   return (
     <Field
       height={height}
@@ -32,4 +32,4 @@ const LoginField = ({ height, width, placeholder, borderColor, type }) => {
   )
 }
 
-export default LoginField
+export default InputField

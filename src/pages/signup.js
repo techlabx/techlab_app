@@ -5,14 +5,14 @@ import React from "react"
 import loginImage from "../images/login.png"
 import { navigate } from "gatsby"
 import styled from "styled-components"
-import styles from "../styles/LoginPage.module.scss"
+import styles from "../styles/signup.module.scss"
 
 const OuterBox = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   background-image: url("login.png");
   background-position: center;
   background-size: cover;
@@ -20,7 +20,7 @@ const OuterBox = styled.div`
 
 const InnerBox = styled.div`
   && {
-    height: 40%;
+    height: 50%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -45,8 +45,9 @@ const StyledImage = styled.img`
 `
 
 const Title = styled.span`
-  color: #418694;
+  color: white;
   font-size: 50px;
+  font-weight: bold;
   margin-bottom: 20px;
   border-sizing: border-box;
 `
@@ -78,7 +79,7 @@ const BottomTextBox = styled.div`
 const BottomText = styled.span`
   font-size: 16px;
   font-weight: bold;
-  color: black;
+  color: white;
   margin-right: 5px;
 `
 
@@ -99,40 +100,50 @@ const Overlay = styled.div`
   z-index: 1;
 `
 
-const LoginPage = () => {
+const signup = () => {
   return (
     <OuterBox>
       <Overlay />
       <StyledImage src={loginImage}></StyledImage>
       <InnerBox>
-        <Title>Login</Title>
+        <Title>Cadastro</Title>
         <InputBox>
-          <InputField height="25px" width="50%" placeholder="Usuário" />
           <InputField
             height="25px"
-            width="50%"
+            width="70%"
+            placeholder="Digite aqui seu nome completo"
+            borderColor="3px solid #418694"
+          />
+          <InputField
+            height="25px"
+            width="70%"
+            placeholder="Digite aqui seu e-mail"
+            borderColor="3px solid #418694"
+          />
+          <InputField
+            height="25px"
+            width="70%"
             type="password"
-            placeholder="Senha"
+            placeholder="Digite aqui sua nova senha"
+            borderColor="3px solid #418694"
+          />
+          <InputField
+            height="25px"
+            width="70%"
+            type="password"
+            placeholder="Repita sua senha"
+            borderColor="3px solid #418694"
           />
         </InputBox>
         <ButtonBox>
-          <Button height="50px" width="56%" backgroundColor="#418694">
-            Entrar
-          </Button>
-          <Button
-            height="50px"
-            width="56%"
-            backgroundColor="#db4a39"
-            fontSize="16px"
-          >
-            <EmailIcon />
-            Entrar com Gmail
+          <Button height="50px" width="70%" backgroundColor="#418694">
+            Cadastrar
           </Button>
         </ButtonBox>
         <BottomTextBox>
-          <BottomText>Não tem uma conta? </BottomText>
-          <CreateAccountLink onClick={() => navigate("/signup")}>
-            Faça o cadastro
+          <BottomText>Já tem uma conta? </BottomText>
+          <CreateAccountLink onClick={() => navigate("/LoginPage")}>
+            Faça o login
           </CreateAccountLink>
         </BottomTextBox>
       </InnerBox>
@@ -140,4 +151,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default signup

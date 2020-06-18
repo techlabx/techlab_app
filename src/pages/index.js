@@ -1,8 +1,8 @@
-import React from "react"
-import styled from "styled-components"
 import FormSelectionList from "../components/FormSelection/FormSelectionList"
-import UiWrapper from "../components/ui-wrapper"
 import ImageWithDescription from "../components/FormSelection/ImageWithDescription"
+import React from "react"
+import UiWrapper from "../components/ui-wrapper"
+import styled from "styled-components"
 
 const Layout = styled.div`
   max-height: 100%;
@@ -14,11 +14,13 @@ const Layout = styled.div`
 `
 
 const FormSelectionPage = () => {
+  const chatAPIAddr = process.env.CHAT_API_ADDR
+
   return (
-    <UiWrapper pageTitle='Questionários' lastPage='/'>
+    <UiWrapper pageTitle="Questionários" lastPage="/">
       <Layout>
         <ImageWithDescription />
-        <FormSelectionList />
+        <FormSelectionList apiAddr={chatAPIAddr} />
       </Layout>
     </UiWrapper>
   )
