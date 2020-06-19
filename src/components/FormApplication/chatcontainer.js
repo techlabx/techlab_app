@@ -36,6 +36,7 @@ class ChatContainer extends React.Component {
     this.setState({
       sessionId: res.data.session_id,
       messages: res.data.intro.map(msg => {
+        console.log(msg)
         return {
           direction: "server",
           message: msg,
@@ -119,7 +120,7 @@ class ChatContainer extends React.Component {
     } else this.setState({ options: [] })
 
     if (res.data.question === "" || res.data.question === undefined) {
-      let messages = res.data.result.split("\n")
+      let messages = res.data.result
       let messagesObject = Array()
 
       for (const idx in messages) {

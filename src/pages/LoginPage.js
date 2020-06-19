@@ -5,7 +5,6 @@ import React from "react"
 import loginImage from "../images/login.png"
 import { navigate } from "gatsby"
 import styled from "styled-components"
-import styles from "../styles/LoginPage.module.scss"
 
 const OuterBox = styled.div`
   height: 100%;
