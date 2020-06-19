@@ -60,4 +60,5 @@ const UiWrapper = ({ pageTitle, lastPage, children }) => (
     <Navbar/>
   </div>
 )
+
 export default UiWrapper

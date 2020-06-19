@@ -11,13 +11,12 @@
 }
 
 .Content {
-  display: flex;
   height: 100%;
+  bottom: 0;
+  top: 0;
   margin-top: $nav-height;
   margin-bottom: $nav-height;
   font-family: $font;
-
-  flex-direction: column;
   overflow-x: hidden;
 }
 
@@ -53,6 +52,8 @@
   overflow: hidden;
   display: flex;
   flex-direction: row;
+  z-index: auto;
+
 }
 
 .IconBox {
