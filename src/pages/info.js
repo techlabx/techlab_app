@@ -41,8 +41,6 @@ const title7 = "O que é 'produtividade'?"
 const text7 = `
 `;
 
-
-
 const InfoPage = () => (
   <UiWrapper pageTitle='Sobre o Gapsi' lastPage='/'>
     <ContentContainer title={title1} text={text1} color={global.Blue} bgImage={bgImg}/>
