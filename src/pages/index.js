@@ -3,7 +3,7 @@ import { Link } from "gatsby"
 import UiWrapper from "../components/ui-wrapper"
 
 const IndexPage = () => (
-  <UiWrapper pageTitle="" lastPage=''>
+  <UiWrapper pageTitle="Gapsi">
     <>
     <Link to="/info">Informações</Link>
     </>

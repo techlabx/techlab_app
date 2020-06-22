@@ -14,22 +14,23 @@ const NavbarIcons = [
 ];
 
 const GoBackArrow = ({to}) => (
-  <div>
-    <a href={to}>
-      <IconButton>
-        <ArrowBackIcon fontSize="large" />
-      </IconButton>
-    </a>
-  </div>
+  <a href={to}>
+    <IconButton>
+      <ArrowBackIcon fontSize="large" />
+    </IconButton>
+  </a>
 )
 
-const Header = ({ title, lastPage }) => (
-  <header className={styles.Header}>
-    <GoBackArrow to={lastPage} />
-    <h1>{title}</h1>
-  </header>
-)
-
+const Header = ({ title, lastPage }) => {  
+  return (
+    <header className={styles.Header}>
+      <div>
+        {lastPage && <GoBackArrow to={lastPage}/>}
+      </div>
+      <h1>{title}</h1>
+    </header>
+  );
+}
 const NavButton = (props) => (
   <div className={styles.IconBox}>
     <a href={props.destUrl}>

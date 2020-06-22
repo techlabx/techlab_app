@@ -1,87 +1,65 @@
 @import 'global';
 
-.SearchContainer {
+.ScheduleMenu {
     width: 100%;
-    background-color: $white-background;
-    height: 100px;
-    max-height: 100px;
-    display: inline-block;
-    overflow: visible;
-    z-index: 9999;
-}
-
-.Search {
-    width: 100%;
-    align-items: center;
-    overflow: visible;
-    justify-content: center;
-    align-items: center;
-}
-
-.Dropdown{
-    width: 75%;
-
-    float: left;
-    display: block;
-}
-
-.SearchButton {
-    width: 25%;
-    height: 100px;
-    max-height: 100px;
-
-    float: right;
-    display: block;
-}
-
-.Menu {
-    background-color: $white-background;
+    height: 400px;
+    background-color: $orange-background;
     z-index: auto;
+    padding: 6px;
 }
 
-.MenuOption{
-    margin: 5px;
-    height: 140px;
+.SchoolSelection {
+    min-height: 55px;
+}
+
+.InnerMenu {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: $orange-background;
+}
+
+.PsychologistCard{
+    height: 100px;
     display: flex;
     flex-direction: row;
     background-color: $orange-background;
 }
 
-.OptionPhoto {
+.PhotoArea {
     display: block;
     width: 25%;
     text-align: center;
     justify-content: center;
-    margin-left: auto;
+    padding-left: auto;
     margin-right: auto;
 }
 
-.PhotoPlaceholder {
+.ImagePortrait {
     display: block;
-    margin: 10px;
-    width: 70px;
-    height: 80px;
-    border: white;
+    width: 75px;
+    height: 90px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    border: $white-background;
     border-style: solid;
     border-radius: 5px;
-    margin: 10px;
+
     background-color: $white-background;
     img {
         display: block;
         margin-left: auto;
         margin-right: auto;
-        max-width:100%;
-        max-height:100%;
+        max-width: 100%;
+        max-height: 100%;
     }
 }
 
-.OptionContent {
+.CardContent {
     display: flex;
     flex-direction: column;
     width: 75%;
-}
-
-.ContentInfo {
     display: block;
     font-family: $font;
 
@@ -97,33 +75,10 @@
     }
 }
 
-.ContentButton {
-    width: 100%;
-    height: 100px;
-    max-height: 100px;
-    flex-direction: row-reverse;
-
-    float: right;
-    display: flex;
-}
-
-.ScheduleMenu {
-    margin: 5px;
-    height: 600px;
-    display: flex;
-    flex-direction: column;
-    background-color: $orange-background;
-}
-
-.ScheduleOptions {
-    display: block;
-}
-
-.ScheduleButtons {
+.ConfirmButton {
     width: 100%;
     height: 20px;
     display: flex;
     flex-direction: column;
     margin-top: 10px;
-    margin-left: 5px;
 }

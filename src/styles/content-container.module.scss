@@ -14,11 +14,14 @@ $textbox-opacity: 0.8;
 .ContentContainer {
     display: block;
     background-size: cover;
-    padding-bottom: 20px;
+    padding-top: 4px;
+    padding-bottom: 8px;
+    width: 100%//;
 }
 
 .TextBox {
     border-radius: 50px 0px 0px 50px;
+    min-height: 120px;
     
     margin-left: $box-margin;
     padding-bottom: 5px;

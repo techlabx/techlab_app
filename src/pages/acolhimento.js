@@ -1,15 +1,14 @@
 import React from "react"
 import UiWrapper from "../components/ui-wrapper"
 import ContentContainer from "../components/content-container"
-import bgImg from "../images/infopage_background.jpg"
 import styles from "../styles/acolhimento.module.scss"
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
 import Button from '@material-ui/core/Button'
 import global from "../styles/global.scss"
 import {withStyles} from "@material-ui/core/styles"
-import defaultPhotoMale from "../images/default_user_photo_male.jpg"
-import defaultPhotoFemale from "../images/default_user_photo_female.jpg"
+import defaultImageMale from "../images/default_user_photo_male.jpg"
+import defaultImageFemale from "../images/default_user_photo_female.jpg"
 
 const pageHeader = {
   title: "Acolhimento GAPSI",
@@ -27,22 +26,22 @@ const Psychologists = [
   {
     name: "Juliana de Oliveira Santos",
     school: "ifsc",
-    photo: defaultPhotoFemale
+    image: defaultImageFemale
   },
   {
     name: "Miki Aiko Nishiro",
     school: "icmc",
-    photo: defaultPhotoFemale
+    image: defaultImageFemale
   },
   {
     name: "Juliana Teixeira de Barros",
     school: "eesc",
-    photo: defaultPhotoFemale
+    image: defaultImageFemale
   },
   {
     name: "Júnior Gomes de Freitas",
     school: "iau",
-    photo: defaultPhotoMale
+    image: defaultImageMale
   }
 ]
 
@@ -64,6 +63,36 @@ function getPsychologistBySchool(school) {
   return Psychologists.find(i => normalizeString(i.school) === normalizeString(school.value));
 }
 
+function getSchoolName(schoolValue) {
+  return Schools.find(i => normalizeString(i.value) === normalizeString(schoolValue)).label;
+}
+
+const CardPhoto = ({psychologist}) => (
+  <div className={styles.ImagePortrait}>
+    <img src={psychologist.image} alt={psychologist.name+' image'} style={{width:'70px', height:'80px'}}/>
+  </div>
+)
+
+const PsychologistCard = ({psychologist}) => (
+  <div className={styles.PsychologistCard}>
+    <div className={styles.PhotoArea}>
+      <CardPhoto psychologist={psychologist}/>
+    </div>
+    <div className={styles.CardContent}>
+      <h1>{psychologist.name}</h1>
+      <p>Responsável pelo instituto:</p>
+      <p>{getSchoolName(psychologist.school)}</p>
+    </div>
+  </div>
+);
+
+const DateSelection = ({parentMenu}) => (
+  <div className={styles.DateSelection}>
+    <p>Escolha um horário</p>
+    <Dropdown options={Timetable} onChange={date => parentMenu.selectDate(date)} value={Timetable[0]} placeholder="Escolha um horario" />
+  </div>
+)
+
 // Entender
 const ColorButton = withStyles((theme) => (
   { root: {
@@ -81,53 +110,42 @@ const ColorButton = withStyles((theme) => (
   }
 ))(Button);
 
-const PsychologistCard = ({psychologist}) => (
-  <div className={styles.MenuOption}>
-    <div className={styles.OptionPhoto}>
-      <div className={styles.PhotoPlaceholder}>
-        <img src={psychologist.photo} alt={psychologist.name+' photo'} style={{width:'70px', height:'80px'}}/>
-      </div>
-    </div>
-    <div className={styles.OptionContent}>
-      <div className={styles.ContentInfo}>
-        <h1>{psychologist.name}</h1>
-        <p>Responsável pelo instituto:</p>
-        <p>{psychologist.school}</p>
-      </div>
-    </div>
+const ConfirmButton = () => (
+  <div className={styles.ConfirmButton}>
+    <ColorButton variant="contained" color="primary" style={{backgroundColor: global.Orange, height:'40px', marginBottom: '15px', marginRight: '10px'}}>Confirmar</ColorButton>
   </div>
-);
+)
 
-class Menu extends React.Component {
+class ScheduleMenu extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {selectedSchool: null}
+    this.state = {selectedSchool: null, selectedDate: null}
   }
 
   selectSchool(school) {
     this.setState({selectedSchool: school});
   }
 
+  selectDate(date) {
+    this.setState({selectedDate: date});
+  }
+
   render() { 
     var selectedSchool = this.state.selectedSchool;
     if (selectedSchool == null) {
       return (
-        <div className={styles.Menu}>
-          <Dropdown options={Schools} onChange={school => this.selectSchool(school)} value={null} placeholder="Escolha o instituto em que estuda" />
+        <div className={styles.ScheduleMenu}>
+          <Dropdown className={styles.SchoolSelection} options={Schools} onChange={school => this.selectSchool(school)} placeholder="Escolha o instituto em que estuda" />
         </div>
       );
     } else {
       return (
         <div className={styles.ScheduleMenu}>
-          <Dropdown options={Schools} onChange={school => this.selectSchool(school)} value={selectedSchool.label}/>
-          <PsychologistCard psychologist={getPsychologistBySchool(selectedSchool)}/>
-          <div className={styles.ScheduleOptions}>
-            <p>Escolha um horário</p>
-            <Dropdown options={Timetable} onChange={this._onSelect} value={Timetable[0]} placeholder="Escolha um horario" />
-          </div>
-          <div className={styles.ScheduleButtons}>
-            <ColorButton onClick={() => this.selectSchool(null)} variant="contained" color="primary" style={{backgroundColor: global.Blue, height:'40px', marginBottom: '15px', marginRight: '10px'}}>Voltar</ColorButton>
-            <ColorButton variant="contained" color="primary" style={{backgroundColor: global.Orange, height:'40px', marginBottom: '15px', marginRight: '10px'}}>Confirmar</ColorButton>
+          <Dropdown className={styles.SchoolSelection} options={Schools} onChange={school => this.selectSchool(school)} value={selectedSchool.label}/>
+          <div className={styles.InnerMenu}>
+            <PsychologistCard psychologist={getPsychologistBySchool(selectedSchool)}/>
+            <DateSelection parentMenu={this}/>
+            <ConfirmButton/>
           </div>
         </div>
       );
@@ -137,8 +155,8 @@ class Menu extends React.Component {
 
 const AcolhimentoPage = () => (
   <UiWrapper pageTitle='Acolhimentos' lastPage='/'>
-    <ContentContainer title={pageHeader.title} text={pageHeader.text} color={styles.Blue} bgImage={bgImg}/>
-    <Menu/>
+    <ContentContainer title={pageHeader.title} text={pageHeader.text} color={styles.Blue}/>
+    <ScheduleMenu/>
   </UiWrapper>
 )
 
