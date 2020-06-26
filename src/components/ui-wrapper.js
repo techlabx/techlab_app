@@ -15,12 +15,12 @@ const NavbarIcons = [
 
 const GoBackArrow = ({to}) => (
   <div>
-      <a href={to}>
-        <IconButton>
-          <ArrowBackIcon fontSize="large" />
-        </IconButton>
-      </a>
-    </div>
+    <a href={to}>
+      <IconButton>
+        <ArrowBackIcon fontSize="large" />
+      </IconButton>
+    </a>
+  </div>
 )
 
 const Header = ({ title, lastPage }) => (
@@ -60,4 +60,5 @@ const UiWrapper = ({ pageTitle, lastPage, children }) => (
     <Navbar/>
   </div>
 )
+
 export default UiWrapper

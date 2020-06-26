@@ -1,58 +1,59 @@
 import React from "react"
 import UiWrapper from "../components/ui-wrapper"
 import ShareBox from "../components/sharebox"
-import styles from "../styles/infopage.module.scss"
+import ContentContainer from "../components/content-container"
 import bgImg from "../images/infopage_background.jpg"
-import chroma from "chroma-js"
+import global from "../styles/global.scss"
 
-const sampleText = `
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam laoreet elementum vehicula. Sed sodales eu massa ut luctus. Suspendisse ultrices ante ut bibendum pulvinar. Donec lorem diam, luctus eu dapibus at, tincidunt vitae lorem. Sed venenatis finibus diam et facilisis. Fusce et erat malesuada, consequat lorem in, ultrices libero. Vestibulum quis pretium tortor, sit amet efficitur augue.
+const title1 = "Mais Informações sobre Saúde Mental e Atenção Psicossocial na Universidade";
+const text1 = `
+Quando o assunto é saúde mental no contexto universitário, alguns temas costumam ser recorrentes. Aqui você encontrará informações sobre alguns destes temas, mas se quiser mais informações sobre algum outro tema, entre em contato conosco. 
+
+Quer saber mais sobre esse tipo de conteúdo? Acesse o instagram/facebook→  (aqui vai ficar o link)
 `;
-  
-const sampleTitle= `
-  Lorem ipsum?
+
+const title2 = "O que eu preciso saber sobre saúde mental no contexto universitário?";
+const text2 = `
+A saúde não é, apenas, a ausência de doenças. E, nesse sentido, No caso do que se entende por “saúde mental”, isso é ainda mais complexo, uma vez que o   O que contribui para o sofrimento psíquico não envolvesão apenas condições biológicas, mas, também, socioeconômicas, ambientais e relacionais e, por isso, o que se compreende por “saúde mental” é mais complexo do que somente a ausência de doenças. No campo social, as diversas formas de violação de direitos humanos e violência também estão diretamente relacionadas ao sofrimento psíquico. 
+Nas universidades, é possível que esses fatores apareçam nas condições de trabalho e de aprendizagem, uma vez que, como instituição, a universidade tende a reproduzir valores que são próprios da sociedade como um todo. 	A
+Nesse sentido, a promoção da saúde nas universidades envolve ações para a criação de condições de vida e ambientes saudáveis, integrando-as ao seu entorno físico, social, cultural e ambiental; desenvolvimento de uma cultura organizacional voltada para a execução de uma política institucional de saúde integral; o fortalecimento da participação da comunidade universitária nos espaços decisórios e ; aporte de evidências científicas que apoiem na construção e da formulação de políticas públicas voltadas para que favoreçam a melhora das condições de saúde. Percebe-se, portanto, Assim, que as estratégias de promoção de saúde não são apenas individuais, mas, também, coletivas e institucionais.
+Nesse sentido, um ambiente saudável acolhe e abriga pessoas em suas diferenças e dificuldades. Alegria, amor, satisfação, tristeza, raiva, frustração fazem parte da vida humana e das nossas relações com os outros. e, portanto, Ccabe à universidade, como ambiente saudável, oferecer as condições necessárias para que sua comunidade consiga enfrentar os desafios e as mudanças da vida cotidiana e oferecer apoio diante das adversidades próprias ao contexto universitário. Esperamos que esse conteúdo post tenha sido explicativo e tirado algumas dúvidas que frequentemente nos ocorre. Caso tenha alguma dúvida ou curiosidade nos envie uma mensagem!
 `;
 
-const textBoxOpacity = parseFloat(styles.TextBoxOpacity);
+const title3 = "Ansiedade"
+const text3 = `
+`;
 
-const Container = (props) => (
-  <div className={styles.InfoContainer} style={{backgroundImage: `url(${props.bgImage})`}}>
-    {props.children}
-  </div>
-);
+const title4 = "Depressão"
+const text4 = `
+`;
 
-const TextBox = (props) => (
-  <div className={styles.TextBox} style={{ backgroundColor: chroma(props.boxColor).alpha(textBoxOpacity) }}>
-    {props.children}
-  </div>
-);
 
-const InfoContainer = (props) => (
-  <Container bgImage={props.bgImage}>
-    <TextBox boxColor={props.boxColor}>
-      <div className={styles.ContainerText}>
-        <h2>{props.title}</h2>
-        <p>{props.text}</p>
-      </div>
-    </TextBox>
-  </Container>
-);
+const title5 = "Sintomas físicos"
+const text5 = `
+`;
 
-InfoContainer.defaultProps = {
-  title: sampleTitle,
-  text: sampleText,
-  boxColor: styles.BackgroundWhite,
-  bgImage: null
-};
+const title6 = "Abuso de substâncias"
+const text6 = `
+`;
+
+const title7 = "O que é 'produtividade'?"
+const text7 = `
+`;
+
+
 
 const InfoPage = () => (
   <UiWrapper pageTitle='Sobre o Gapsi' lastPage='/'>
-    <InfoContainer boxColor={styles.Blue} bgImage={bgImg}/>
-    <InfoContainer/>
-    <InfoContainer boxColor={styles.Orange}/>
-    <InfoContainer/>
+    <ContentContainer title={title1} text={text1} color={global.Blue} bgImage={bgImg}/>
+    <ContentContainer title={title2} text={text2}/>
+    <ContentContainer title={title3} color={global.Orange}/>
+    <ContentContainer title={title4} />
+    <ContentContainer title={title5} color={global.Blue}/>
+    <ContentContainer title={title6} />
+    <ContentContainer title={title7} color={global.Orange}/>
     <ShareBox/>
   </UiWrapper>
-)
+);
 
 export default InfoPage
