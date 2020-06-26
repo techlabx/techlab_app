@@ -64,7 +64,7 @@ const Navbar = () => {
             </StyledIconButton>
           </IconBox>
           <IconBox>
-            <StyledIconButton onClick={() => navigate("/contact")}>
+            <StyledIconButton onClick={() => navigate("/acolhimento")}>
               <ContactSupportIcon fontSize="large" />
             </StyledIconButton>
           </IconBox>
