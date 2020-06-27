@@ -1,13 +1,16 @@
 @import 'global';
 
-$sharebox-height: 300px;
+$sharebox-height: 260px;
 $sharebox-color: grey;
 $button-horizontal-margin: 40px;
 $button-vertical-margin: 10px;
 
 .sharebox {
     height: $sharebox-height;
-
+    width: 100%;
+    
+    padding-top: 10px;
+    padding-bottom: 10px;
     display: flex;
     flex-direction: column;
     font-family: $font;
@@ -16,6 +19,10 @@ $button-vertical-margin: 10px;
 
     h1 {
         font-size: 15px;
+        margin: 0px;
+    }
+    p {
+        margin: 0px;
     }
 }
 

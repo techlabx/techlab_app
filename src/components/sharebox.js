@@ -5,7 +5,7 @@ import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import FacebookIcon from '@material-ui/icons/Facebook';
 
 const HeaderText = `
-Nos compartilhe nas redes sociais
+Nos compartilhe nas redes sociais!
 `;
 
 const ContentText = `

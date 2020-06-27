@@ -3,6 +3,8 @@
 $text-margin: 25px;
 $box-margin: 10px;
 $textbox-opacity: 0.8;
+$text-padding-bottom: 15px;
+$title-vertical-padding: 10px;
 
 :export {
     TextBoxOpacity: $textbox-opacity;
@@ -14,19 +16,17 @@ $textbox-opacity: 0.8;
 .ContentContainer {
     display: block;
     background-size: cover;
-    padding-top: 4px;
-    padding-bottom: 8px;
-    width: 100%//;
+    width: 100%;
 }
 
 .TextBox {
-    border-radius: 50px 0px 0px 50px;
+    border-radius: 35px 0px 0px 35px;
     min-height: 120px;
     
     margin-left: $box-margin;
-    padding-bottom: 5px;
     padding-left: $text-margin - $box-margin;
     padding-right: $text-margin;
+    padding-bottom: 5px;
     
     background-color: $white-background;
 }
@@ -37,10 +37,13 @@ $textbox-opacity: 0.8;
     font-family: $font;
 
     h2 {
-        padding-top: 5px;
-        margin: 0;
+        margin: 0px;
+        padding-top: $title-vertical-padding;
+        padding-bottom: $title-vertical-padding;
     }
     p {
+        margin: 0px;
         text-align: justify;
+        padding-bottom: $text-padding-bottom;
     }
 }
