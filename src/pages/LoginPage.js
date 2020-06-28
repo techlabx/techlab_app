@@ -2,10 +2,10 @@ import Button from "../components/Button"
 import EmailIcon from "@material-ui/icons/Email"
 import InputField from "../components/Login/InputField"
 import React from "react"
-// import loginImage from "../images/login.jpg"
+import global from "../styles/global.scss"
+import loginImage from "../images/login.jpg"
 import { navigate } from "gatsby"
 import styled from "styled-components"
-import global from "../styles/global.scss"
 
 const OuterBox = styled.div`
   height: 100%;
@@ -95,17 +95,16 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #EFA748;
+  background-color: #efa748;
   z-index: 1;
 `
 
 class LoginPage extends React.Component {
-
   render() {
     return (
       <OuterBox>
         <Overlay />
-        {/* <StyledImage src={loginImage}></StyledImage> */}
+        <StyledImage src={loginImage}></StyledImage>
         <InnerBox>
           <Title>Login</Title>
           <ButtonBox>
@@ -116,7 +115,7 @@ class LoginPage extends React.Component {
               fontSize="16px"
               href={`http://${process.env.CHAT_API_ADDR}/auth/login`}
             >
-              <EmailIcon/>
+              <EmailIcon />
               Entrar com email USP
             </Button>
           </ButtonBox>

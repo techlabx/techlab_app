@@ -1,0 +1,88 @@
+@import "global";
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.List {
+  margin-top: 10px;
+  overflow: auto;
+}
+
+.AddBox {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.AddButton {
+  display: flex;
+  align-items: center;
+  color: gray;
+  border: 0px;
+  background-color: white;
+  height: 100%;
+  cursor: pointer;
+}
+
+.ListItem {
+  display: flex;
+  background-color: $orange;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0px 20px 20px 0px;
+  margin-bottom: 5px;
+}
+
+.AtendentInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.RemoveButton {
+  color: gray;
+  font-weight: bold;
+  border: 0px;
+  background-color: $orange;
+  cursor: pointer;
+  margin: 15px;
+}
+
+.ButtonBox {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 30%;
+  padding: 0px 24px 16px 24px;
+  box-sizing: border-box;
+}
+
+.ConfirmationText {
+  padding: 0px 24px 16px 24px;
+  box-sizing: border-box;
+}
+
+.Button {
+  color: red;
+  border: 0px;
+  background-color: white;
+  height: 100%;
+  cursor: pointer;
+}
+
+.AtendentName {
+  font-size: 25px;
+  color: white;
+  max-width: 250px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.AtendentInstitute {
+  font-size: 20px;
+  color: gray;
+}
