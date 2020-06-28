@@ -2,6 +2,8 @@
 
 .box {
   display: table;
+  font-size: 0.85em;
+  word-spacing: 0.01em;
   position: sticky;
   background-color: $default-chatbox;
   color: $chatbox-text-color;

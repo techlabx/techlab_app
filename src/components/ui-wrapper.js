@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "../styles/ui-wrapper.module.scss";
+import { navigate } from "gatsby"
+import isLoggedIn from "../services/auth"
 
 import IconButton from "@material-ui/core/IconButton";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
@@ -51,14 +53,21 @@ const Navbar = () => (
   </div>
 );
 
-const UiWrapper = ({ pageTitle, lastPage, children }) => (
-  <div className={styles.PageWrapper}>
-    <Header title={pageTitle} lastPage={lastPage}/>
-    <div className={styles.Content}>
-      {children}
-    </div>
-    <Navbar/>
-  </div>
-)
+const UiWrapper = ({ pageTitle, lastPage, children, location }) => {
+  if (!isLoggedIn()) {
+    navigate("/LoginPage")
+    return null
+  } else return (
+      <div className={styles.PageWrapper}>
+        <Header title={pageTitle} lastPage={lastPage}/>
+          <div className={styles.Content}>
+            {children}
+          </div>
+        <Navbar/>
+      </div>
+    )
+}
+
+  
 
 export default UiWrapper

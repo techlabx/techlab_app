@@ -29,21 +29,30 @@ class ChatContainer extends React.Component {
   }
 
   componentDidMount = async () => {
-    const res = await axios.post(
-      `http://${this.props.chatAddr}/questionarios/${this.props.form}/begin`
-    )
+    try {
+      const res = await axios.post(
+        `http://${this.props.chatAddr}/questionarios/${this.props.form}/begin`,
+        {teste: 'test'},
+        {headers: {'x-access-token': process.env.TOKEN}})
 
-    this.setState({
-      sessionId: res.data.session_id,
-      messages: res.data.intro.map(msg => {
-        console.log(msg)
-        return {
-          direction: "server",
-          message: msg,
-          button: false,
-        }
-      })
-    })
+      console.log(res)
+
+      this.setState({
+        sessionId: res.data.session_id,
+        messages: res.data.intro.map(msg => {
+          console.log(msg)
+          return {
+            direction: "server",
+            message: msg,
+            button: false,
+      }})})
+    }
+    catch (error) {
+      if (error.response.status == 401) {
+        navigate('/LoginPage');
+        return;
+      } 
+    }
   }
 
   componentDidUpdate = () => {
@@ -97,64 +106,71 @@ class ChatContainer extends React.Component {
   }
 
   getServerResponse = async messageText => {
-
-    let res = await axios.put(
-      `http://${this.props.chatAddr}/questionarios/${this.props.form}/${this.state.sessionId}/proxima`,
-      {
-        answer: messageText,
-      }
-    )
-
-    let response_server = [
-      {
-        direction: "server",
-        message: res.data.question,
-        button: false,
-      },
-    ]
-
-    console.log(res.data)
     
-    if (res.data.options) {
-      this.setState({ options: res.data.options })
-    } else this.setState({ options: [] })
+    try {
+      const res = await axios.post(
+        `http://${this.props.chatAddr}/questionarios/${this.props.form}/${this.state.sessionId}/proxima`,
+        {answer: messageText},
+        {headers: {'x-access-token': process.env.TOKEN}})
 
-    if (res.data.question === "" || res.data.question === undefined) {
-      let messages = res.data.result
-      let messagesObject = Array()
-
-      for (const idx in messages) {
+      let response_server = [
+        {
+          direction: "server",
+          message: res.data.question,
+          button: false,
+        },
+      ]
+  
+      console.log(res.data)
+      
+      if (res.data.options) {
+        this.setState({ options: res.data.options })
+      } else this.setState({ options: [] })
+  
+      if (res.data.question === "" || res.data.question === undefined) {
+        let messages = res.data.result
+        let messagesObject = Array()
+  
+        for (const idx in messages) {
+          messagesObject.push({
+            direction: "server",
+            message: messages[idx],
+            button: false,
+          })
+        }
+  
         messagesObject.push({
           direction: "server",
-          message: messages[idx],
+          message: "Se desejar, você pode marcar uma conversa com a gente! Só clicar no botão abaixo que você será redirecionado para a página de acolhimento.",
           button: false,
         })
+        
+        messagesObject.push({
+          direction: "server",
+          message: "Clique aqui para ir para a aba de acolhimento",
+          button: true,
+        })
+  
+        this.setState({
+          blocked: true,
+          messages: [...this.state.messages, ...messagesObject],
+        })
+      } else {
+        this.setState({
+          blocked: false,
+          messages: [...this.state.messages, ...response_server],
+        })
       }
-
-      messagesObject.push({
-        direction: "server",
-        message: "Se desejar, você pode marcar uma conversa com a gente! Só clicar no botão abaixo que você será redirecionado para a página de acolhimento.",
-        button: false,
-      })
-      
-      messagesObject.push({
-        direction: "server",
-        message: "Clique aqui para ir para a aba de acolhimento",
-        button: true,
-      })
-
-      this.setState({
-        blocked: true,
-        messages: [...this.state.messages, ...messagesObject],
-      })
-    } else {
-      this.setState({
-        blocked: false,
-        messages: [...this.state.messages, ...response_server],
-      })
+  
+      this.scrollToBottom()
+    }
+    catch (error) {
+      if (error.response.status == 401) {
+        navigate('/LoginPage');
+        return;
+      } 
     }
 
-    this.scrollToBottom()
   }
 
   renderMessage = (message, index) => {

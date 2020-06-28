@@ -59,7 +59,7 @@ const Navbar = () => {
             </StyledIconButton>
           </IconBox>
           <IconBox>
-            <StyledIconButton onClick={() => navigate("/home")}>
+            <StyledIconButton onClick={() => navigate("/")}>
               <HomeIcon fontSize="large" />
             </StyledIconButton>
           </IconBox>

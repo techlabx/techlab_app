@@ -2,9 +2,10 @@ import Button from "../components/Button"
 import EmailIcon from "@material-ui/icons/Email"
 import InputField from "../components/Login/InputField"
 import React from "react"
-import loginImage from "../images/login.png"
+// import loginImage from "../images/login.jpg"
 import { navigate } from "gatsby"
 import styled from "styled-components"
+import global from "../styles/global.scss"
 
 const OuterBox = styled.div`
   height: 100%;
@@ -12,7 +13,6 @@ const OuterBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("login.png");
   background-position: center;
   background-size: cover;
 `
@@ -46,6 +46,7 @@ const StyledImage = styled.img`
 const Title = styled.span`
   color: #418694;
   font-size: 50px;
+  font-weight: bold;
   margin-bottom: 20px;
   border-sizing: border-box;
 `
@@ -94,49 +95,35 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(236, 121, 15, 0.3);
+  background-color: #EFA748;
   z-index: 1;
 `
 
-const LoginPage = () => {
-  return (
-    <OuterBox>
-      <Overlay />
-      <StyledImage src={loginImage}></StyledImage>
-      <InnerBox>
-        <Title>Login</Title>
-        <InputBox>
-          <InputField height="25px" width="50%" placeholder="Usuário" />
-          <InputField
-            height="25px"
-            width="50%"
-            type="password"
-            placeholder="Senha"
-          />
-        </InputBox>
-        <ButtonBox>
-          <Button height="50px" width="56%" backgroundColor="#418694">
-            Entrar
-          </Button>
-          <Button
-            height="50px"
-            width="56%"
-            backgroundColor="#db4a39"
-            fontSize="16px"
-          >
-            <EmailIcon />
-            Entrar com Gmail
-          </Button>
-        </ButtonBox>
-        <BottomTextBox>
-          <BottomText>Não tem uma conta? </BottomText>
-          <CreateAccountLink onClick={() => navigate("/signup")}>
-            Faça o cadastro
-          </CreateAccountLink>
-        </BottomTextBox>
-      </InnerBox>
-    </OuterBox>
-  )
+class LoginPage extends React.Component {
+
+  render() {
+    return (
+      <OuterBox>
+        <Overlay />
+        {/* <StyledImage src={loginImage}></StyledImage> */}
+        <InnerBox>
+          <Title>Login</Title>
+          <ButtonBox>
+            <Button
+              height="50px"
+              width="56%"
+              backgroundColor="#647B98"
+              fontSize="16px"
+              href={`http://${process.env.CHAT_API_ADDR}/auth/login`}
+            >
+              <EmailIcon/>
+              Entrar com email USP
+            </Button>
+          </ButtonBox>
+        </InnerBox>
+      </OuterBox>
+    )
+  }
 }
 
 export default LoginPage

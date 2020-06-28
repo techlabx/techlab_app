@@ -1,12 +1,12 @@
 import FormSelectionList from "../components/FormSelection/FormSelectionList"
 import ImageWithDescription from "../components/FormSelection/ImageWithDescription"
-import NavBar from "../components/NavBar"
 import React from "react"
+import UiWrapper from "../components/ui-wrapper"
 import styled from "styled-components"
 
 const Layout = styled.div`
-  // max-width: 900px;
-  height: 100%;
+  max-height: 100%;
+  height: 85%;
   display: flex;
   flex-direction: column;
   align-items: flex-stretch;
@@ -17,11 +17,12 @@ const FormSelectionPage = () => {
   const chatAPIAddr = process.env.CHAT_API_ADDR
 
   return (
-    <Layout>
-      <ImageWithDescription />
-      <FormSelectionList apiAddr={chatAPIAddr} />
-      <NavBar />
-    </Layout>
+    <UiWrapper pageTitle="Questionários" lastPage="/">
+      <Layout>
+        <ImageWithDescription />
+        <FormSelectionList apiAddr={chatAPIAddr} />
+      </Layout>
+    </UiWrapper>
   )
 }
 

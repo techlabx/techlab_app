@@ -2,7 +2,7 @@ import Button from "../components/Button"
 import EmailIcon from "@material-ui/icons/Email"
 import InputField from "../components/Login/InputField"
 import React from "react"
-import loginImage from "../images/login.png"
+import loginImage from "../images/login.jpg"
 import { navigate } from "gatsby"
 import styled from "styled-components"
 
@@ -12,7 +12,7 @@ const OuterBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background-image: url("login.png");
+  background-image: url("login.jpg");
   background-position: center;
   background-size: cover;
 `

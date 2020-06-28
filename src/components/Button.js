@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-const StyledButton = styled.button`
+const StyledButton = styled.a`
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -21,9 +21,10 @@ const StyledButton = styled.button`
   border-sizing: border-box;
 `
 
-const Button = ({ height, width, backgroundColor, fontSize, children }) => {
+const Button = ({ href, height, width, backgroundColor, fontSize, children }) => {
   return (
     <StyledButton
+      href={href}
       height={height}
       width={width}
       backgroundColor={backgroundColor}

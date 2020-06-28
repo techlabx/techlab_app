@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react"
 
 import ListItem from "../ListItem"
 import axios from "axios"
+import header from "../FormApplication/header"
+import { navigate } from "gatsby"
 
 const FormSelectionList = () => {
   const [forms, setForms] = useState([])
@@ -14,13 +16,21 @@ const FormSelectionList = () => {
   }, [])
 
   const getForms = async () => {
-    console.log(`http://${chatAPIAddr}/questionarios/lista`)
-    const response = await axios.get(
-      `http://${chatAPIAddr}/questionarios/lista`
-    )
-    const data = response.data
-    console.log(data)
-    setForms(data)
+    try {
+      const response = await axios.get(
+        `http://${chatAPIAddr}/questionarios/lista`,
+        {headers: {'x-access-token': process.env.TOKEN}})
+      const data = response.data
+      const statusCode = response.status
+      console.log(data, statusCode)
+      setForms(data)
+    }
+    catch (error) {
+      if (error.response.status == 401) {
+        navigate('/LoginPage');
+        return;
+      } 
+    }
   }
 
   const listItems = forms.map((form, index) => {

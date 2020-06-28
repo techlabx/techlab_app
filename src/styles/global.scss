@@ -8,12 +8,12 @@ $gray2: #CDC4BB;
 $text-dark: black;
 $white: white;
 
-$font1: Roboto, sans-serif;
+$font1: Monospace, sans-serif;
 $default-font-size: 18px;
 
 $header-background-color: $color3;
 $header-text-color: $white;
-$default-chatbox: $gray;
+$default-chatbox: $color2;
 $client-chatbox: $color3;
 $chatbox-text-color: $white;
 $background-chat: $white;
@@ -32,7 +32,7 @@ $orange: #EFA748;
 $orange-background: #ffd874;
 $white-background: #F9F9F9;
 
-$font: Roboto;
+$font: Roboto, sans-serif;
 :export {
     BackgroundWhite: $white-background;
     Blue:  $blue;
