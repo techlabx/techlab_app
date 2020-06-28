@@ -3,26 +3,28 @@ import ImageWithDescription from "../components/FormSelection/ImageWithDescripti
 import React          from "react"
 import UiWrapper      from "../components/ui-wrapper"
 import { navigate }   from "gatsby"
-import ContentContainer from "../components/content-container"
+import OptionContainer from "../components/option-container"
 import global from "../styles/global.scss"
 
 const FormSelectionPage = () => {
+  
   const chatAPIAddr = process.env.CHAT_API_ADDR
+  console.log(chatAPIAddr)
 
   return (
     <UiWrapper pageTitle="TechLab" lastPage="/">
       <ul style={{listStyle: "none"}}>
         <li onClick={() => {navigate('/questionarios')}}>
-          <ContentContainer title="" text="Questionarios" textColor="white" color={global.Blue}/>
+          <OptionContainer title="" text="Questionarios" textColor="white" color="#647B98"/>
         </li>
         <li onClick={() => {navigate('/acolhimento')}}>
-          <ContentContainer title="" text="Sobre nós" textColor="white" color={global.Blue}/>
+          <OptionContainer title="" text="Sobre nós" textColor="white" color="#647B98"/>
         </li>
         <li onClick={() => {navigate('/info')}}>
-          <ContentContainer title="" text="Informações" textColor="white" color={global.Blue}/>
+          <OptionContainer title="" text="Informações" textColor="white" color="#647B98"/>
         </li>
         <li onClick={() => {navigate('/acolhimento')}}>
-          <ContentContainer title="" text="Acolhimento" textColor="white" color={global.Blue}/>
+          <OptionContainer title="" text="Acolhimento" textColor="white" color="#647B98"/>
         </li>
       </ul>
     </UiWrapper>

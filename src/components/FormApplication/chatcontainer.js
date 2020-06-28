@@ -18,7 +18,7 @@ class ChatContainer extends React.Component {
     this.state = {
       sessionId: undefined,
       messages: [],
-      options: ["Li e aceito", "Li e não aceito"],
+      options: [],
       messageNumber: 0,
       blocked: false,
     }
@@ -32,10 +32,8 @@ class ChatContainer extends React.Component {
     try {
       const res = await axios.post(
         `http://${this.props.chatAddr}/questionarios/${this.props.form}/begin`,
-        {teste: 'test'},
+        {teste: 'teste'},
         {headers: {'x-access-token': process.env.TOKEN}})
-
-      console.log(res)
 
       this.setState({
         sessionId: res.data.session_id,
@@ -45,9 +43,12 @@ class ChatContainer extends React.Component {
             direction: "server",
             message: msg,
             button: false,
-      }})})
+        }}),
+        options: res.data.options
+      })
     }
     catch (error) {
+      console.log(error)
       if (error.response.status == 401) {
         navigate('/LoginPage');
         return;
@@ -74,30 +75,31 @@ class ChatContainer extends React.Component {
       button: false,
     }
     
-    if (this.state.messageNumber === 0) {
-      if (messageText === "Li e aceito") {
-        this.setState({
-          blocked: false,
-          messages: [...this.state.messages, message, {
-            direction: "server",
-            message: this.props.descricao,
-            button: false,
-          }],
-          options: ["Iniciar", "Sair"],
-        })      
-      } else {
-        navigate('/')
-        return
-      }
-    } else {
+    // if (this.state.messageNumber === 0) {
+    //   if (messageText === "Li e aceito") {
+    //     this.setState({
+    //       blocked: false,
+    //       messages: [...this.state.messages, message, {
+    //         direction: "server",
+    //         message: this.props.descricao,
+    //         button: false,
+    //       }],
+    //       options: ["Iniciar", "Sair"],
+    //     })      
+    //   } else {
+    //     navigate('/')
+    //     return
+    //   }
+    // } else {
       
-      this.setState({
-        messages: [...this.state.messages, message],
-        blocked: true,
-      })
-      this.getServerResponse(messageText)
+    this.setState({
+      messages: [...this.state.messages, message],
+      blocked: true,
+    })
     
-    }
+    this.getServerResponse(messageText)
+  
+    // }
     this.setState({
       messageNumber:this.state.messageNumber+1
     })
@@ -108,8 +110,8 @@ class ChatContainer extends React.Component {
   getServerResponse = async messageText => {
     
     try {
-      const res = await axios.post(
-        `http://${this.props.chatAddr}/questionarios/${this.props.form}/${this.state.sessionId}/proxima`,
+      const res = await axios.put(
+        `http://${this.props.chatAddr}/questionarios/${this.props.form}/${this.state.sessionId}/proxima/`,
         {answer: messageText},
         {headers: {'x-access-token': process.env.TOKEN}})
 
