@@ -22,7 +22,6 @@
   position: fixed;
   width: 100%;
   height: $nav-height;
-  padding-right: 10px;
   
   display: flex;
   justify-content: space-between;
@@ -35,7 +34,7 @@
   color: $blue;
 
   h1 {
-    padding-right: 12px;
+    padding-right: $global-screen-padding;
   }
 }
 

@@ -1,16 +1,13 @@
 @import 'global';
 
-$sharebox-height: 260px;
 $sharebox-color: grey;
-$button-horizontal-margin: 40px;
-$button-vertical-margin: 10px;
+$vertical-spacing: 10px;
 
 .sharebox {
-    height: $sharebox-height;
+    height: 220px;
     width: 100%;
-    
-    padding-top: 10px;
-    padding-bottom: 10px;
+
+    padding: $vertical-spacing 0px;
     display: flex;
     flex-direction: column;
     font-family: $font;
@@ -18,19 +15,15 @@ $button-vertical-margin: 10px;
     background-color: $sharebox-color;
 
     h1 {
+        margin: 0px;
         font-size: 15px;
-        margin: 0px;
-    }
-    p {
-        margin: 0px;
+        text-align: center;
+        padding: 0px $global-screen-padding;
     }
 }
 
 .ShareButton {
     display: block;
-    margin-left: $button-horizontal-margin;
-    margin-right: $button-horizontal-margin;
-    margin-top: $button-vertical-margin;
-    margin-bottom: $button-vertical-margin;
+    margin: $vertical-spacing 40px;
     border-radius: 12px;
 }

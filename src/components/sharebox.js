@@ -8,10 +8,6 @@ const HeaderText = `
 Nos compartilhe nas redes sociais!
 `;
 
-const ContentText = `
-Dúvidas? Escreva para nosso e-mail ou entre em contato pelo telefone (16) 3373-8905
-`;
-
 const appUrl = "https://gapsi.icmc.usp.br/";
 
 const Buttons = [
@@ -58,7 +54,6 @@ const ShareBox = () => (
         </ShareButton>
       )})}
     </div>
-    <p>{ContentText}</p>
   </div>
 );
 

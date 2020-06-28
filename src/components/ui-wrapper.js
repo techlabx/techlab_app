@@ -10,7 +10,7 @@ import InfoIcon from "@material-ui/icons/Info"
 const NavbarIcons = [
   {Icon: <InfoIcon fontSize='large'/>, destUrl: "/info"},
   {Icon: <HomeIcon fontSize='large'/>, destUrl: "/"},
-  {Icon: <ContactSupportIcon fontSize='large'/>, destUrl: "/"}
+  {Icon: <ContactSupportIcon fontSize='large'/>, destUrl: "/faq"}
 ];
 
 const GoBackArrow = ({to}) => (

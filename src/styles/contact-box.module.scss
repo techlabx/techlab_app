@@ -1,0 +1,38 @@
+@import 'global';
+
+.ContactBox {
+    font-size: 12px;
+    margin: 0px;
+
+    padding: 0px $global-screen-padding;
+    background-color: inherit;
+    h2 {
+        text-align: center;
+        margin: 0px ;
+        padding: 4px;
+    }
+    a {
+        text-decoration: none;
+    }
+}
+
+.Links {
+    justify-content: center;
+    text-align: center;
+
+    p {
+        margin: 0px 0px 0px 4px;
+        padding: 0px;
+        font-size: smaller;
+    }
+}
+
+.Contact {
+    justify-content: center;
+    text-align: center;
+    p {
+        margin: 0px 0px 0px 4px;
+        padding: 2px 0px;
+        font-size: large;
+    }
+}

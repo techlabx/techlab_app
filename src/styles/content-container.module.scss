@@ -1,7 +1,7 @@
 @import 'global';
 
-$text-margin: 25px;
-$box-margin: 10px;
+$text-margin: $global-screen-padding;
+$box-margin: $global-screen-padding/2;
 $textbox-opacity: 0.8;
 $text-padding-bottom: 15px;
 $title-vertical-padding: 10px;

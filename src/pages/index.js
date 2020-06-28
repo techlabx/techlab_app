@@ -4,12 +4,9 @@ import UiWrapper from "../components/ui-wrapper"
 
 const IndexPage = () => (
   <UiWrapper pageTitle="Gapsi">
-    <>
-    <Link to="/info">Informações</Link>
-    </>
-    <>
-    <Link to="/acolhimento">Acolhimentos</Link>
-    </>
+    <div><Link to="/info">Informações</Link></div>
+    <div><Link to="/faq">FAQ</Link></div>
+    <div><Link to="/acolhimento">Acolhimentos</Link></div>
   </UiWrapper>
 );
 
