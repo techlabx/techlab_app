@@ -5,7 +5,7 @@ import axios from "axios"
 import header from "../FormApplication/header"
 import { navigate } from "gatsby"
 
-const FormSelectionList = () => {
+const FormSelectionList = ({callback, context, ...props}) => {
   const [forms, setForms] = useState([])
   const chatAPIAddr = process.env.CHAT_API_ADDR
 
@@ -22,7 +22,6 @@ const FormSelectionList = () => {
         {headers: {'x-access-token': process.env.TOKEN}})
       const data = response.data
       const statusCode = response.status
-      console.log(data, statusCode)
       setForms(data)
     }
     catch (error) {
@@ -35,7 +34,7 @@ const FormSelectionList = () => {
 
   const listItems = forms.map((form, index) => {
     return (
-      <ListItem key={index} apelido={form.apelido} nome={form.nome} descricao={form.descricao}>
+      <ListItem key={index} apelido={form.apelido} nome={form.nome} descricao={form.descricao} callback={callback} context={context}>
         {form.nome}
       </ListItem>
     )

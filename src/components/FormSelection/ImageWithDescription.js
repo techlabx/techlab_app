@@ -1,11 +1,12 @@
 import React from "react"
 import styled from "styled-components"
 import terapia from '../../images/terapia.jpg'
+import { navigate } from "@reach/router"
 
 const ImageBox = styled.div`
   && {
     position: relative;
-    height: 40%;
+    min-height: 40%;
     z-index: 1;
     background-color: black;
     background-image: url("terapia.jpg");
@@ -39,7 +40,7 @@ const TextTitle = styled.span`
 
 const StyledImage = styled.img`
   max-width: 100%;
-  max-heigh: 100%;
+  max-heigh: 50%;
   height: 100%;
   z-index: 1;
 `
@@ -54,13 +55,21 @@ const Overlay = styled.div`
   z-index: 2;
 `
 
-const ImageWithDescription = () => {
+const ImageWithDescription = ({title, text}) => {
   return (
-    <ImageBox>
+    <ImageBox onClick={() => {
+      if (title !== "Questionários Sobre Saúde Mental") {
+        navigate(`/formpage?form=${title}`)
+      }
+      return;
+    }}>
       <Overlay />
       <StyledImage src={terapia}></StyledImage>
       <TextBox>
-        <TextTitle>Questionários Sobre Saúde Mental</TextTitle>
+        <TextTitle>{title}</TextTitle>
+        <div style={{color: "white", fontSize: "0.8em", marginTop: "0.8em"}}>
+          {text}
+        </div>
       </TextBox>
     </ImageBox>
   )

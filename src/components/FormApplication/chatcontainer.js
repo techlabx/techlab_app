@@ -38,7 +38,6 @@ class ChatContainer extends React.Component {
       this.setState({
         sessionId: res.data.session_id,
         messages: res.data.intro.map(msg => {
-          console.log(msg)
           return {
             direction: "server",
             message: msg,
@@ -48,7 +47,6 @@ class ChatContainer extends React.Component {
       })
     }
     catch (error) {
-      console.log(error)
       if (error.response.status == 401) {
         navigate('/LoginPage');
         return;
@@ -63,7 +61,6 @@ class ChatContainer extends React.Component {
   addMessage = messageText => {
     this.scrollToBottom()
 
-    console.log(messageText)
     if (messageText == "Sair") {
       navigate('/')
       return
@@ -74,24 +71,7 @@ class ChatContainer extends React.Component {
       message: messageText,
       button: false,
     }
-    
-    // if (this.state.messageNumber === 0) {
-    //   if (messageText === "Li e aceito") {
-    //     this.setState({
-    //       blocked: false,
-    //       messages: [...this.state.messages, message, {
-    //         direction: "server",
-    //         message: this.props.descricao,
-    //         button: false,
-    //       }],
-    //       options: ["Iniciar", "Sair"],
-    //     })      
-    //   } else {
-    //     navigate('/')
-    //     return
-    //   }
-    // } else {
-      
+  
     this.setState({
       messages: [...this.state.messages, message],
       blocked: true,
@@ -123,8 +103,6 @@ class ChatContainer extends React.Component {
         },
       ]
   
-      console.log(res.data)
-      
       if (res.data.options) {
         this.setState({ options: res.data.options })
       } else this.setState({ options: [] })

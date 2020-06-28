@@ -1,5 +1,4 @@
 import React from "react"
-import { navigate } from "@reach/router"
 import styled from "styled-components"
 
 const StyledListItem = styled.button`
@@ -25,12 +24,14 @@ const Text = styled.span`
   white-space: nowrap;
 `
 
-const ListItem = ({nome, apelido, descricao, children, ...props }) => {
-  console.log(apelido)
+const ListItem = ({nome, apelido, children, callback, context, descricao }) => {
   return (
     <StyledListItem
       key={apelido}
-      onClick={() => navigate(`/formpage?form=${apelido}&descricao=${descricao}`)}
+      onClick={() => {
+        callback(context, apelido, descricao);
+        return null;
+      }}
     >
       <Text>{children}</Text>
     </StyledListItem>

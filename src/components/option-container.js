@@ -2,7 +2,6 @@ import React from "react"
 import styles from '../styles/content-container.module.scss'
 
 const TextBox = ({ color, textColor, name, children }) => {
-  console.log(color, name)
   return (
   <div className={styles.TextBox} style={{ backgroundColor: color, color: textColor == undefined ? "black" : textColor }}>
     {children}
