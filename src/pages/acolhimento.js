@@ -54,7 +54,7 @@ const Professionals = [
 // Entender
 const ColorButton = withStyles((theme) => (
   { root: {
-      color: theme.palette.getContrastText(global.Orange),
+      color: global.Color1,// theme.palette.getContrastText(global.Orange),
       backgroundColor: global.Orange,
       '&:hover': {
         backgroundColor: global.Orange,
