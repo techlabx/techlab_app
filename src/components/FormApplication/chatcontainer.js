@@ -31,7 +31,8 @@ class ChatContainer extends React.Component {
       const res = await axios.post(
         `http://${this.props.chatAddr}/questionarios/${this.props.form}/begin`,
         {teste: 'teste'},
-        {headers: {'x-access-token': process.env.TOKEN}})
+        {headers: {'x-access-token': window.localStorage.getItem("TOKEN")
+      }})
 
       this.setState({
         sessionId: res.data.session_id,
@@ -91,7 +92,7 @@ class ChatContainer extends React.Component {
       const res = await axios.put(
         `http://${this.props.chatAddr}/questionarios/${this.props.form}/${this.state.sessionId}/proxima/`,
         {answer: messageText},
-        {headers: {'x-access-token': process.env.TOKEN}})
+        {headers: {'x-access-token': window.localStorage.getItem("TOKEN")}})
 
       let response_server = [
         {

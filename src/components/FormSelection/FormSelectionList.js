@@ -19,7 +19,7 @@ const FormSelectionList = ({callback, context, ...props}) => {
     try {
       const response = await axios.get(
         `http://${chatAPIAddr}/questionarios/lista`,
-        {headers: {'x-access-token': process.env.TOKEN}})
+        {headers: {'x-access-token': window.localStorage.getItem("TOKEN")}})
       const data = response.data
       const statusCode = response.status
       setForms(data)
