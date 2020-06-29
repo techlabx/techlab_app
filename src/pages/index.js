@@ -6,11 +6,10 @@ import { navigate }   from "gatsby"
 import OptionContainer from "../components/option-container"
 import global from "../styles/global.scss"
 
-const FormSelectionPage = () => {
+const IndexPage = () => {
   
   const chatAPIAddr = process.env.CHAT_API_ADDR
-  console.log(chatAPIAddr)
-
+  console.log('index page')
   return (
     <UiWrapper pageTitle="TechLab" lastPage="/">
       <ul style={{listStyle: "none"}}>
@@ -31,4 +30,4 @@ const FormSelectionPage = () => {
   )
 }
 
-export default FormSelectionPage
+export default IndexPage

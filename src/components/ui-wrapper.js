@@ -53,19 +53,35 @@ const Navbar = () => (
   </div>
 );
 
-const UiWrapper = ({ pageTitle, lastPage, children, location }) => {
-  if (!isLoggedIn()) {
-    navigate("/LoginPage")
-    return null
-  } else return (
+class UiWrapper extends React.Component {
+  
+  constructor (props) {
+    super(props)
+  }
+
+  async componentDidMount () {
+    
+    let isLogged = await isLoggedIn()
+    if (!isLogged) {
+      console.log('not rendering')
+      navigate("/LoginPage")
+      return null
+    } else {
+      console.log('letting render')
+    }
+  }
+  
+  render () {
+    return (
       <div className={styles.PageWrapper}>
-        <Header title={pageTitle} lastPage={lastPage}/>
+        <Header title={this.props.pageTitle} lastPage={this.props.lastPage}/>
           <div className={styles.Content}>
-            {children}
+            {this.props.children}
           </div>
         <Navbar/>
       </div>
     )
+  }
 }
 
   

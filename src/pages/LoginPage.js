@@ -5,7 +5,10 @@ import React from "react"
 // import loginImage from "../images/login.jpg"
 import { navigate } from "gatsby"
 import styled from "styled-components"
+import { Location } from "@reach/router"
 import global from "../styles/global.scss"
+import queryString from "query-string"
+import { isTokenValid } from "../services/auth"
 
 const OuterBox = styled.div`
   height: 100%;
@@ -98,14 +101,53 @@ const Overlay = styled.div`
   background-color: #EFA748;
   z-index: 1;
 `
+const LoginPage = ComponentToWrap => props => (
+  <Location>
+    {({ location, navigate }) => (
+      <ComponentToWrap
+        {...props}
+        location={location}
+        navigate={navigate}
+        search={location.search ? queryString.parse(location.search) : {}}
+      />
+    )}
+  </Location>
+)
+class LoginPageUnwrapped extends React.Component {
+  
+  constructor (props) {
+    super (props)
+    this.state = {
+      validToken: false
+    }
+  }
 
-class LoginPage extends React.Component {
+  getToken () {
+    console.log(this.props.search)
+    return this.props.search ? this.props.search.token : null 
+  }
 
-  render() {
+  async isTokenValid (token) {
+    return await isTokenValid(token)
+  }
+
+  async componentDidMount () {
+    let token = this.getToken();
+    console.log(token)
+    let tokenIsValid = await isTokenValid(token);
+    
+    if (token !== null && tokenIsValid) {
+      window.localStorage.setItem("TOKEN", token)
+      navigate('/')
+      return (<div/>)
+    }
+
+  }
+
+  LoginPageComponent () {
     return (
       <OuterBox>
         <Overlay />
-        {/* <StyledImage src={loginImage}></StyledImage> */}
         <InnerBox>
           <Title>Login</Title>
           <ButtonBox>
@@ -124,6 +166,10 @@ class LoginPage extends React.Component {
       </OuterBox>
     )
   }
+
+  render () {
+    return this.LoginPageComponent()
+  }
 }
 
-export default LoginPage
+export default LoginPage(LoginPageUnwrapped)
