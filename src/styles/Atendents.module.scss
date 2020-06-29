@@ -22,11 +22,12 @@ body {
 .AddButton {
   display: flex;
   align-items: center;
-  color: gray;
+  color: $color2;
   border: 0px;
   background-color: white;
   height: 100%;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .ListItem {
@@ -41,10 +42,11 @@ body {
 .AtendentInfo {
   display: flex;
   flex-direction: column;
+  padding-left: 10px;
 }
 
 .RemoveButton {
-  color: gray;
+  color: $color2;
   font-weight: bold;
   border: 0px;
   background-color: $orange;
@@ -67,10 +69,11 @@ body {
 }
 
 .Button {
-  color: red;
+  color: $color2;
   border: 0px;
   background-color: white;
   height: 100%;
+  font-weight: bold;
   cursor: pointer;
 }
 
@@ -78,11 +81,12 @@ body {
   font-size: 25px;
   color: white;
   max-width: 250px;
-  overflow-x: hidden;
+  max-height: 25px;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .AtendentInstitute {
   font-size: 20px;
-  color: gray;
+  color: $color2;
 }

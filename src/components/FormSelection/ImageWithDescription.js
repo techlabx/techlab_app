@@ -1,6 +1,5 @@
 import React from "react"
 import styled from "styled-components"
-import terapia from '../../images/terapia.jpg'
 
 const ImageBox = styled.div`
   && {
@@ -54,13 +53,13 @@ const Overlay = styled.div`
   z-index: 2;
 `
 
-const ImageWithDescription = () => {
+const ImageWithDescription = ({ src, title }) => {
   return (
     <ImageBox>
       <Overlay />
-      <StyledImage src={terapia}></StyledImage>
+      <StyledImage src={src}></StyledImage>
       <TextBox>
-        <TextTitle>Questionários Sobre Saúde Mental</TextTitle>
+        <TextTitle>{title}</TextTitle>
       </TextBox>
     </ImageBox>
   )

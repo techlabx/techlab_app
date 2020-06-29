@@ -3,6 +3,7 @@ import ImageWithDescription from "../components/FormSelection/ImageWithDescripti
 import React from "react"
 import UiWrapper from "../components/ui-wrapper"
 import styled from "styled-components"
+import terapia from "../images/terapia.jpg"
 
 const Layout = styled.div`
   max-height: 100%;
@@ -19,7 +20,10 @@ const FormSelectionPage = () => {
   return (
     <UiWrapper pageTitle="Questionários" lastPage="/">
       <Layout>
-        <ImageWithDescription />
+        <ImageWithDescription
+          src={terapia}
+          title={"Questionários Sobre Saúde Mental"}
+        />
         <FormSelectionList apiAddr={chatAPIAddr} />
       </Layout>
     </UiWrapper>
