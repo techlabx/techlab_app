@@ -1,3 +1,30 @@
+$color1: #829fd9;
+$color2: #027368;
+$color3: #fc9332;
+$color4: #8c8303;
+$color5: #594302;
+$gray: #9e9e9e;
+$gray2: #d4d4d4;
+$text-dark: black;
+$white: white;
+
+$font1: Roboto, sans-serif;
+$default-font-size: 18px;
+
+$header-background-color: $color3;
+$header-text-color: $white;
+$default-chatbox: $gray;
+$client-chatbox: $color3;
+$chatbox-text-color: $white;
+$background-chat: $white;
+
+$input-text-color: $gray;
+$chat-input-blackground: $white;
+$chat-internal-blackground: $gray2;
+
+.container {
+  font-family: $font1;
+}
 @use 'https://fonts.googleapis.com/css2?family=Roboto&display=swap';
 
 $blue: #418694;

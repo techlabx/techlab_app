@@ -1,0 +1,12 @@
+version: '3.3'
+
+services:
+  gatsby:
+    image: node:11
+    volumes:
+      - .:/app
+    environment: 
+      - PATH=/app/node_modules/.bin:$PATH
+    command: /bin/bash -c 'cd /app && ./run.sh'
+    ports:
+      - 8000:8000

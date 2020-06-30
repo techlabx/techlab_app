@@ -1,0 +1,32 @@
+@import "global";
+
+.box {
+  display: table;
+  position: sticky;
+  background-color: $default-chatbox;
+  color: $chatbox-text-color;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 6px;
+  max-width: 400px;
+  min-width: 150px;
+  padding: 8px 8px 10px 10px;
+  shape-outside: 5px;
+}
+
+.box-client {
+  @extend .box;
+  background-color: $client-chatbox;
+  left: 100%;
+}
+
+.box-server {
+  right: 100%;
+  @extend .box;
+}
+
+.box-server-button {
+  right: 100%;
+  @extend .box;
+  background-color: $color2;
+}

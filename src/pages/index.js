@@ -7,7 +7,10 @@ const IndexPage = () => (
     <div><Link to="/info">Informações</Link></div>
     <div><Link to="/faq">FAQ</Link></div>
     <div><Link to="/acolhimento">Acolhimentos</Link></div>
+    <div><Link to="/loginpage">Login</Link></div>
+    <div><Link to="/formpage">FormPage</Link></div>
+    <div><Link to="/acolhimento">Acolhimentos</Link></div>
   </UiWrapper>
 );
 
-export default IndexPage
+export default IndexPage;
