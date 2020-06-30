@@ -51,7 +51,7 @@ const Title = styled.span`
   font-size: 50px;
   font-weight: bold;
   margin-bottom: 20px;
-  border-sizing: border-box;
+  box-sizing: border-box;
 `
 
 const InputBox = styled.div`
@@ -61,7 +61,7 @@ const InputBox = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 5px;
-  border-sizing: border-box;
+  box-sizing: border-box;
 `
 
 const ButtonBox = styled.div`

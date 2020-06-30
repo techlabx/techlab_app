@@ -5,6 +5,8 @@ body {
 }
 
 .PageWrapper {
+  height: 100%;
+  width: 100%;
   width: 100%;
   height: 100%;
   position: fixed;
@@ -28,7 +30,6 @@ body {
   margin-top: $nav-height;
   margin-bottom: $nav-height;
   font-family: $font;
-  overflow-x: hidden;
 }
 
 .Header {
@@ -43,7 +44,11 @@ body {
   font-family: $font;
   font-weight: bold;
   font-size: 10px;
-  color: $blue;
+  color: $main-blue;
+
+  h1 {
+    padding-right: $global-screen-padding;
+  }
 }
 
 .Navbar {
@@ -63,7 +68,6 @@ body {
   display: flex;
   flex-direction: row;
   z-index: auto;
-
 }
 
 .IconBox {

@@ -8,8 +8,18 @@ $gray2: #CDC4BB;
 $text-dark: black;
 $white: white;
 
-$font1: Monospace, sans-serif;
-$default-font-size: 18px;
+// Cores do ICMC
+$main-orange: #f6aa41;
+$light-orange: #ffd874;
+$white-background: #F9F9F9;
+$main-blue: #72849d;
+$light-blue: #c6ceda;
+$main-grey: #727376;
+$light-grey: #dcd6cd;
+
+$font-color-dark: #212121;
+$font-color-light: $white-background;
+$link-font-color: black;
 
 $header-background-color: $color3;
 $header-text-color: $white;
@@ -22,8 +32,17 @@ $input-text-color: $gray;
 $chat-input-blackground: $white;
 $chat-internal-blackground: $gray2;
 
+$font1: Roboto, sans-serif;
+$default-font-size: 18px;
+
+$global-screen-padding: 4%;
+$border-radius: 35px;
+$h1-font-size: 22px;
+$h2-font-size: 20px;
+$text-font-size: $default-font-size;
+
 .container {
-  font-family: $font1;
+    font-family: $font1;
 }
 @use 'https://fonts.googleapis.com/css2?family=Roboto&display=swap';
 
@@ -33,11 +52,18 @@ $orange-background: #ffd874;
 $white-background: #F9F9F9;
 
 $font: Roboto, sans-serif;
+
 :export {
     BackgroundWhite: $white-background;
-    Blue:  $blue;
-    Orange: $orange;
+    MainBlue: $main-blue;
+    LightBlue: $light-blue;
+    MainOrange: $main-orange;
+    LightOrange: $light-orange;
+    MainGrey: $main-grey;
+    LightGrey: $light-grey;
     Font: $font;
+    FontColorDark: $font-color-dark;
+    FontColorLight: $font-color-light;
 }
 
 $header-font-size: 10px;

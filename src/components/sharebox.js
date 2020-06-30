@@ -5,11 +5,7 @@ import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import FacebookIcon from '@material-ui/icons/Facebook';
 
 const HeaderText = `
-Nos compartilhe nas redes sociais
-`;
-
-const ContentText = `
-Dúvidas? Escreva para nosso e-mail ou entre em contato pelo telefone (16) 3373-8905
+Nos compartilhe nas redes sociais!
 `;
 
 const appUrl = "https://gapsi.icmc.usp.br/";
@@ -50,7 +46,7 @@ class ShareButton extends React.Component {
 
 const ShareBox = () => (
   <div className={styles.sharebox}>
-    <h1>{HeaderText}</h1>
+    <h2>{HeaderText}</h2>
     <div className={styles.ButtonsContainer}>
       {Buttons.map((v, i) => {; return(
         <ShareButton myButton={v} key={i}>
@@ -58,7 +54,6 @@ const ShareBox = () => (
         </ShareButton>
       )})}
     </div>
-    <p>{ContentText}</p>
   </div>
 );
 
