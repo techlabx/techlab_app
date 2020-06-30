@@ -119,11 +119,11 @@ const ConfirmButton = () => (
 class ScheduleMenu extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {selectedSchool: null, selectedDate: null}
+    this.state = {userSchool: null, selectedDate: null}
   }
 
   selectSchool(school) {
-    this.setState({selectedSchool: school});
+    this.setState({userSchool: school});
   }
 
   selectDate(date) {
@@ -131,19 +131,19 @@ class ScheduleMenu extends React.Component {
   }
 
   render() { 
-    var selectedSchool = this.state.selectedSchool;
-    if (selectedSchool == null) {
+    var userSchool = this.state.userSchool;
+    if (userSchool == null) {
       return (
         <div className={styles.ScheduleMenu}>
-          <Dropdown className={styles.SchoolSelection} options={Schools} onChange={school => this.selectSchool(school)} placeholder="Escolha o instituto em que estuda" />
+          <p>Você precisa estar logado para acessar isso.</p>
         </div>
       );
     } else {
       return (
         <div className={styles.ScheduleMenu}>
-          <Dropdown className={styles.SchoolSelection} options={Schools} onChange={school => this.selectSchool(school)} value={selectedSchool.label}/>
+          <Dropdown className={styles.SchoolSelection} options={Schools} onChange={school => this.selectSchool(school)} value={userSchool.label}/>
           <div className={styles.InnerMenu}>
-            <PsychologistCard psychologist={getPsychologistBySchool(selectedSchool)}/>
+            <PsychologistCard psychologist={getPsychologistBySchool(userSchool)}/>
             <DateSelection parentMenu={this}/>
             <ConfirmButton/>
           </div>

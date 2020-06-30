@@ -10,14 +10,13 @@ $border-padding-constant: 6.19;
 :export {
     TextBoxOpacity: $textbox-opacity;
     BackgroundWhite: $white-background;
-    Blue: $blue;
-    Orange: $orange;
 }
 
 .ContentContainer {
     display: block;
     background-size: cover;
     width: 100%;
+
 }
 
 .TextBox {
@@ -38,7 +37,6 @@ $border-padding-constant: 6.19;
     font-family: $font;
     color: $font-color-dark;
     padding: $border-radius/$border-padding-constant $border-radius/$border-padding-constant;
-    text-shadow: $white-background 0px 0px 1px;
     
     h1 {
         margin: 0px 4px 0px 4px;
