@@ -8,24 +8,13 @@ import ImageWithDescription from "../components/FormSelection/ImageWithDescripti
 import InputField from "../components/Login/InputField"
 import MenuItem from "@material-ui/core/MenuItem"
 import TextField from "@material-ui/core/TextField"
-import styles from "../styles/AddingAtendent.module.scss"
+import styles from "../styles/ConfirmingAtendent.module.scss"
 import terapia from "../images/terapia.jpg"
 
-const AddingAtendents = () => {
-  const [instituto, setInstituto] = useState("")
+const ConfirmingAtendent = () => {
   const [calendarLinkDialogOpen, setCalendarLinkDialogOpen] = useState(false)
 
-  const institutos = ["ICMC", "EESQ", "IFSC", "IQSC"]
-
-  const options = institutos.map(instituto => {
-    return <option value={instituto}>{instituto}</option>
-  })
-
-  const handleChange = event => {
-    setInstituto(event.target.value)
-  }
-
-  const handleAddingClick = () => {
+  const handleGenerateLinkClick = () => {
     setCalendarLinkDialogOpen(!calendarLinkDialogOpen)
   }
 
@@ -44,61 +33,44 @@ const AddingAtendents = () => {
           </DialogContentText>
           <a className={styles.LinkText}>www.google.br</a>
         </DialogContent>
-        <div className={styles.ButtonBox}>
+        <div className={styles.DialogButtonBox}>
           <button className={styles.Button} onClick={() => handleDialog()}>
             Fechar
           </button>
         </div>
       </Dialog>
-      <ImageWithDescription src={terapia} title={"Adicionar Atendente"} />
+      <ImageWithDescription src={terapia} title={"Confirmar Atendente"} />
       <form>
         <div className={styles.Form}>
           <div className={styles.InputBox}>
-            <span className={styles.InputLabel}>Nome</span>
+            <span className={styles.InputLabel}>Código do Google Agenda</span>
             <input
               className={styles.InputField}
-              placeholder="Nome"
+              placeholder="Código"
               type="text"
             />
-          </div>
-          <div className={styles.InputBox}>
-            <span className={styles.InputLabel}>Email</span>
-            <input
-              className={styles.InputField}
-              placeholder="Email"
-              type="email"
-            />
-          </div>
-          <div className={styles.InputBox}>
-            <span className={styles.InputLabel}>Link da Agenda</span>
-            <input
-              className={styles.InputField}
-              placeholder="Link"
-              type="text"
-            />
-          </div>
-          <div className={styles.InputBox}>
-            <span className={styles.InputLabel}>Instituto</span>
-            <select className={styles.InputField} placeholder="Instituto">
-              {options}
-            </select>
           </div>
         </div>
+
         <div className={styles.ButtonBox}>
-          <button
-            className={styles.AddButton}
-            onClick={handleAddingClick}
-            type="submit"
-          >
-            ADICIONAR
+          <button className={styles.AddButton} type="submit">
+            ENVIAR
           </button>
           <a className={styles.Link} href={"/Atendents"}>
             <button className={styles.CancelButton}>CANCELAR</button>
           </a>
+        </div>
+        <div className={styles.CalendarButtonBox}>
+          <button
+            className={styles.CalendarButton}
+            onClick={handleGenerateLinkClick}
+          >
+            GERAR LINK DE CONFIRMAÇÃO
+          </button>
         </div>
       </form>
     </>
   )
 }
 
-export default AddingAtendents
+export default ConfirmingAtendent

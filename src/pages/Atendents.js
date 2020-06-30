@@ -1,64 +1,148 @@
 import React, { useState } from "react"
 
 import AddIcon from "@material-ui/icons/Add"
+import DeleteIcon from "@material-ui/icons/Delete"
 import Dialog from "@material-ui/core/Dialog"
 import DialogTitle from "@material-ui/core/DialogTitle"
+import EditIcon from "@material-ui/icons/Edit"
 import ImageWithDescription from "../components/FormSelection/ImageWithDescription"
 import styled from "styled-components"
 import styles from "../styles/Atendents.module.scss"
 import terapia from "../images/terapia.jpg"
 
 const Atendents = () => {
+  //Janela de confirmação ao remover um atendente
   const [removeDialogOpen, setRemoveDialogOpen] = useState(false)
 
-  const atendents = [
-    { nome: "Pedro Paulo Isnard Brando", instituto: "ICMC" },
-    { nome: "Maria", instituto: "EESC" },
-    { nome: "Maria", instituto: "EESC" },
-    { nome: "Maria", instituto: "EESC" },
-    { nome: "Maria", instituto: "EESC" },
-    { nome: "Maria", instituto: "EESC" },
-    { nome: "Maria", instituto: "EESC" },
-    { nome: "Maria", instituto: "EESC" },
-    { nome: "Maria", instituto: "EESC" },
-    { nome: "Maria", instituto: "EESC" },
-    { nome: "Maria", instituto: "EESC" },
-    { nome: "Maria", instituto: "EESC" },
-    { nome: "Maria", instituto: "EESC" },
-    { nome: "Maria", instituto: "EESC" },
-    { nome: "Maria", instituto: "EESC" },
-    { nome: "Maria", instituto: "EESC" },
-  ]
+  const [atendents, setAtendents] = useState([
+    {
+      id: 12122,
+      nome: "Pedro Paulo Isnard Brando",
+      instituto: "ICMC",
+      status: "CONFIRMED",
+    },
+    {
+      id: 23121,
+      nome: "Pedro Paulo Isnard Brando",
+      instituto: "EESC",
+      status: "WAITING",
+    },
+    {
+      id: 12111,
+      nome: "Pedro Paulo Isnard Brando",
+      instituto: "IQSC",
+      status: "WAITING",
+    },
+    {
+      id: 3344,
+      nome: "Pedro Paulo Isnard Brando",
+      instituto: "IFSC",
+      status: "CONFIRMED",
+    },
+  ])
 
-  const handleDialog = () => {
-    setRemoveDialogOpen(!removeDialogOpen)
+  const handleRemoveClick = () => {
+    setRemoveDialogOpen(true)
   }
 
-  const atendentsList = atendents.map(atendent => {
+  const handleCancelClick = () => {
+    setRemoveDialogOpen(false)
+  }
+
+  const handleConfirmClick = index => {
+    const array = [...atendents]
+    array.splice(index, 1)
+    setAtendents(array)
+    setRemoveDialogOpen(false)
+  }
+
+  const atendentsList = atendents.map((atendent, index) => {
     return (
-      <div className={styles.ListItem}>
-        <Dialog open={removeDialogOpen}>
-          <DialogTitle>Confirmação</DialogTitle>
-          <span className={styles.ConfirmationText}>
-            Tem certeza que deseja remover o atendente?
-          </span>
-          <div className={styles.ButtonBox}>
-            <button className={styles.Button} onClick={() => handleDialog()}>
-              Sim
-            </button>
-            <button className={styles.Button} onClick={() => handleDialog()}>
-              Não
-            </button>
+      <>
+        {atendent.status === "CONFIRMED" && (
+          <div className={styles.ConfirmedListItem}>
+            <Dialog open={removeDialogOpen}>
+              <DialogTitle>Confirmação</DialogTitle>
+              <span className={styles.ConfirmationText}>
+                Tem certeza que deseja remover o atendente?
+              </span>
+              <div className={styles.ButtonBox}>
+                <button
+                  className={styles.Button}
+                  onClick={() => handleConfirmClick(index)}
+                >
+                  Confirmar
+                </button>
+                <button
+                  className={styles.Button}
+                  onClick={() => handleCancelClick()}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </Dialog>
+            <div className={styles.AtendentInfo}>
+              <div className={styles.AtendentName}>{atendent.nome}</div>
+              <div className={styles.ConfirmedAtendentInstitute}>
+                {atendent.instituto}
+              </div>
+            </div>
+            <div className={styles.ActionBox}>
+              <button
+                className={styles.ConfirmedRemoveButton}
+                onClick={() => handleRemoveClick()}
+              >
+                <DeleteIcon />
+              </button>
+            </div>
           </div>
-        </Dialog>
-        <div className={styles.AtendentInfo}>
-          <div className={styles.AtendentName}>{atendent.nome}</div>
-          <div className={styles.AtendentInstitute}>{atendent.instituto}</div>
-        </div>
-        <button className={styles.RemoveButton} onClick={() => handleDialog()}>
-          REMOVER
-        </button>
-      </div>
+        )}
+
+        {atendent.status === "WAITING" && (
+          <div className={styles.WaitingListItem}>
+            <Dialog open={removeDialogOpen}>
+              <DialogTitle>Confirmação</DialogTitle>
+              <span className={styles.ConfirmationText}>
+                Tem certeza que deseja remover o atendente?
+              </span>
+              <div className={styles.ButtonBox}>
+                <button
+                  className={styles.Button}
+                  onClick={() => handleConfirmClick(index)}
+                >
+                  Confirmar
+                </button>
+                <button
+                  className={styles.Button}
+                  onClick={() => handleCancelClick()}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </Dialog>
+            <div className={styles.AtendentInfo}>
+              <div className={styles.AtendentName}>{atendent.nome}</div>
+              <div className={styles.WaitingAtendentInstitute}>
+                {atendent.instituto}
+              </div>
+            </div>
+            <div className={styles.ActionBox}>
+              <button className={styles.WaitingRemoveButton}>
+                {/* Imagino q a rota que tenha de destino deva ser '/ConfirmingAtendent/atendentid' */}
+                <a className={styles.Link} href={"/ConfirmingAtendent"}>
+                  <EditIcon />
+                </a>
+              </button>
+              <button
+                className={styles.WaitingRemoveButton}
+                onClick={() => handleRemoveClick()}
+              >
+                <DeleteIcon />
+              </button>
+            </div>
+          </div>
+        )}
+      </>
     )
   })
 
@@ -67,7 +151,9 @@ const Atendents = () => {
       <ImageWithDescription src={terapia} title={"Lista de Atendentes"} />
       <div className={styles.AddBox}>
         <button className={styles.AddButton}>
-          ADICIONAR <AddIcon />
+          <a className={styles.Link} href={"/AddingAtendent"}>
+            ADICIONAR <AddIcon />
+          </a>
         </button>
       </div>
       <div className={styles.List}>{atendentsList}</div>

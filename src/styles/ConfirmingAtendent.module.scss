@@ -48,6 +48,36 @@
   margin-top: 10px;
 }
 
+.DialogButtonBox {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 30%;
+  padding: 0px 24px 16px 24px;
+  box-sizing: border-box;
+}
+
+.CalendarButtonBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.CalendarButton {
+  color: $color2;
+  border: 0px;
+  background-color: white;
+  height: 100%;
+  font-weight: bold;
+  cursor: pointer;
+  width: 90%;
+  background: $color3;
+  border: 3px solid $color2;
+  border-radius: 7px;
+  height: 40px;
+}
+
 .AddButton {
   color: $color2;
   border: 0px;
@@ -74,20 +104,6 @@
   border: 3px solid $color2;
   border-radius: 7px;
   height: 40px;
-}
-
-.ButtonBox {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 30%;
-  padding: 0px 24px 16px 24px;
-  box-sizing: border-box;
-}
-
-.ConfirmationText {
-  padding: 0px 24px 16px 24px;
-  box-sizing: border-box;
 }
 
 .Button {
