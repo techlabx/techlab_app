@@ -16,13 +16,11 @@ const Atendents = () => {
 
   const [atendents, setAtendents] = useState([
     {
-      id: 12122,
       nome: "Pedro Paulo Isnard Brando",
       instituto: "ICMC",
       status: "CONFIRMED",
     },
     {
-      id: 23121,
       nome: "Pedro Paulo Isnard Brando",
       instituto: "EESC",
       status: "WAITING",
@@ -34,7 +32,6 @@ const Atendents = () => {
       status: "WAITING",
     },
     {
-      id: 3344,
       nome: "Pedro Paulo Isnard Brando",
       instituto: "IFSC",
       status: "CONFIRMED",
