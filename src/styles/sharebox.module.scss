@@ -1,29 +1,35 @@
 @import 'global';
 
-$sharebox-height: 300px;
 $sharebox-color: grey;
-$button-horizontal-margin: 40px;
-$button-vertical-margin: 10px;
+$vertical-spacing: 10px;
 
 .sharebox {
-    height: $sharebox-height;
+    height: 224px;
+    width: 100%;
 
+    padding: $vertical-spacing 0px;
     display: flex;
     flex-direction: column;
     font-family: $font;
     text-align: center;
     background-color: $sharebox-color;
 
-    h1 {
+    h2 {
+        color: $font-color-light;
+        margin: 0px;
         font-size: 15px;
+        text-align: center;
+        padding: 0px $global-screen-padding;
+        font-size: $h2-font-size;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-font-smoothing: antialiased !important;
+        text-rendering: optimizelegibility !important;
     }
 }
 
 .ShareButton {
     display: block;
-    margin-left: $button-horizontal-margin;
-    margin-right: $button-horizontal-margin;
-    margin-top: $button-vertical-margin;
-    margin-bottom: $button-vertical-margin;
+    margin: $vertical-spacing 40px;
     border-radius: 12px;
 }

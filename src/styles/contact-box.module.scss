@@ -1,0 +1,55 @@
+@import 'global';
+
+.ContactBox {
+    font-size: 12px;
+    margin: 0px;
+    padding: 0px $global-screen-padding;
+    padding-bottom: 8px;
+
+    h2 {
+        font-size: $h2-font-size;
+        text-align: center;
+        margin: 10px 0px;
+    }
+    a {
+        text-decoration: none;
+        mix-blend-mode: difference;
+        color:white;
+    }
+}
+
+.Links {
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: $font-color-dark;
+    
+    p {
+        padding: 0px;
+        font-size: smaller;
+        margin: 0px 0px 0px 6px;
+    }
+    a {
+        mix-blend-mode: color-burn;
+    }
+}
+
+.Contact {
+    justify-content: center;
+    text-align: center;
+    color: $font-color-dark;
+
+    p {
+        margin: 0px 0px 0px 4px;
+        font-size: $text-font-size;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-font-smoothing: antialiased !important;
+        text-rendering: optimizelegibility !important;
+        line-height: 1.25em;
+        text-align: left;
+    }
+
+}

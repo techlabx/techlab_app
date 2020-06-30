@@ -1,0 +1,44 @@
+@import 'global';
+
+$text-margin: 25px;
+$box-margin: 10px;
+$textbox-opacity: 0.8;
+
+:export {
+    TextBoxOpacity: $textbox-opacity;
+    BackgroundWhite: $white-background;
+    Blue: $blue;
+    Orange: $orange;
+}
+
+.ContentContainer {
+    font-family: $font;
+    display: block;
+    background-size: cover;
+    padding-bottom: 20px;
+}
+
+.TextBox {
+    border-radius: 50px 0px 0px 50px;
+    
+    margin-left: $box-margin;
+    padding-bottom: 5px;
+    padding-left: $text-margin - $box-margin;
+    padding-right: $text-margin;
+    
+    background-color: $white-background;
+}
+
+.Text {
+    display: block;
+    text-align: center;
+    font-family: $font;
+
+    h2 {
+        padding-top: 5px;
+        margin: 0;
+    }
+    p {
+        text-align: justify;
+    }
+}

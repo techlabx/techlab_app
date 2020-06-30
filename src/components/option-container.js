@@ -1,5 +1,5 @@
 import React from "react"
-import styles from '../styles/content-container.module.scss'
+import styles from '../styles/option-container.module.scss'
 
 const TextBox = ({ color, textColor, name, children }) => {
   return (

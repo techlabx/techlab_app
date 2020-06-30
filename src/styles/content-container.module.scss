@@ -1,30 +1,33 @@
 @import 'global';
 
-$text-margin: 25px;
-$box-margin: 10px;
+$text-margin: $global-screen-padding + 3%;
+$box-margin: $global-screen-padding;
 $textbox-opacity: 0.8;
+$text-padding-bottom: 15px;
+$title-vertical-padding: 10px;
+$border-padding-constant: 6.19;
 
 :export {
     TextBoxOpacity: $textbox-opacity;
     BackgroundWhite: $white-background;
-    Blue: $blue;
-    Orange: $orange;
 }
 
 .ContentContainer {
     font-family: $font;
     display: block;
     background-size: cover;
-    padding-bottom: 20px;
+    width: 100%;
+
 }
 
 .TextBox {
-    border-radius: 50px 0px 0px 50px;
+    border-radius: $border-radius 0px 0px $border-radius;
+    min-height: 120px;
     
     margin-left: $box-margin;
-    padding-bottom: 5px;
     padding-left: $text-margin - $box-margin;
     padding-right: $text-margin;
+    padding-bottom: 5px;
     
     background-color: $white-background;
 }
@@ -33,12 +36,27 @@ $textbox-opacity: 0.8;
     display: block;
     text-align: center;
     font-family: $font;
-
-    h2 {
-        padding-top: 5px;
-        margin: 0;
+    color: $font-color-dark;
+    padding: $border-radius/$border-padding-constant $border-radius/$border-padding-constant;
+    
+    h1 {
+        margin: 0px 4px 0px 4px;
+        padding-top: $title-vertical-padding;
+        padding-bottom: $title-vertical-padding;
+        font-size: $h1-font-size;
     }
+
     p {
         text-align: justify;
+        padding-bottom: $text-padding-bottom;
+        margin: 0px 0px 10px 4px;
+        padding: 2px 0px;
+        font-size: $text-font-size;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-font-smoothing: antialiased !important;
+        text-rendering: optimizelegibility !important;
+        line-height: 1.25em;
+        vertical-align: middle;
     }
 }
