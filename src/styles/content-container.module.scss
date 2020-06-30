@@ -1,10 +1,11 @@
 @import 'global';
 
-$text-margin: $global-screen-padding;
-$box-margin: $global-screen-padding/2;
+$text-margin: $global-screen-padding + 3%;
+$box-margin: $global-screen-padding;
 $textbox-opacity: 0.8;
 $text-padding-bottom: 15px;
 $title-vertical-padding: 10px;
+$border-padding-constant: 6.19;
 
 :export {
     TextBoxOpacity: $textbox-opacity;
@@ -20,7 +21,7 @@ $title-vertical-padding: 10px;
 }
 
 .TextBox {
-    border-radius: 35px 0px 0px 35px;
+    border-radius: $border-radius 0px 0px $border-radius;
     min-height: 120px;
     
     margin-left: $box-margin;
@@ -35,15 +36,28 @@ $title-vertical-padding: 10px;
     display: block;
     text-align: center;
     font-family: $font;
-
-    h2 {
-        margin: 0px;
+    color: $font-color-dark;
+    padding: $border-radius/$border-padding-constant $border-radius/$border-padding-constant;
+    text-shadow: $white-background 0px 0px 1px;
+    
+    h1 {
+        margin: 0px 4px 0px 4px;
         padding-top: $title-vertical-padding;
         padding-bottom: $title-vertical-padding;
+        font-size: $h1-font-size;
     }
+
     p {
-        margin: 0px;
         text-align: justify;
         padding-bottom: $text-padding-bottom;
+        margin: 0px 0px 10px 4px;
+        padding: 2px 0px;
+        font-size: $text-font-size;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-font-smoothing: antialiased !important;
+        text-rendering: optimizelegibility !important;
+        line-height: 1.25em;
+        vertical-align: middle;
     }
 }

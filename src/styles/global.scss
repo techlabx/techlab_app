@@ -1,17 +1,29 @@
 @use 'https://fonts.googleapis.com/css2?family=Roboto&display=swap';
 
 $blue: #418694;
+$light-blue: #5fabba;
 $orange: #EC790f;
 $orange-background: #ffd874;
 $white-background: #F9F9F9;
 $global-screen-padding: 4%;
+$link-font-color: black;
+$border-radius: 35px;
+$font-color-dark: #212121;
+$font-color-light: $white-background;
+$h1-font-size: 22px;
+$h2-font-size: 18px;
+$text-font-size: 16px;
 
-$font: Roboto;
+$font: 'Roboto';
+
 :export {
     BackgroundWhite: $white-background;
     Blue:  $blue;
+    LightBlue: $light-blue;
     Orange: $orange;
     Font: $font;
+    FontColorDark: $font-color-dark;
+    FontColorLight: $font-color-light;
 }
 
 $header-font-size: 10px;

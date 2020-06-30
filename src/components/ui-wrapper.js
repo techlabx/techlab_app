@@ -1,11 +1,14 @@
 import React from "react";
 import styles from "../styles/ui-wrapper.module.scss";
+import Helmet from "react-helmet"
 
 import IconButton from "@material-ui/core/IconButton";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import HomeIcon from "@material-ui/icons/Home"
 import ContactSupportIcon from "@material-ui/icons/ContactSupport"
 import InfoIcon from "@material-ui/icons/Info"
+
+const appTitle = "GAPSI USP São Carlos"
 
 const NavbarIcons = [
   {Icon: <InfoIcon fontSize='large'/>, destUrl: "/info"},
@@ -54,6 +57,12 @@ const Navbar = () => (
 
 const UiWrapper = ({ pageTitle, lastPage, children }) => (
   <div className={styles.PageWrapper}>
+    <Helmet>
+      <meta charSet="utf-8" />
+      <title>{appTitle}</title>
+      <link rel="canonical" href="http://mysite.com/example"/>
+      <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0"/>
+    </Helmet>
     <Header title={pageTitle} lastPage={lastPage}/>
     <div className={styles.Content}>
       {children}

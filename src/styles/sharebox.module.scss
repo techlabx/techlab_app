@@ -4,7 +4,7 @@ $sharebox-color: grey;
 $vertical-spacing: 10px;
 
 .sharebox {
-    height: 220px;
+    height: 224px;
     width: 100%;
 
     padding: $vertical-spacing 0px;
@@ -14,11 +14,18 @@ $vertical-spacing: 10px;
     text-align: center;
     background-color: $sharebox-color;
 
-    h1 {
+    h2 {
+        color: $font-color-light;
         margin: 0px;
         font-size: 15px;
         text-align: center;
         padding: 0px $global-screen-padding;
+        font-size: $h2-font-size;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-font-smoothing: antialiased !important;
+        text-rendering: optimizelegibility !important;
+        line-height: 1.25em;
     }
 }
 

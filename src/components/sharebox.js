@@ -46,7 +46,7 @@ class ShareButton extends React.Component {
 
 const ShareBox = () => (
   <div className={styles.sharebox}>
-    <h1>{HeaderText}</h1>
+    <h2>{HeaderText}</h2>
     <div className={styles.ButtonsContainer}>
       {Buttons.map((v, i) => {; return(
         <ShareButton myButton={v} key={i}>
