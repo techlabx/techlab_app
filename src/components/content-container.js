@@ -38,7 +38,7 @@ ContentContainer.defaultProps = {
   title: sampleTitle,
   text: sampleText,
   textColor: global.FontColorDark,
-  bgColor: styles.BackgroundWhite,
+  color: styles.BackgroundWhite,
   bgImage: null
 };
 
