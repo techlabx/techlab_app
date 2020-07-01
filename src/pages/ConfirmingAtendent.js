@@ -17,6 +17,7 @@ const ConfirmingAtendent = () => {
   const [codigo, setCodigo] = useState("")
   const [calendarLinkDialogOpen, setCalendarLinkDialogOpen] = useState(false)
   const [errorDialogOpen, setErrorDialogOpen] = useState(false)
+  const [emailLink, setEmailLink] = useState("")
 
   const handleSendClick = () => {
     console.log(codigo)
@@ -26,9 +27,27 @@ const ConfirmingAtendent = () => {
     //setErrorDialogOpen(true)
   }
 
-  const handleGenerateLinkClick = () => {
+  const handleGenerateLinkClick = async () => {
+
+    const chatAPIAddr = process.env.CHAT_API_ADDR
+
+    try {
+      const res = await axios.get(
+        `http://${chatAPIAddr}/acolhimento/token/`, //${}`,
+        {headers: {'x-access-token': window.localStorage.getItem("TOKEN")
+      }})
+      
+      setEmailLink(res.data.authLink)
+      setCalendarLinkDialogOpen(true)
+
+    }
+    catch (error) {
+      if (error.response.status == 401) {
+        navigate('/loginpage');
+        return;
+      } 
+    }
     //precisa ter acesso ao link da agenda cadastrado, nn sei como passar isso entre paginas do gatsby
-    setCalendarLinkDialogOpen(true)
   }
 
   const handleCancelClick = () => {

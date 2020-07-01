@@ -54,7 +54,7 @@ class Atendents extends React.Component {
         atendents: res.data.map((value) => {
           return {
             nome: value.nomeatendente,
-            status: "CONFIRMED",
+            status: "WAITING",
             instituto: value.emailatendente,
             email: value.emailatendente
           }
@@ -180,7 +180,7 @@ class Atendents extends React.Component {
               <div className={styles.ActionBox}>
                 <button className={styles.WaitingRemoveButton}>
                   {/* Imagino q a rota que tenha de destino deva ser '/ConfirmingAtendent/atendentid' */}
-                  <a className={styles.Link} href={"/ConfirmingAtendent"}>
+                  <a className={styles.Link} href={`/ConfirmingAtendent?sigla=${atendent.instituto}`}>
                     <EditIcon />
                   </a>
                 </button>
