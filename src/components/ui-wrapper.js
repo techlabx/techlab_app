@@ -68,7 +68,7 @@ class UiWrapper extends React.Component {
     let isLogged = await isLoggedIn()
     if (!isLogged) {
       console.log('not rendering')
-      navigate("/LoginPage")
+      navigate("/loginpage")
       return null
     } else {
       console.log('letting render')

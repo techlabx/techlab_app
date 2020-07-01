@@ -4,6 +4,7 @@ export const isBrowser = () => typeof window !== "undefined"
 
 export const isTokenValid = async (token) => {
 
+    if (token === undefined) return false
     console.log('isTokenValid', token)
     try {
         console.log(`http://${process.env.CHAT_API_ADDR}/questionarios/lista`)

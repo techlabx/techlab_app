@@ -47,7 +47,7 @@ class ChatContainer extends React.Component {
     }
     catch (error) {
       if (error.response.status == 401) {
-        navigate('/LoginPage');
+        navigate('/loginpage');
         return;
       } 
     }
@@ -145,7 +145,7 @@ class ChatContainer extends React.Component {
     }
     catch (error) {
       if (error.response.status == 401) {
-        navigate('/LoginPage');
+        navigate('/loginpage');
         return;
       } 
     }
