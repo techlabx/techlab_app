@@ -5,158 +5,215 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import Dialog from "@material-ui/core/Dialog"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import EditIcon from "@material-ui/icons/Edit"
-import ImageWithDescription from "../components/FormSelection/ImageWithDescription"
-import styled from "styled-components"
 import styles from "../styles/Atendents.module.scss"
-import terapia from "../images/terapia.jpg"
 import UiWrapper from "../components/ui-wrapper"
+import axios from "axios"
+import { navigate } from "gatsby"
+class Atendents extends React.Component {
 
-const Atendents = () => {
-  //Janela de confirmação ao remover um atendente
-  const [removeDialogOpen, setRemoveDialogOpen] = useState(false)
-
-  const [atendents, setAtendents] = useState([
-    {
-      nome: "Pedro Paulo Isnard Brando",
-      instituto: "ICMC",
-      status: "CONFIRMED",
-    },
-    {
-      nome: "Pedro Paulo Isnard Brando",
-      instituto: "EESC",
-      status: "WAITING",
-    },
-    {
-      id: 12111,
-      nome: "Pedro Paulo Isnard Brando",
-      instituto: "IQSC",
-      status: "WAITING",
-    },
-    {
-      nome: "Pedro Paulo Isnard Brando",
-      instituto: "IFSC",
-      status: "CONFIRMED",
-    },
-  ])
-
-  const handleRemoveClick = () => {
-    setRemoveDialogOpen(true)
+  constructor(props) {
+    super(props)
+    this.state = {
+      removeDialogOpen: false,
+      atendents: [
+        // {
+        //   nome: "Pedro Paulo Isnard Brando",
+        //   instituto: "ICMC",
+        //   status: "CONFIRMED",
+        // },
+        // {
+        //   nome: "Pedro Paulo Isnard Brando",
+        //   instituto: "EESC",
+        //   status: "WAITING",
+        // },
+        // {
+        //   id: 12111,
+        //   nome: "Pedro Paulo Isnard Brando",
+        //   instituto: "IQSC",
+        //   status: "WAITING",
+        // },
+        // {
+        //   nome: "Pedro Paulo Isnard Brando",
+        //   instituto: "IFSC",
+        //   status: "CONFIRMED",
+        // },
+      ]
+    }
   }
 
-  const handleCancelClick = () => {
-    setRemoveDialogOpen(false)
+  componentDidMount = async () => {
+    const chatAPIAddr = process.env.CHAT_API_ADDR
+    console.log('getting usuarios')
+    try {
+      const res = await axios.get(
+        `http://${chatAPIAddr}/usuarios/gapsi/`,
+        {headers: {'x-access-token': window.localStorage.getItem("TOKEN")
+      }})
+      
+      this.setState({
+        atendents: res.data.map((value) => {
+          return {
+            nome: value.nomeatendente,
+            status: "CONFIRMED",
+            instituto: value.emailatendente,
+            email: value.emailatendente
+          }
+        })
+      })
+    }
+    catch (error) {
+      if (error.response.status == 401) {
+        navigate('/loginpage');
+        return;
+      } 
+    }
   }
 
-  const handleConfirmClick = index => {
-    const array = [...atendents]
-    array.splice(index, 1)
-    setAtendents(array)
-    setRemoveDialogOpen(false)
+  handleRemoveClick = () => {
+    this.setState({
+      removeDialogOpen: true
+    })
   }
 
-  const atendentsList = atendents.map((atendent, index) => {
+  handleCancelClick = () => {
+    console.log('cancel')
+    this.setState({
+      removeDialogOpen: false
+    })
+  }
+
+  handleConfirmClick = async (index) => {
+    
+    const chatAPIAddr = process.env.CHAT_API_ADDR
+    try {
+      const res = await axios.delete(
+        `http://${chatAPIAddr}/usuarios/gapsi/${this.state.atendents[index].email}`,
+        {headers: {'x-access-token': window.localStorage.getItem("TOKEN")}})
+      
+      this.setState({
+        atendents: this.state.atendents.filter((value) => value.email === this.state.atendents[index].email ? false : true)
+      })
+    }
+    catch (error) {
+      if (error.response.status == 401) {
+        navigate('/loginpage');
+        return;
+      } 
+    }
+
+    this.setState({
+      removeDialogOpen: false
+    })
+  }
+
+  getAttendentList() {
+    return this.state.atendents.map((atendent, index) => {
+      return (
+        <div key={index}>
+          {atendent.status === "CONFIRMED" && (
+            <div className={styles.ConfirmedListItem}>
+              <Dialog open={this.state.removeDialogOpen}>
+                <DialogTitle>Confirmação</DialogTitle>
+                <span className={styles.ConfirmationText}>
+                  Tem certeza que deseja remover o atendente?
+                </span>
+                <div className={styles.ButtonBox}>
+                  <button
+                    className={styles.Button}
+                    onClick={ () => this.handleConfirmClick(index)}
+                  >
+                    Confirmar
+                  </button>
+                  <button
+                    className={styles.Button}
+                    onClick={() => this.handleCancelClick()}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </Dialog>
+              <div className={styles.AtendentInfo}>
+                <div className={styles.AtendentName}>{atendent.nome}</div>
+                <div className={styles.ConfirmedAtendentInstitute}>
+                  {atendent.instituto}
+                </div>
+              </div>
+              <div className={styles.ActionBox}>
+                <button
+                  className={styles.ConfirmedRemoveButton}
+                  onClick={() => this.handleRemoveClick()}
+                >
+                  <DeleteIcon />
+                </button>
+              </div>
+            </div>
+          )}
+  
+          {atendent.status === "WAITING" && (
+            <div className={styles.WaitingListItem}>
+              <Dialog open={this.state.removeDialogOpen}>
+                <DialogTitle>Confirmação</DialogTitle>
+                <span className={styles.ConfirmationText}>
+                  Tem certeza que deseja remover o atendente?
+                </span>
+                <div className={styles.ButtonBox}>
+                  <button
+                    className={styles.Button}
+                    onClick={() => this.handleConfirmClick(index)}
+                  >
+                    Confirmar
+                  </button>
+                  <button
+                    className={styles.Button}
+                    onClick={() => this.handleCancelClick()}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </Dialog>
+              <div className={styles.AtendentInfo}>
+                <div className={styles.AtendentName}>{atendent.nome}</div>
+                <div className={styles.WaitingAtendentInstitute}>
+                  {atendent.instituto}
+                </div>
+              </div>
+              <div className={styles.ActionBox}>
+                <button className={styles.WaitingRemoveButton}>
+                  {/* Imagino q a rota que tenha de destino deva ser '/ConfirmingAtendent/atendentid' */}
+                  <a className={styles.Link} href={"/ConfirmingAtendent"}>
+                    <EditIcon />
+                  </a>
+                </button>
+                <button
+                  className={styles.WaitingRemoveButton}
+                  onClick={() => this.handleRemoveClick()}
+                >
+                  <DeleteIcon />
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )
+    })
+
+  }
+
+  render () {
     return (
-      <>
-        {atendent.status === "CONFIRMED" && (
-          <div className={styles.ConfirmedListItem}>
-            <Dialog open={removeDialogOpen}>
-              <DialogTitle>Confirmação</DialogTitle>
-              <span className={styles.ConfirmationText}>
-                Tem certeza que deseja remover o atendente?
-              </span>
-              <div className={styles.ButtonBox}>
-                <button
-                  className={styles.Button}
-                  onClick={() => handleConfirmClick(index)}
-                >
-                  Confirmar
-                </button>
-                <button
-                  className={styles.Button}
-                  onClick={() => handleCancelClick()}
-                >
-                  Cancelar
-                </button>
-              </div>
-            </Dialog>
-            <div className={styles.AtendentInfo}>
-              <div className={styles.AtendentName}>{atendent.nome}</div>
-              <div className={styles.ConfirmedAtendentInstitute}>
-                {atendent.instituto}
-              </div>
-            </div>
-            <div className={styles.ActionBox}>
-              <button
-                className={styles.ConfirmedRemoveButton}
-                onClick={() => handleRemoveClick()}
-              >
-                <DeleteIcon />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {atendent.status === "WAITING" && (
-          <div className={styles.WaitingListItem}>
-            <Dialog open={removeDialogOpen}>
-              <DialogTitle>Confirmação</DialogTitle>
-              <span className={styles.ConfirmationText}>
-                Tem certeza que deseja remover o atendente?
-              </span>
-              <div className={styles.ButtonBox}>
-                <button
-                  className={styles.Button}
-                  onClick={() => handleConfirmClick(index)}
-                >
-                  Confirmar
-                </button>
-                <button
-                  className={styles.Button}
-                  onClick={() => handleCancelClick()}
-                >
-                  Cancelar
-                </button>
-              </div>
-            </Dialog>
-            <div className={styles.AtendentInfo}>
-              <div className={styles.AtendentName}>{atendent.nome}</div>
-              <div className={styles.WaitingAtendentInstitute}>
-                {atendent.instituto}
-              </div>
-            </div>
-            <div className={styles.ActionBox}>
-              <button className={styles.WaitingRemoveButton}>
-                {/* Imagino q a rota que tenha de destino deva ser '/ConfirmingAtendent/atendentid' */}
-                <a className={styles.Link} href={"/ConfirmingAtendent"}>
-                  <EditIcon />
-                </a>
-              </button>
-              <button
-                className={styles.WaitingRemoveButton}
-                onClick={() => handleRemoveClick()}
-              >
-                <DeleteIcon />
-              </button>
-            </div>
-          </div>
-        )}
-      </>
+      <UiWrapper pageTitle="Adicionar Atendente" lastPage="/">
+        {/* <ImageWithDescription src={terapia} title={"Lista de Atendentes"} /> */}
+        <div className={styles.AddBox}>
+          <button className={styles.AddButton}>
+            <a className={styles.Link} href={"/AddingAtendent"}>
+              ADICIONAR <AddIcon />
+            </a>
+          </button>
+        </div>
+        <div className={styles.List}>{this.getAttendentList()}</div>
+      </UiWrapper>
     )
-  })
-
-  return (
-    <UiWrapper pageTitle="Adicionar Atendente" lastPage="/">
-      {/* <ImageWithDescription src={terapia} title={"Lista de Atendentes"} /> */}
-      <div className={styles.AddBox}>
-        <button className={styles.AddButton}>
-          <a className={styles.Link} href={"/AddingAtendent"}>
-            ADICIONAR <AddIcon />
-          </a>
-        </button>
-      </div>
-      <div className={styles.List}>{atendentsList}</div>
-    </UiWrapper>
-  )
+  }
 }
 
 export default Atendents

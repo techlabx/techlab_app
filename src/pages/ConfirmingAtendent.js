@@ -44,7 +44,7 @@ const ConfirmingAtendent = () => {
   }
 
   return (
-    <UiWrapper pageTitle="Confirmação de Atendimento" lastPage="/">
+    <UiWrapper pageTitle="Confirmação de Atendimento" lastPage="/Atendents">
       <Dialog open={errorDialogOpen}>
         <DialogTitle>Código incorreto</DialogTitle>
         <DialogContent>

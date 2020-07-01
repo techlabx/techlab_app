@@ -9,8 +9,10 @@ import { navigate } from "gatsby"
 import styles from "../styles/AddingAtendent.module.scss"
 import terapia from "../images/terapia.jpg"
 import UiWrapper from "../components/ui-wrapper"
+import axios from "axios"
 
 const AddingAtendents = () => {
+
   const [nome, setNome] = useState("")
   const [email, setEmail] = useState("")
   const [instituto, setInstituto] = useState("")
@@ -24,12 +26,30 @@ const AddingAtendents = () => {
     return <option key={instituto} value={instituto}>{instituto}</option>
   })
 
-  const handleAddingClick = () => {
+  const handleAddingClick = async () => {
+
     console.log(nome, email, link, instituto)
-    //se der certo
-    setCalendarLinkDialogOpen(true)
-    //se der errado
-    //setErrorDialogOpen(true)
+    const chatAPIAddr = process.env.CHAT_API_ADDR
+    try {
+      const res = await axios.post(
+        `http://${chatAPIAddr}/usuarios/gapsi/`,
+        {
+          nomeatendente: nome,
+          emailatendente: email,
+          linkagenda: link
+        },
+        {headers: {'x-access-token': window.localStorage.getItem("TOKEN")}})
+      // instituto: instituto
+      
+      setCalendarLinkDialogOpen(true)
+    }
+    catch (error) {
+      if (error.response.status == 401) {
+        navigate('/loginpage');
+        return;
+      } 
+      setErrorDialogOpen(true)
+    }
   }
 
   const handleCloseDialog = () => {
@@ -42,7 +62,7 @@ const AddingAtendents = () => {
   }
 
   return (
-    <UiWrapper pageTitle="Adicionar Atendente" lastPage="/">
+    <UiWrapper pageTitle="Adicionar Atendente" lastPage="/Atendents">
       <Dialog open={errorDialogOpen}>
         <DialogTitle>Instituto Inválido</DialogTitle>
         <DialogContent>
