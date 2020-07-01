@@ -8,6 +8,7 @@ import ImageWithDescription from "../components/FormSelection/ImageWithDescripti
 import { navigate } from "gatsby"
 import styles from "../styles/AddingAtendent.module.scss"
 import terapia from "../images/terapia.jpg"
+import UiWrapper from "../components/ui-wrapper"
 
 const AddingAtendents = () => {
   const [nome, setNome] = useState("")
@@ -20,7 +21,7 @@ const AddingAtendents = () => {
   const institutos = ["-", "ICMC", "EESQ", "IFSC", "IQSC"]
 
   const options = institutos.map(instituto => {
-    return <option value={instituto}>{instituto}</option>
+    return <option key={instituto} value={instituto}>{instituto}</option>
   })
 
   const handleAddingClick = () => {
@@ -41,7 +42,7 @@ const AddingAtendents = () => {
   }
 
   return (
-    <>
+    <UiWrapper pageTitle="Adicionar Atendente" lastPage="/">
       <Dialog open={errorDialogOpen}>
         <DialogTitle>Instituto Inválido</DialogTitle>
         <DialogContent>
@@ -74,7 +75,7 @@ const AddingAtendents = () => {
           </button>
         </div>
       </Dialog>
-      <ImageWithDescription src={terapia} title={"Adicionar Atendente"} />
+      {/* <ImageWithDescription src={terapia} title={"Adicionar Atendente"} /> */}
       <div className={styles.Form}>
         <div className={styles.InputBox}>
           <span className={styles.InputLabel}>Nome</span>
@@ -122,7 +123,7 @@ const AddingAtendents = () => {
           <button className={styles.CancelButton}>CANCELAR</button>
         </a>
       </div>
-    </>
+    </UiWrapper>
   )
 }
 

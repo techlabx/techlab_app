@@ -9,6 +9,7 @@ import ImageWithDescription from "../components/FormSelection/ImageWithDescripti
 import styled from "styled-components"
 import styles from "../styles/Atendents.module.scss"
 import terapia from "../images/terapia.jpg"
+import UiWrapper from "../components/ui-wrapper"
 
 const Atendents = () => {
   //Janela de confirmação ao remover um atendente
@@ -144,8 +145,8 @@ const Atendents = () => {
   })
 
   return (
-    <>
-      <ImageWithDescription src={terapia} title={"Lista de Atendentes"} />
+    <UiWrapper pageTitle="Adicionar Atendente" lastPage="/">
+      {/* <ImageWithDescription src={terapia} title={"Lista de Atendentes"} /> */}
       <div className={styles.AddBox}>
         <button className={styles.AddButton}>
           <a className={styles.Link} href={"/AddingAtendent"}>
@@ -154,7 +155,7 @@ const Atendents = () => {
         </button>
       </div>
       <div className={styles.List}>{atendentsList}</div>
-    </>
+    </UiWrapper>
   )
 }
 

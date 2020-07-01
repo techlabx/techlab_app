@@ -11,6 +11,7 @@ import TextField from "@material-ui/core/TextField"
 import { navigate } from "gatsby"
 import styles from "../styles/ConfirmingAtendent.module.scss"
 import terapia from "../images/terapia.jpg"
+import UiWrapper from "../components/ui-wrapper"
 
 const ConfirmingAtendent = () => {
   const [codigo, setCodigo] = useState("")
@@ -43,7 +44,7 @@ const ConfirmingAtendent = () => {
   }
 
   return (
-    <>
+    <UiWrapper pageTitle="Confirmação de Atendimento" lastPage="/">
       <Dialog open={errorDialogOpen}>
         <DialogTitle>Código incorreto</DialogTitle>
         <DialogContent>
@@ -75,7 +76,7 @@ const ConfirmingAtendent = () => {
           </button>
         </div>
       </Dialog>
-      <ImageWithDescription src={terapia} title={"Confirmar Atendente"} />
+      {/* <ImageWithDescription src={terapia} title={"Confirmar Atendente"} /> */}
       <div className={styles.Form}>
         <div className={styles.InputBox}>
           <span className={styles.InputLabel}>Código do Google Agenda</span>
@@ -106,7 +107,7 @@ const ConfirmingAtendent = () => {
           GERAR LINK DE CONFIRMAÇÃO
         </button>
       </div>
-    </>
+    </UiWrapper>
   )
 }
 
