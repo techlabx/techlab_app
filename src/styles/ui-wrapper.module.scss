@@ -1,4 +1,4 @@
-@import 'global';
+@import "global";
 
 body {
   font-family: $font;
@@ -34,7 +34,7 @@ body {
 
 .Header {
   position: fixed;
-  width: 95%;
+  width: 100%;
   height: $nav-height;
   display: flex;
   justify-content: space-between;
@@ -62,7 +62,7 @@ body {
   justify-content: center;
   position: fixed;
   align-items: center;
-  
+
   background-color: $white-background;
   overflow: hidden;
   display: flex;

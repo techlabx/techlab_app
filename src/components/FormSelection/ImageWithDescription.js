@@ -1,7 +1,7 @@
 import React from "react"
-import styled from "styled-components"
-import terapia from '../../images/terapia.jpg'
 import { navigate } from "@reach/router"
+import styled from "styled-components"
+import terapia from "../../images/terapia.jpg"
 
 const ImageBox = styled.div`
   && {
@@ -32,6 +32,12 @@ const TextBox = styled.div`
   }
 `
 
+const TextDescriptionBox = styled.div`
+  height: auto;
+  max-height: 100px;
+  overflow-x: hidden;
+`
+
 const TextTitle = styled.span`
   color: white;
   font-size: 18px;
@@ -55,21 +61,27 @@ const Overlay = styled.div`
   z-index: 2;
 `
 
-const ImageWithDescription = ({title, text}) => {
+const ImageWithDescription = ({ title, text }) => {
   return (
-    <ImageBox onClick={() => {
-      if (title !== "Questionários Sobre Saúde Mental") {
-        navigate(`/formpage?form=${title}`)
-      }
-      return;
-    }}>
+    <ImageBox
+      onClick={() => {
+        if (title !== "Questionários Sobre Saúde Mental") {
+          navigate(`/formpage?form=${title}`)
+        }
+        return
+      }}
+    >
       <Overlay />
       <StyledImage src={terapia}></StyledImage>
       <TextBox>
         <TextTitle>{title}</TextTitle>
-        <div style={{color: "white", fontSize: "0.8em", marginTop: "0.8em"}}>
-          {text}
-        </div>
+        <TextDescriptionBox>
+          <div
+            style={{ color: "white", fontSize: "0.8em", marginTop: "0.2em" }}
+          >
+            {text}
+          </div>
+        </TextDescriptionBox>
       </TextBox>
     </ImageBox>
   )
