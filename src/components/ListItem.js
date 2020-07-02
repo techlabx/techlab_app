@@ -1,4 +1,7 @@
-import React from "react"
+import React, { useState } from "react"
+
+import InfoIcon from "@material-ui/icons/Info"
+import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilledWhite"
 import styled from "styled-components"
 
 const StyledListItem = styled.button`
@@ -15,6 +18,20 @@ const StyledListItem = styled.button`
   align-items: center;
   color: white;
   font-size: 18px;
+  justify-content: space-between;
+`
+
+const StyledPlayIcon = styled(PlayCircleFilledWhiteIcon)`
+  margin-right: 15px;
+`
+
+const StyledInfoIcon = styled(InfoIcon)`
+  margin-right: 15px;
+`
+
+const IconBox = styled.div`
+  display: flex;
+  align-item: center;
 `
 
 const Text = styled.span`
@@ -24,16 +41,33 @@ const Text = styled.span`
   white-space: nowrap;
 `
 
-const ListItem = ({nome, apelido, children, callback, context, descricao }) => {
+const ListItem = ({
+  nome,
+  apelido,
+  children,
+  callback,
+  context,
+  descricao,
+}) => {
+  const [playAvailable, setPlayAvailable] = useState(false)
+
+  const handleInfoClick = () => {
+    callback(context, apelido, descricao)
+    setPlayAvailable(true)
+    return null
+  }
+
+  const handlePlayClick = () => {
+    //Vai para o formulário
+  }
+
   return (
-    <StyledListItem
-      key={apelido}
-      onClick={() => {
-        callback(context, apelido, descricao);
-        return null;
-      }}
-    >
+    <StyledListItem key={apelido}>
       <Text>{children}</Text>
+      <IconBox>
+        <StyledInfoIcon onClick={() => handleInfoClick()} />
+        {playAvailable && <StyledPlayIcon onClick={() => handlePlayClick()} />}
+      </IconBox>
     </StyledListItem>
   )
 }
