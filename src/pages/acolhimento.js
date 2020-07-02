@@ -191,7 +191,7 @@ const PsychologistCard = ({psychologist}) => (
 // Entender
 const ColorButton = withStyles((theme) => (
   { root: {
-      color: theme.palette.getContrastText(Orange),
+      color: 'black',  // theme.palette.getContrastText(Orange),
       backgroundColor: Orange,
       '&:hover': {
         backgroundColor: Orange,

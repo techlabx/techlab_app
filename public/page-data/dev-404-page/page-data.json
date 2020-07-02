@@ -1,5 +1,0 @@
-<<<<<<< HEAD
-{"componentChunkName":"component---cache-dev-404-page-js","path":"/dev-404-page/","result":{"data":{"allSitePage":{"nodes":[{"path":"/404/"},{"path":"/acolhimento/"},{"path":"/AddingAtendent/"},{"path":"/Atendents/"},{"path":"/ConfirmingAtendent/"},{"path":"/EditingAtendent/"},{"path":"/faq/"},{"path":"/formpage/"},{"path":"/"},{"path":"/info/"},{"path":"/loginpage/"},{"path":"/questionarios/"},{"path":"/signup/"},{"path":"/404.html"}]}},"pageContext":{}}}
-=======
-{"componentChunkName":"component---cache-dev-404-page-js","path":"/dev-404-page/","result":{"data":{"allSitePage":{"nodes":[{"path":"/404/"},{"path":"/acolhimento/"},{"path":"/faq/"},{"path":"/formpage/"},{"path":"/"},{"path":"/index.old/"},{"path":"/info/"},{"path":"/LoginPage/"},{"path":"/404.html"},{"path":"/AddingAtendent/"},{"path":"/Atendents/"},{"path":"/ConfirmingAtendent/"},{"path":"/EditingAtendent/"},{"path":"/loginpage/"},{"path":"/questionarios/"},{"path":"/signup/"}]}},"pageContext":{}}}
->>>>>>> origin/acolhimento
