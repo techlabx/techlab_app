@@ -8,10 +8,10 @@ import ImageWithDescription from "../components/FormSelection/ImageWithDescripti
 import InputField from "../components/Login/InputField"
 import MenuItem from "@material-ui/core/MenuItem"
 import TextField from "@material-ui/core/TextField"
+import UiWrapper from "../components/ui-wrapper"
 import { navigate } from "gatsby"
 import styles from "../styles/ConfirmingAtendent.module.scss"
 import terapia from "../images/terapia.jpg"
-import UiWrapper from "../components/ui-wrapper"
 
 const ConfirmingAtendent = () => {
   const [codigo, setCodigo] = useState("")
@@ -44,7 +44,7 @@ const ConfirmingAtendent = () => {
   }
 
   return (
-    <UiWrapper pageTitle="Confirmação de Atendimento" lastPage="/Atendents">
+    <UiWrapper pageTitle="Confirmação da Agenda" lastPage="/Atendents">
       <Dialog open={errorDialogOpen}>
         <DialogTitle>Código incorreto</DialogTitle>
         <DialogContent>

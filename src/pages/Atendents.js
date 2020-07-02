@@ -1,108 +1,112 @@
 import React, { useState } from "react"
 
 import AddIcon from "@material-ui/icons/Add"
+import CheckIcon from "@material-ui/icons/Check"
 import DeleteIcon from "@material-ui/icons/Delete"
 import Dialog from "@material-ui/core/Dialog"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import EditIcon from "@material-ui/icons/Edit"
-import styles from "../styles/Atendents.module.scss"
 import UiWrapper from "../components/ui-wrapper"
 import axios from "axios"
 import { navigate } from "gatsby"
-class Atendents extends React.Component {
+import styles from "../styles/Atendents.module.scss"
 
+class Atendents extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       removeDialogOpen: false,
-      atendents: [
-        // {
-        //   nome: "Pedro Paulo Isnard Brando",
-        //   instituto: "ICMC",
-        //   status: "CONFIRMED",
-        // },
-        // {
-        //   nome: "Pedro Paulo Isnard Brando",
-        //   instituto: "EESC",
-        //   status: "WAITING",
-        // },
-        // {
-        //   id: 12111,
-        //   nome: "Pedro Paulo Isnard Brando",
-        //   instituto: "IQSC",
-        //   status: "WAITING",
-        // },
-        // {
-        //   nome: "Pedro Paulo Isnard Brando",
-        //   instituto: "IFSC",
-        //   status: "CONFIRMED",
-        // },
-      ]
+      atendents: [],
+      //   {
+      //     nome: "Pedro Paulo Isnard Brando",
+      //     instituto: "ICMC",
+      //     status: "CONFIRMED",
+      //     email: "pedro@gmail.com",
+      //   },
+      //   {
+      //     nome: "Pedro Paulo Isnard Brando",
+      //     instituto: "EESC",
+      //     status: "WAITING",
+      //     email: "pedro@gmail.com",
+      //   },
+      //   {
+      //     id: 12111,
+      //     nome: "Pedro Paulo Isnard Brando",
+      //     instituto: "IQSC",
+      //     status: "WAITING",
+      //     email: "pedro@gmail.com",
+      //   },
+      //   {
+      //     nome: "Pedro Paulo Isnard Brando",
+      //     instituto: "IFSC",
+      //     status: "CONFIRMED",
+      //     email: "pedro@gmail.com",
+      //   },
+      //
     }
   }
 
   componentDidMount = async () => {
     const chatAPIAddr = process.env.CHAT_API_ADDR
-    console.log('getting usuarios')
+    console.log("getting usuarios")
     try {
-      const res = await axios.get(
-        `http://${chatAPIAddr}/usuarios/gapsi/`,
-        {headers: {'x-access-token': window.localStorage.getItem("TOKEN")
-      }})
-      
+      const res = await axios.get(`http://${chatAPIAddr}/usuarios/gapsi/`, {
+        headers: { "x-access-token": window.localStorage.getItem("TOKEN") },
+      })
+
       this.setState({
-        atendents: res.data.map((value) => {
+        atendents: res.data.map(value => {
           return {
             nome: value.nomeatendente,
             status: "CONFIRMED",
             instituto: value.emailatendente,
-            email: value.emailatendente
+            email: value.emailatendente,
           }
-        })
+        }),
       })
-    }
-    catch (error) {
+    } catch (error) {
       if (error.response.status == 401) {
-        navigate('/loginpage');
-        return;
-      } 
+        navigate("/loginpage")
+        return
+      }
     }
   }
 
   handleRemoveClick = () => {
     this.setState({
-      removeDialogOpen: true
+      removeDialogOpen: true,
     })
   }
 
   handleCancelClick = () => {
-    console.log('cancel')
+    console.log("cancel")
     this.setState({
-      removeDialogOpen: false
+      removeDialogOpen: false,
     })
   }
 
-  handleConfirmClick = async (index) => {
-    
+  handleConfirmClick = async index => {
     const chatAPIAddr = process.env.CHAT_API_ADDR
     try {
       const res = await axios.delete(
         `http://${chatAPIAddr}/usuarios/gapsi/${this.state.atendents[index].email}`,
-        {headers: {'x-access-token': window.localStorage.getItem("TOKEN")}})
-      
+        { headers: { "x-access-token": window.localStorage.getItem("TOKEN") } }
+      )
+
       this.setState({
-        atendents: this.state.atendents.filter((value) => value.email === this.state.atendents[index].email ? false : true)
+        atendents: this.state.atendents.filter(value =>
+          value.email === this.state.atendents[index].email ? false : true
+        ),
       })
-    }
-    catch (error) {
+    } catch (error) {
       if (error.response.status == 401) {
-        navigate('/loginpage');
-        return;
-      } 
+        navigate("/loginpage")
+        return
+      }
     }
 
     this.setState({
-      removeDialogOpen: false
+      removeDialogOpen: false,
     })
   }
 
@@ -120,7 +124,7 @@ class Atendents extends React.Component {
                 <div className={styles.ButtonBox}>
                   <button
                     className={styles.Button}
-                    onClick={ () => this.handleConfirmClick(index)}
+                    onClick={() => this.handleConfirmClick(index)}
                   >
                     Confirmar
                   </button>
@@ -139,6 +143,15 @@ class Atendents extends React.Component {
                 </div>
               </div>
               <div className={styles.ActionBox}>
+                <button className={styles.ConfirmedRemoveButton}>
+                  {/* Imagino q a rota que tenha de destino deva ser '/ConfirmingAtendent/atendentid' */}
+                  <a
+                    className={styles.Link}
+                    href={`/EditingAtendent?${atendent.email}`}
+                  >
+                    <EditIcon />
+                  </a>
+                </button>
                 <button
                   className={styles.ConfirmedRemoveButton}
                   onClick={() => this.handleRemoveClick()}
@@ -148,7 +161,7 @@ class Atendents extends React.Component {
               </div>
             </div>
           )}
-  
+
           {atendent.status === "WAITING" && (
             <div className={styles.WaitingListItem}>
               <Dialog open={this.state.removeDialogOpen}>
@@ -180,7 +193,19 @@ class Atendents extends React.Component {
               <div className={styles.ActionBox}>
                 <button className={styles.WaitingRemoveButton}>
                   {/* Imagino q a rota que tenha de destino deva ser '/ConfirmingAtendent/atendentid' */}
-                  <a className={styles.Link} href={"/ConfirmingAtendent"}>
+                  <a
+                    className={styles.Link}
+                    href={`/ConfirmingAtendent?${atendent.instituto}`}
+                  >
+                    <CheckIcon />
+                  </a>
+                </button>
+                <button className={styles.WaitingRemoveButton}>
+                  {/* Imagino q a rota que tenha de destino deva ser '/ConfirmingAtendent/atendentid' */}
+                  <a
+                    className={styles.Link}
+                    href={`/EditingAtendent?${atendent.email}`}
+                  >
                     <EditIcon />
                   </a>
                 </button>
@@ -196,12 +221,11 @@ class Atendents extends React.Component {
         </div>
       )
     })
-
   }
 
-  render () {
+  render() {
     return (
-      <UiWrapper pageTitle="Adicionar Atendente" lastPage="/">
+      <UiWrapper pageTitle="Lista de Atendentes" lastPage="/">
         {/* <ImageWithDescription src={terapia} title={"Lista de Atendentes"} /> */}
         <div className={styles.AddBox}>
           <button className={styles.AddButton}>
