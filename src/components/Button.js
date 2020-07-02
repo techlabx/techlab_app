@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-const StyledButton = styled.button`
+const StyledButton = styled.a`
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -9,6 +9,7 @@ const StyledButton = styled.button`
   box-shadow: 0px 3px 5px gray;
   height: ${props => (props.height ? props.height : `90px`)};
   width: ${props => (props.width ? props.width : `200px`)};
+  max-width: 320px;
   border-radius: 15px;
   border: 0px;
   background-color: ${props =>
@@ -20,9 +21,10 @@ const StyledButton = styled.button`
   border-sizing: border-box;
 `
 
-const Button = ({ height, width, backgroundColor, fontSize, children }) => {
+const Button = ({ href, height, width, backgroundColor, fontSize, children }) => {
   return (
     <StyledButton
+      href={href}
       height={height}
       width={width}
       backgroundColor={backgroundColor}

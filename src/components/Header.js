@@ -27,6 +27,7 @@ const IconBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  transform: scale(50%)
 `
 
 const StyledIconButton = styled(IconButton)`

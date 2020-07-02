@@ -7,11 +7,19 @@
 
 import React from "react"
 import styles from "../../styles/chatbox.module.scss"
+import { navigate } from "gatsby"
 
 const ButtonBox = props => {
   return (
     <>
-      <div className={styles.boxServerButton}>{props.text}</div>
+      <div className={styles.boxServerButton}
+        onClick={
+          () => {
+            navigate('/acolhimento')
+            return
+          }
+        }
+      >{props.text}</div>
     </>
   )
 }

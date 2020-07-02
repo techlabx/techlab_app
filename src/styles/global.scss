@@ -1,10 +1,10 @@
 $color1: #829fd9;
-$color2: #027368;
-$color3: #fc9332;
+$color2: #647B98;
+$color3: #EFA748;
 $color4: #8c8303;
 $color5: #594302;
-$gray: #9e9e9e;
-$gray2: #d4d4d4;
+$gray: #CDC4BB;
+$gray2: #CDC4BB;
 $text-dark: black;
 $white: white;
 
@@ -23,7 +23,7 @@ $link-font-color: black;
 
 $header-background-color: $color3;
 $header-text-color: $white;
-$default-chatbox: $gray;
+$default-chatbox: $color2;
 $client-chatbox: $color3;
 $chatbox-text-color: $white;
 $background-chat: $white;
@@ -47,8 +47,12 @@ $text-font-size: $default-font-size;
 }
 @use 'https://fonts.googleapis.com/css2?family=Roboto&display=swap';
 
+$blue: #647B98;
+$orange: #EFA748;
+$orange-background: #ffd874;
+$white-background: #F9F9F9;
 
-$font: 'Roboto';
+$font: Roboto, sans-serif;
 
 :export {
     BackgroundWhite: $white-background;

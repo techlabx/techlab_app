@@ -1,25 +1,25 @@
 import Button from "../components/Button"
 import EmailIcon from "@material-ui/icons/Email"
-import LoginField from "../components/Login/LoginField"
+import InputField from "../components/Login/InputField"
 import React from "react"
+import loginImage from "../images/login.jpg"
 import { navigate } from "gatsby"
 import styled from "styled-components"
-import loginImage from "../images/login.png"
 
 const OuterBox = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  background-image: url("login.png");
+  align-items: flex-start;
+  background-image: url("login.jpg");
   background-position: center;
   background-size: cover;
 `
 
 const InnerBox = styled.div`
   && {
-    height: 40%;
+    height: 50%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -35,20 +35,20 @@ const StyledImage = styled.img`
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;  
+  bottom: 0;
   max-width: 100%;
   max-height: 100%;
   width: 100%;
-  transform: scale(1.4);
-  overflow: hidden;
+  overlay: hidden;
   z-index: 0;
 `
 
 const Title = styled.span`
-  color: #418694;
+  color: white;
   font-size: 50px;
+  font-weight: bold;
   margin-bottom: 20px;
-  box-sizing: border-box;
+  border-sizing: border-box;
 `
 
 const InputBox = styled.div`
@@ -58,7 +58,7 @@ const InputBox = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 5px;
-  box-sizing: border-box;
+  border-sizing: border-box;
 `
 
 const ButtonBox = styled.div`
@@ -78,7 +78,7 @@ const BottomTextBox = styled.div`
 const BottomText = styled.span`
   font-size: 16px;
   font-weight: bold;
-  color: black;
+  color: white;
   margin-right: 5px;
 `
 
@@ -99,40 +99,50 @@ const Overlay = styled.div`
   z-index: 1;
 `
 
-const LoginPage = () => {
+const signup = () => {
   return (
     <OuterBox>
       <Overlay />
       <StyledImage src={loginImage}></StyledImage>
       <InnerBox>
-        <Title>Login</Title>
+        <Title>Cadastro</Title>
         <InputBox>
-          <LoginField height="25px" width="50%" placeholder="Usuário" />
-          <LoginField
+          <InputField
             height="25px"
-            width="50%"
+            width="70%"
+            placeholder="Digite aqui seu nome completo"
+            borderColor="3px solid #418694"
+          />
+          <InputField
+            height="25px"
+            width="70%"
+            placeholder="Digite aqui seu e-mail"
+            borderColor="3px solid #418694"
+          />
+          <InputField
+            height="25px"
+            width="70%"
             type="password"
-            placeholder="Senha"
+            placeholder="Digite aqui sua nova senha"
+            borderColor="3px solid #418694"
+          />
+          <InputField
+            height="25px"
+            width="70%"
+            type="password"
+            placeholder="Repita sua senha"
+            borderColor="3px solid #418694"
           />
         </InputBox>
         <ButtonBox>
-          <Button height="50px" width="56%" backgroundColor="#418694">
-            Entrar
-          </Button>
-          <Button
-            height="50px"
-            width="56%"
-            backgroundColor="#db4a39"
-            fontSize="16px"
-          >
-            <EmailIcon />
-            Entrar com Gmail
+          <Button height="50px" width="70%" backgroundColor="#418694">
+            Cadastrar
           </Button>
         </ButtonBox>
         <BottomTextBox>
-          <BottomText>Não tem uma conta? </BottomText>
-          <CreateAccountLink onClick={() => navigate("/SignUpPage")}>
-            Faça o cadastro
+          <BottomText>Já tem uma conta? </BottomText>
+          <CreateAccountLink onClick={() => navigate("/LoginPage")}>
+            Faça o login
           </CreateAccountLink>
         </BottomTextBox>
       </InnerBox>
@@ -140,4 +150,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default signup

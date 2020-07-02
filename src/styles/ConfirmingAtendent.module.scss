@@ -1,0 +1,116 @@
+@import "global";
+
+.Form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding: 0px 10px 0px 10px;
+  box-sizing: border-box;
+}
+
+.Link {
+  color: inherit;
+  width: 40%;
+}
+
+.LinkText {
+  color: $color2;
+}
+
+.InputBox {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.InputLabel {
+  color: $color2;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.InputField {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  height: 40px;
+  border-radius: 7px;
+  border: 2px solid $color3;
+}
+
+.ButtonBox {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.DialogButtonBox {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 30%;
+  padding: 0px 24px 16px 24px;
+  box-sizing: border-box;
+}
+
+.CalendarButtonBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.CalendarButton {
+  color: $color2;
+  border: 0px;
+  background-color: white;
+  height: 100%;
+  font-weight: bold;
+  cursor: pointer;
+  width: 90%;
+  background: $color3;
+  border: 3px solid $color2;
+  border-radius: 7px;
+  height: 40px;
+}
+
+.AddButton {
+  color: $color2;
+  border: 0px;
+  background-color: white;
+  height: 100%;
+  font-weight: bold;
+  cursor: pointer;
+  width: 40%;
+  background: $color3;
+  border: 3px solid $color2;
+  border-radius: 7px;
+  height: 40px;
+}
+
+.CancelButton {
+  color: $color2;
+  border: 0px;
+  background-color: white;
+  height: 100%;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  background: white;
+  border: 3px solid $color2;
+  border-radius: 7px;
+  height: 40px;
+}
+
+.Button {
+  color: $color2;
+  border: 0px;
+  background-color: white;
+  height: 100%;
+  font-weight: bold;
+  cursor: pointer;
+}

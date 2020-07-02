@@ -38,13 +38,13 @@ const theme5 = {
 
 const InfoPage = () => (
   <UiWrapper pageTitle='Sobre o Gapsi' lastPage='/'>
-    <ContentContainer title={header.title} text={header.text} bgColor={global.LightBlue} bgImage={bgImg} textColor={global.FontColorDark}>
+    <ContentContainer title={header.title} text={header.text} color={global.LightBlue} bgImage={bgImg} textColor={global.FontColorDark}>
       <ContactBox/>
     </ContentContainer>
     <ContentContainer title={theme1.title} text={theme1.text}/>
-    <ContentContainer title={theme2.title} text={theme2.text} bgColor={global.MainOrange}/>
+    <ContentContainer title={theme2.title} text={theme2.text} color={global.MainOrange}/>
     <ContentContainer title={theme3.title} text={theme3.text}/>
-    <ContentContainer title={theme4.title} text={theme4.text} bgColor={global.MainBlue}/>
+    <ContentContainer title={theme4.title} text={theme4.text} color={global.MainBlue}/>
     <ContentContainer title={theme5.title} text={theme5.text}/>
     <ShareBox/>
   </UiWrapper>

@@ -1,16 +1,75 @@
+import OptionContainer from "../components/option-container"
 import React from "react"
-import { Link } from "gatsby"
 import UiWrapper from "../components/ui-wrapper"
+import { navigate } from "gatsby"
 
-const IndexPage = () => (
-  <UiWrapper pageTitle="Gapsi">
-    <div><Link to="/info">Informações</Link></div>
-    <div><Link to="/faq">FAQ</Link></div>
-    <div><Link to="/acolhimento">Acolhimentos</Link></div>
-    <div><Link to="/loginpage">Login</Link></div>
-    <div><Link to="/formpage">FormPage</Link></div>
-    <div><Link to="/acolhimento">Acolhimentos</Link></div>
-  </UiWrapper>
-);
+const IndexPage = () => {
+  return (
+    <UiWrapper pageTitle="TechLab" lastPage="/">
+      <ul style={{ listStyle: "none" }}>
+        <li
+          onClick={() => {
+            navigate("/info")
+          }}
+        >
+          <OptionContainer
+            title=""
+            text="Informações"
+            textColor="white"
+            color="#647B98"
+          />
+        </li>
+        <li
+          onClick={() => {
+            navigate("/questionarios")
+          }}
+        >
+          <OptionContainer
+            title=""
+            text="Questionarios"
+            textColor="white"
+            color="#647B98"
+          />
+        </li>
+        <li
+          onClick={() => {
+            navigate("/acolhimento")
+          }}
+        >
+          <OptionContainer
+            title=""
+            text="Acolhimento"
+            textColor="white"
+            color="#647B98"
+          />
+        </li>
+        <li
+          onClick={() => {
+            navigate("/faq")
+          }}
+        >
+          <OptionContainer
+            title=""
+            text="Perguntas Frequentes"
+            textColor="white"
+            color="#647B98"
+          />
+        </li>
+        <li
+          onClick={() => {
+            navigate("/Atendents")
+          }}
+        >
+          <OptionContainer
+            title=""
+            text="Administração"
+            textColor="white"
+            color="#647B98"
+          />
+        </li>
+      </ul>
+    </UiWrapper>
+  )
+}
 
-export default IndexPage;
+export default IndexPage
