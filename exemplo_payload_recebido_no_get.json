@@ -1,0 +1,60 @@
+[
+    {
+        "kind": "calendar#event",
+        "etag": "\"3187061092716000\"",
+        "id": "0fnl6diudkvdc8446fvekra7a8",
+        "status": "confirmed",
+        "htmlLink": "https://www.google.com/calendar/event?eid=MGZubDZkaXVka3ZkYzg0NDZmdmVrcmE3YTggbGVvbmFyZG9naW92YW5uaXBAbQ",
+        "created": "2020-06-30T15:22:26.000Z",
+        "updated": "2020-06-30T15:22:26.358Z",
+        "summary": "Livre",
+        "creator": {
+            "email": "leonardogiovannip@gmail.com",
+            "self": true
+        },
+        "organizer": {
+            "email": "leonardogiovannip@gmail.com",
+            "self": true
+        },
+        "start": {
+            "dateTime": "2020-06-30T13:30:00-03:00"
+        },
+        "end": {
+            "dateTime": "2020-06-30T14:30:00-03:00"
+        },
+        "iCalUID": "0fnl6diudkvdc8446fvekra7a8@google.com",
+        "sequence": 0,
+        "reminders": {
+            "useDefault": true
+        }
+    },
+    {
+        "kind": "calendar#event",
+        "etag": "\"3187061098348000\"",
+        "id": "10upda0bqq31gglbepfs1ol8h9",
+        "status": "confirmed",
+        "htmlLink": "https://www.google.com/calendar/event?eid=MTB1cGRhMGJxcTMxZ2dsYmVwZnMxb2w4aDkgbGVvbmFyZG9naW92YW5uaXBAbQ",
+        "created": "2020-06-30T15:22:29.000Z",
+        "updated": "2020-06-30T15:22:29.174Z",
+        "summary": "Livre",
+        "creator": {
+            "email": "leonardogiovannip@gmail.com",
+            "self": true
+        },
+        "organizer": {
+            "email": "leonardogiovannip@gmail.com",
+            "self": true
+        },
+        "start": {
+            "dateTime": "2020-06-30T15:00:00-03:00"
+        },
+        "end": {
+            "dateTime": "2020-06-30T16:00:00-03:00"
+        },
+        "iCalUID": "10upda0bqq31gglbepfs1ol8h9@google.com",
+        "sequence": 0,
+        "reminders": {
+            "useDefault": true
+        }
+    }
+]

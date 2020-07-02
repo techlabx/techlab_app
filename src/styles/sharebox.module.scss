@@ -4,10 +4,9 @@ $sharebox-color: grey;
 $vertical-spacing: 10px;
 
 .sharebox {
-    height: 224px;
+    height: 234px;
     width: 100%;
-
-    padding: $vertical-spacing 0px;
+        
     display: flex;
     flex-direction: column;
     font-family: $font;
@@ -15,12 +14,10 @@ $vertical-spacing: 10px;
     background-color: $sharebox-color;
 
     h2 {
+        margin: $vertical-spacing 0px 0px 0px;
         color: $font-color-light;
-        margin: 0px;
-        font-size: 15px;
-        text-align: center;
-        padding: 0px $global-screen-padding;
         font-size: $h2-font-size;
+        text-align: center;
         -moz-osx-font-smoothing: grayscale;
         -webkit-font-smoothing: antialiased !important;
         -moz-font-smoothing: antialiased !important;
@@ -30,6 +27,6 @@ $vertical-spacing: 10px;
 
 .ShareButton {
     display: block;
-    margin: $vertical-spacing 40px;
+    margin: $vertical-spacing $text-margin;
     border-radius: 12px;
 }

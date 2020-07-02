@@ -13,7 +13,7 @@ const ChatBox = props => {
     <>
       <div
         className={
-          props.direction == "client" ? styles.boxClient : styles.boxServer
+          props.direction === "client" ? styles.boxClient : styles.boxServer
         }
       >
         {props.text}

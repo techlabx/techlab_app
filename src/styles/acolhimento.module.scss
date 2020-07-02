@@ -1,78 +1,96 @@
 @import 'global';
 
 .ScheduleMenu {
-    width: 100%;
-    height: 400px;
-    background-color: $main-orange;
-    padding: 4px;
-}
-
-.SchoolSelection {
-    min-height: 55px;
-}
-
-.InnerMenu {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: $main-orange;
+    height: 420px;
+    background-color: $light-orange;
+    border-radius: $border-radius $border-radius 0px 0px;
+    margin: 0px $global-screen-padding;
+    padding: $border-radius/2 $border-radius/2;
 }
 
 .PsychologistCard{
     height: 100px;
+    width: 100%;
+
     display: flex;
     flex-direction: row;
-    background-color: $main-orange;
 }
 
 .PhotoArea {
     display: block;
     width: 25%;
-    text-align: center;
-    justify-content: center;
-    padding-left: auto;
-    margin-right: auto;
 }
+
+$photo-width: 80px;
+$photo-height: 90px;
 
 .ImagePortrait {
     display: block;
-    width: 75px;
-    height: 90px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    width: $photo-width;
+    height: $photo-height;
 
     border: $white-background;
-    border-style: solid;
+    background-color: $light-grey;
+    
     border-radius: 5px;
+    object-fit: fill;
+    padding: 2px;
 
-    background-color: $white-background;
     img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 100%;
-        max-height: 100%;
+        width: $photo-width;
+        height: $photo-height;
+        border-radius: 5px;
     }
 }
 
 .CardContent {
+    width: 75%;
     display: flex;
     flex-direction: column;
-    width: 75%;
     display: block;
     font-family: $font;
     color: $font-color-dark;
+    padding-left: 16px;
 
     h1 {
         font-size: 20px;
         font-weight: bold;
-        margin: 5px;
+        margin: 0px 0px 2px 0px;
     }
     p {
-        margin: 5px;
+        margin: 2px 0px;
         font-weight: normal;
         font-size: 15px;
     }
+}
+
+.ScheduleForm {
+    display: block;
+}
+
+.DateSelection {
+    width: 100%;
+    height: 180px;
+
+    p {
+        margin: 0px;
+    
+    }
+}
+
+.CustomDatePicker {
+    display: flex;
+    flex-direction: row;
+}
+
+$custom-picker-date-ratio: 75%;
+
+.CustomDatePickerDate {
+    width: $custom-picker-date-ratio;
+}
+
+.CustomDatePickerTime {
+    width: 100% - $custom-picker-date-ratio;
 }
 
 .ConfirmButton {

@@ -1,11 +1,10 @@
 @import 'global';
 
-$text-margin: $global-screen-padding + 3%;
 $box-margin: $global-screen-padding;
 $textbox-opacity: 0.8;
 $text-padding-bottom: 15px;
 $title-vertical-padding: 10px;
-$border-padding-constant: 6.19;
+$inner-text-padding: $border-radius/6.19;
 
 :export {
     TextBoxOpacity: $textbox-opacity;
@@ -17,7 +16,6 @@ $border-padding-constant: 6.19;
     display: block;
     background-size: cover;
     width: 100%;
-
 }
 
 .TextBox {
@@ -25,9 +23,7 @@ $border-padding-constant: 6.19;
     min-height: 120px;
     
     margin-left: $box-margin;
-    padding-left: $text-margin - $box-margin;
-    padding-right: $text-margin;
-    padding-bottom: 5px;
+    padding: 0px $text-margin 0px $text-margin - $box-margin;
     
     background-color: $white-background;
 }
@@ -37,10 +33,10 @@ $border-padding-constant: 6.19;
     text-align: center;
     font-family: $font;
     color: $font-color-dark;
-    padding: $border-radius/$border-padding-constant $border-radius/$border-padding-constant;
+    padding: $inner-text-padding;
     
     h1 {
-        margin: 0px 4px 0px 4px;
+        margin: 0px;
         padding-top: $title-vertical-padding;
         padding-bottom: $title-vertical-padding;
         font-size: $h1-font-size;
@@ -49,8 +45,8 @@ $border-padding-constant: 6.19;
     p {
         text-align: justify;
         padding-bottom: $text-padding-bottom;
-        margin: 0px 0px 10px 4px;
-        padding: 2px 0px;
+        margin: 0px 0px 10px 0px;
+        padding: 0px;
         font-size: $text-font-size;
         -moz-osx-font-smoothing: grayscale;
         -webkit-font-smoothing: antialiased !important;
