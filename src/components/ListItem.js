@@ -51,11 +51,11 @@ const ListItem = ({
   descricao,
 }) => {
 
-  const [playAvailable, setPlayAvailable] = useState(false)
+  const [playAvailable, setPlayAvailable] = useState(true)
 
   const handleInfoClick = () => {
     callback(context, apelido, descricao)
-    setPlayAvailable(true)
+    // setPlayAvailable(true)
     return null
   }
 

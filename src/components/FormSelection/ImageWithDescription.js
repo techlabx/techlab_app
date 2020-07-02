@@ -9,7 +9,6 @@ const ImageBox = styled.div`
     min-height: 40%;
     z-index: 1;
     background-color: black;
-    background-image: url("terapia.jpg");
     background-position: center;
     background-size: cover;
     max-height: 300px;
