@@ -14,34 +14,40 @@ const Layout = styled.div`
 `
 
 class FormSelectionPage extends React.Component {
-    
-    constructor (props) {
-        super (props);
+  constructor(props) {
+    super(props)
 
-        this.state = {
-            chatAPIAddr: process.env.CHAT_API_ADDR,
-            title: "Questionários Sobre Saúde Mental",
-            description: ""
-        }
+    this.state = {
+      chatAPIAddr: process.env.CHAT_API_ADDR,
+      title: "Questionários Sobre Saúde Mental",
+      description: "",
     }
+  }
 
-    changeDescription (context, apelido, descricao) {
-        context.setState({
-            title: apelido,
-            description: descricao 
-        })
-    }
+  changeDescription(context, apelido, descricao) {
+    context.setState({
+      title: apelido,
+      description: descricao,
+    })
+  }
 
-    render () {
-        return (
-            <UiWrapper pageTitle="Questionários" lastPage="/">
-            <Layout>
-                <ImageWithDescription title={this.state.title} text={this.state.description}/>
-                <FormSelectionList apiAddr={this.state.chatAPIAddr} callback={this.changeDescription} context={this}/>
-            </Layout>
-            </UiWrapper>
-        )
-    }  
+  render() {
+    return (
+      <UiWrapper pageTitle="Questionários" lastPage="/">
+        <Layout>
+          <ImageWithDescription
+            title={this.state.title}
+            text={this.state.description}
+          />
+          <FormSelectionList
+            apiAddr={this.state.chatAPIAddr}
+            callback={this.changeDescription}
+            context={this}
+          />
+        </Layout>
+      </UiWrapper>
+    )
+  }
 }
 
 export default FormSelectionPage

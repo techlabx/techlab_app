@@ -1,14 +1,14 @@
 import Button from "../components/Button"
 import EmailIcon from "@material-ui/icons/Email"
 import InputField from "../components/Login/InputField"
+import { Location } from "@reach/router"
 import React from "react"
+import global from "../styles/global.scss"
+import { isTokenValid } from "../services/auth"
 // import loginImage from "../images/login.jpg"
 import { navigate } from "gatsby"
-import styled from "styled-components"
-import { Location } from "@reach/router"
-import global from "../styles/global.scss"
 import queryString from "query-string"
-import { isTokenValid } from "../services/auth"
+import styled from "styled-components"
 
 const OuterBox = styled.div`
   height: 100%;
@@ -71,6 +71,7 @@ const ButtonBox = styled.div`
   justify-content: space-between;
   align-items: center;
 `
+
 const BottomTextBox = styled.div`
   width: 100%;
   display: flex;
@@ -98,9 +99,15 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #EFA748;
+  background-color: #efa748;
   z-index: 1;
 `
+
+const StyledLink = styled.a`
+  text-decoration: none;
+  width: 70%;
+`
+
 const LoginPage = ComponentToWrap => props => (
   <Location>
     {({ location, navigate }) => (
@@ -114,60 +121,59 @@ const LoginPage = ComponentToWrap => props => (
   </Location>
 )
 class LoginPageUnwrapped extends React.Component {
-  
-  constructor (props) {
-    super (props)
+  constructor(props) {
+    super(props)
     this.state = {
-      validToken: false
+      validToken: false,
     }
   }
 
-  getToken () {
+  getToken() {
     console.log(this.props.search)
-    return this.props.search ? this.props.search.token : null 
+    return this.props.search ? this.props.search.token : null
   }
 
-  async isTokenValid (token) {
+  async isTokenValid(token) {
     return await isTokenValid(token)
   }
 
-  async componentDidMount () {
-    let token = this.getToken();
+  async componentDidMount() {
+    let token = this.getToken()
     console.log(token)
-    let tokenIsValid = await isTokenValid(token);
-    
+    let tokenIsValid = await isTokenValid(token)
+
     if (token !== null && tokenIsValid) {
       window.localStorage.setItem("TOKEN", token)
-      navigate('/')
-      return (<div/>)
+      navigate("/")
+      return <div />
     }
-
   }
 
-  LoginPageComponent () {
+  LoginPageComponent() {
     return (
       <OuterBox>
         <Overlay />
         <InnerBox>
           <Title>Login</Title>
           <ButtonBox>
-            <Button
-              height="50px"
-              width="56%"
-              backgroundColor="#647B98"
-              fontSize="16px"
-              href={`http://${process.env.CHAT_API_ADDR}/auth/login`}
-            >
-              <EmailIcon/>
-              Entrar com email USP
-            </Button>
+            <StyledLink href={`http://${process.env.CHAT_API_ADDR}/auth/login`}>
+              <Button
+                height="50px"
+                width="100%"
+                backgroundColor="#647B98"
+                fontSize="16px"
+              >
+                <EmailIcon />
+                Entrar com email USP
+              </Button>
+            </StyledLink>
           </ButtonBox>
         </InnerBox>
       </OuterBox>
     )
   }
 
-  render () {
+  render() {
     return this.LoginPageComponent()
   }
 }
