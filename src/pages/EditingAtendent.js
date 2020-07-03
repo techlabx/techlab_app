@@ -8,7 +8,7 @@ import ImageWithDescription from "../components/FormSelection/ImageWithDescripti
 import UiWrapper from "../components/ui-wrapper"
 import axios from "axios"
 import { navigate } from "gatsby"
-import styles from "../styles/AddingAtendent.module.scss"
+import styles from "../styles/EditingAtendent.module.scss"
 import terapia from "../images/terapia.jpg"
 
 const EditingAtendent = () => {
