@@ -16,6 +16,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import DateFnsUtils from '@date-io/date-fns';
+import axios from 'axios';
 import ptBR from 'date-fns/locale/pt';
 import 'date-fns';
 import { format } from 'date-fns';
@@ -25,6 +26,35 @@ import {
   TimePicker,
 } from '@material-ui/pickers';
 
+const api = {
+  backendUrl: "http://techlab-oauth.mooo.com",
+  usuarios: {
+    gapsi: "usuarios/gapsi"
+    // GET /:instituto
+  },
+  acolhimento: {
+    eventos: "acolhimento/eventos"
+    // POST /:instituto
+      // body: {
+      //   dataHoraIni: Datetime,
+      //   flagUrgente: bool
+      // }s
+    },
+  eventos: "eventos"
+  // GET /:instituto  
+  // PUT /:instituto/:idEvento
+    // body: {
+    //   "evento": {...},
+    //   "userEmail": "bla@exemplo.com"
+    // }
+}
+
+const backend = axios.create({
+  baseURL: api.backendUrl,
+  timeout: 10000,
+  headers: {'x-access-token': window.localStorage.getItem("TOKEN")}
+});
+
 const dateFormat = "eeee, dd 'de' MMMM'";
 const datetimeFormat = "eeee, dd 'de' MMMM 'às' HH:MM";
 
@@ -33,22 +63,6 @@ const formattedDatetime = (date) => format(
   datetimeFormat,
   {locale: ptBR}
 );
-
-const api = {
-  backendUrl: "http://techlab-oauth.mooo.com",
-  psychologists: {
-    endpoint: "/usuarios/gapsi/",
-    method: "GET"
-  },
-  events: {
-    endpoint: "/acolhimento/eventos/",
-    method: "PUT"
-  },
-  customDate: {
-    endpoint: "",
-    method: "POST"
-  }
-}
 
 const Events = [
   {
@@ -131,62 +145,38 @@ const formUrl = "";
 
 const pageHeader = {
   title: "Acolhimento GAPSI",
-  text: "Agende uma conversa com o psicólogo responsável pelo instituto que estuda."
+  text: "Agende uma conversa com o psicólogo responsável pelo seu instituto."
 }
 
-const Schools = [
-  {value: "ifsc", label: "IFSC - Instituto de Física de São Carlos"},
-  {value: "icmc", label: "ICMC - Instituto de Ciências Matemáticas e de Computação"},
-  {value: "eesc", label: "EESC - Escola de Engenharia de São Carlos"},
-  {value: "iau", label: "IAU - Instituto de Arquitetura e Urbanismo"}
-]
+const Schools = {
+  "IFSC": "IFSC - Instituto de Física de São Carlos",
+  "ICMC": "ICMC - Instituto de Ciências Matemáticas e de Computação",
+  "EESC": "EESC - Escola de Engenharia de São Carlos",
+  "IAU": "IAU - Instituto de Arquitetura e Urbanismo"
+}
 
-const Psychologists = [
-  {
-    name: "Juliana de Oliveira Santos",
-    school: "ifsc",
-    image: defaultImageFemale
-  },
-  {
-    name: "Miki Aiko Nishiro",
-    school: "icmc",
-    image: defaultImageFemale
-  },
-  {
-    name: "Juliana Teixeira de Barros",
-    school: "eesc",
-    image: defaultImageFemale
-  },
-  {
-    name: "Júnior Gomes de Freitas",
-    school: "iau",
-    image: defaultImageMale
+const PsychologistCard = ({ps}) => {
+  let image;
+  if (ps.image == null) {
+    image = defaultImageFemale;
+  } else {
+    image = ps.image;
   }
-]
-
-function getPsychologistBySchool(school) {
-  return Psychologists.find(i => i.school === school.value);
-}
-
-function getSchoolName(schoolValue) {
-  var r = Schools.find(i => i.value === schoolValue);
-  return r.label;
-}
-
-const PsychologistCard = ({psychologist}) => (
-  <div className={styles.PsychologistCard}>
-    <div className={styles.PhotoArea}>
-      <div className={styles.ImagePortrait}>
-        <img src={psychologist.image} alt={psychologist.name+' image'}/>
+  return (
+    <div className={styles.PsychologistCard}>
+      <div className={styles.PhotoArea}>
+        <div className={styles.ImagePortrait}>
+          <img src={image} alt={ps.name+' image'}/>
+        </div>
+      </div>
+      <div className={styles.CardContent}>
+        <h1>{ps.name}</h1>
+        <p>Responsável pelo instituto:</p>
+        <p>{ps.schoolName}</p>
       </div>
     </div>
-    <div className={styles.CardContent}>
-      <h1>{psychologist.name}</h1>
-      <p>Responsável pelo instituto:</p>
-      <p>{getSchoolName(psychologist.school)}</p>
-    </div>
-  </div>
-);
+  )
+};
 
 // Entender
 const ColorButton = withStyles((theme) => (
@@ -209,8 +199,11 @@ class ScheduleMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userSchool: {value: "icmc"},
-      events: populateEventOption(Events),
+      userEmail: undefined,
+      loaded: false,
+      school: undefined,
+      psychologist: undefined,
+      events: [],
       selectedEvent: '',
       isCustomDate: false,
       customDate: new Date(),
@@ -219,27 +212,59 @@ class ScheduleMenu extends React.Component {
     this.submitUrl = formUrl;
   }
 
-  selectEvent(event) {
-    this.setState({selectedEvent: event.target.value});
+  setPsychologist = (callback) => {
+    var component = this;
+    backend.get(`${api.usuarios.gapsi}/${this.state.school.toUpperCase()}`)
+      .then(res => {
+        component.setState({
+          psychologist: {
+            name: res.data.nomeatendente,
+            schoolName: Schools[res.data.institutoatendente.toUpperCase()],
+            email: res.data.emailatendente,
+            image: res.data.imgatendente,
+          }
+        }, callback)
+      }); 
+  }
+    
+  setEvents = (callback) => {
+    var component = this;
+    backend.get(`${api.eventos}/${this.state.school.toUpperCase()}`)
+    .then(res => {
+      console.log(res.data);
+      component.setState({
+        events: populateEventOption(res.data)
+      }, callback);
+    })
+    .catch( err => {
+      console.log('ERROR');
+      console.log(err);
+      component.setState({
+        events: populateEventOption(Events)
+      }, callback);
+    });
   }
 
-  handleSubmit = event => {
-    event.preventDefault();
-    const args = {
-      userEmail: "teste@usp.br",
-      event: this.state.selectedEvent,
-      isCustomDate: this.state.isCustomDate,
-      customDate: this.state.customDate,
-      emergency: this.state.emergency
-    }
-    
-    alert(JSON.stringify(args, null, 4));
-    
-    if (args.isCustomDate) {
-      // custom date case
-    } else {
-      // normal case
-    }
+  componentDidMount() {
+    var component = this;
+    this.setState({
+      userEmail: "pedro.pastorello@usp.br",
+      school: "icmc"
+    }, () => {
+        component.setPsychologist( () => {
+          component.setEvents( () => {
+            component.setState({loaded: true});
+            component.render();
+          });
+        });
+      }
+    );
+
+    console.log(this.state);
+}
+
+  selectEvent(event) {
+    this.setState({selectedEvent: event.target.value});
   }
 
   handleChange = (event) => {
@@ -258,9 +283,49 @@ class ScheduleMenu extends React.Component {
     //
   }
 
-  render() {
-    var userSchool = this.state.userSchool;
+  postCustomEvent = () => {
+    const payload = {
+      dataHoraIni: this.state.customDate,
+      flagUrgente: this.state.emergency
+    }
+    backend.post(`${api.acolhimento.eventos}/${this.state.school.toUpperCase()}`, payload)
+    .then(res => {
+      console.log(res);
+    }); 
+  }
+
+  postNormalEvent = () => {
+    var eventId = this.state.selectedEvent;
+    const payload = {
+      evento: this.state.events.find(e => e.id === eventId),
+      userEmail: this.state.userEmail
+    }
+    backend.put(`${api.eventos}/${this.state.school.toUpperCase()}/${eventId}`, payload)
+    .then(res => {
+      console.log(res);
+    });
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+    const args = {
+      userEmail: "teste@usp.br",
+      event: this.state.selectedEvent,
+      isCustomDate: this.state.isCustomDate,
+      customDate: this.state.customDate,
+      emergency: this.state.emergency
+    }
     
+    alert(JSON.stringify(args, null, 4));
+    
+    if (args.isCustomDate) {
+      this.postCustomEvent();
+    } else {
+      this.postNormalEvent();
+    }
+  }
+
+  render() {    
     let dateSelection;
     if (this.state.isCustomDate) {
       dateSelection = (
@@ -272,7 +337,6 @@ class ScheduleMenu extends React.Component {
               <div className={styles.CustomDatePicker}>
                 <DatePicker
                   disableToolbar
-                  format="MM/dd"
                   margin="normal"
                   id="date-picker-inline"
                   disablePast="true"
@@ -286,6 +350,7 @@ class ScheduleMenu extends React.Component {
                   margin="normal"
                   id="time-picker"
                   disablePast="true"
+                  ampm="false"
                   value={this.state.customDate}
                   onChange={this.setCustomDate}
                   className={styles.CustomDatePickerTime}
@@ -325,17 +390,11 @@ class ScheduleMenu extends React.Component {
         </FormGroup>
       );
     }
-    
-    if (userSchool == null) {
+
+    if (this.state.loaded) {
       return (
         <div className={styles.ScheduleMenu}>
-          <p>Você precisa estar logado para acessar isso.</p>
-        </div>
-      );
-    } else {
-      return (
-        <div className={styles.ScheduleMenu}>
-          <PsychologistCard psychologist={getPsychologistBySchool(userSchool)}/>
+          <PsychologistCard ps={this.state.psychologist}/>
             <form onSubmit={this.handleSubmit} className={styles.ScheduleForm}>
               <div className={styles.DateSelection}>
                 {dateSelection}
@@ -352,7 +411,13 @@ class ScheduleMenu extends React.Component {
               </FormControl>
             </form>
         </div>
-      );
+      );      
+    } else {
+      return (
+        <div className={styles.ScheduleMenu}>
+          <p>Carregando...</p>
+        </div>
+      )
     }
   }
 }

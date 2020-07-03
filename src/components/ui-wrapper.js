@@ -56,16 +56,16 @@ class UiWrapper extends React.Component {
     super(props)
   }
 
-  async componentDidMount() {
-    let isLogged = await isLoggedIn()
-    if (!isLogged) {
-      console.log("not rendering")
-      navigate("/loginpage")
-      return null
-    } else {
-      console.log("letting render")
-    }
-  }
+  // async componentDidMount() {
+  //   let isLogged = await isLoggedIn()
+  //   if (!isLogged) {
+  //     console.log("not rendering")
+  //     navigate("/loginpage")
+  //     return null
+  //   } else {
+  //     console.log("letting render")
+  //   }
+  // }
 
   render() {
     return (

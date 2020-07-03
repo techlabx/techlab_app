@@ -11,8 +11,8 @@ const emailUrl = "mailto:gapsi@icmc.usp.br"
 const site = "Nosso site: "
 const siteUrl = "https://gapsi.icmc.usp.br";
 const linksHeader = "Nossas redes sociais:";
-const facebookUrl = "/";
-const instagramUrl = "/";
+const facebookUrl = "https://m.facebook.com/Apoia-Usp-SC-107922227573130/";
+const instagramUrl = "https://www.instagram.com/apoia.usp.sc/";
 
 const ContactBox = () => (
   <div className={styles.ContactBox}>
