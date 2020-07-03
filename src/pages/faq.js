@@ -49,7 +49,7 @@ const theme5 = {
 }
 
 const InfoPage = () => (
-  <UiWrapper pageTitle='Perguntas Frequentes' lastPage='/'>
+  <UiWrapper pageNeedsAuth='false' pageTitle='Perguntas Frequentes' lastPage='/'>
     <ContentContainer title={header.title} text={header.text} color={global.MainOrange}>
       <ContactBox/>
     </ContentContainer>

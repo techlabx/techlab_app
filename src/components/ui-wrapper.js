@@ -8,6 +8,7 @@ import React from "react"
 import isLoggedIn from "../services/auth"
 import { navigate } from "gatsby"
 import styles from "../styles/ui-wrapper.module.scss"
+import { string } from "prop-types"
 
 const appTitle = "GAPSI USP São Carlos"
 
@@ -55,17 +56,23 @@ class UiWrapper extends React.Component {
   constructor(props) {
     super(props)
   }
+  
+  async componentDidMount() {
+    var needsAuth = false;
+    if (typeof this.props.pageNeedsAuth === 'string' &&
+        this.props.pageNeedsAuth.toLowerCase() === 'true') {
+          needsAuth = true;
+    };
 
-  // async componentDidMount() {
-  //   let isLogged = await isLoggedIn()
-  //   if (!isLogged) {
-  //     console.log("not rendering")
-  //     navigate("/loginpage")
-  //     return null
-  //   } else {
-  //     console.log("letting render")
-  //   }
-  // }
+    if (needsAuth) {
+      let isLogged = await isLoggedIn()
+      if (!isLogged) {
+        navigate("/loginpage")
+        return null
+      } else {
+      }
+    }
+  }
 
   render() {
     return (

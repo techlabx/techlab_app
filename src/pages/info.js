@@ -37,7 +37,7 @@ const theme5 = {
 }
 
 const InfoPage = () => (
-  <UiWrapper pageTitle='Sobre o Gapsi' lastPage='/'>
+  <UiWrapper pageNeedsAuth='false' pageTitle='Sobre o Gapsi' lastPage='/'>
     <ContentContainer title={header.title} text={header.text} color={global.LightBlue} bgImage={bgImg} textColor={global.FontColorDark}>
       <ContactBox/>
     </ContentContainer>

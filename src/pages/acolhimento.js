@@ -5,7 +5,6 @@ import styles from "../styles/acolhimento.module.scss"
 import Button from '@material-ui/core/Button'
 import global from "../styles/global.scss"
 import { withStyles } from "@material-ui/core/styles"
-import defaultImageMale from "../images/default_user_photo_male.jpg"
 import defaultImageFemale from "../images/default_user_photo_female.jpg"
 import 'react-dropdown/style.css';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -26,43 +25,15 @@ import {
   TimePicker,
 } from '@material-ui/pickers';
 
-const api = {
-  backendUrl: "http://techlab-oauth.mooo.com",
-  usuarios: {
-    gapsi: "usuarios/gapsi"
-    // GET /:instituto
-  },
-  acolhimento: {
-    eventos: "acolhimento/eventos"
-    // POST /:instituto
-      // body: {
-      //   dataHoraIni: Datetime,
-      //   flagUrgente: bool
-      // }s
-    },
-  eventos: "eventos"
-  // GET /:instituto  
-  // PUT /:instituto/:idEvento
-    // body: {
-    //   "evento": {...},
-    //   "userEmail": "bla@exemplo.com"
-    // }
-}
+const token = `
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwNDM3MDkzOTYyNDQxOTQ2NTgzNyIsIm5hbWUiOiJQZWRybyBQYXN0b3JlbGxvIEZlcm5hbmRlcyIsImVtYWlsIjoicGVkcm9wYXN0b3JmQHVzcC5iciIsImhkIjoidXNwLmJyIiwiaWF0IjoxNTkzODAwMTQ0LCJleHAiOjE1OTM4ODY1NDR9.8CHiY8ix03gpopV4mvEVrHrs1fUxFecOFQiNtDX0djQ
+`;
 
 const backend = axios.create({
-  baseURL: api.backendUrl,
+  baseURL: "http://techlab-oauth.mooo.com",
   timeout: 10000,
   headers: {'x-access-token': window.localStorage.getItem("TOKEN")}
-});
-
-const dateFormat = "eeee, dd 'de' MMMM'";
-const datetimeFormat = "eeee, dd 'de' MMMM 'às' HH:MM";
-
-const formattedDatetime = (date) => format(
-  date, 
-  datetimeFormat,
-  {locale: ptBR}
-);
+})
 
 const Events = [
   {
@@ -124,6 +95,52 @@ const Events = [
       }
   }
 ]
+
+const api = {
+  auth: {
+    // GET auth/info/ - informações do usuário logado
+    info: {
+      get: {
+        endpoint: () => (`auth/info/`)
+      }
+    }
+  },
+  usuarios: {
+    gapsi: {
+      // GET usuarios/gapsi/:instituto - pegar psicologo do instituto
+      get: {
+        endpoint: (instituto) => (`usuarios/gapsi/${instituto.toUpperCase()}`)
+      }
+    }
+  },
+  acolhimento: {
+    eventos: {
+      // GET usuarios/gapsi/:instituto - pegar eventos disponiveis do instituto
+      get: {
+        endpoint: instituto => (`acolhimento/eventos/${instituto.toUpperCase()}`),
+      },
+      // POST /:instituto - sugerir evento novo
+      post: { 
+        endpoint: instituto => (`acolhimento/eventos/${instituto.toUpperCase()}`),
+        payload: (date, emergency) => ({dataHoraIni: date, flagUrgente: emergency})
+      },
+      // PUT /:instituto/:idEvento - selecionar evento existente
+      put: {
+        endpoint: (instituto, idEvento) => (`acolhimento/eventos/${instituto.toUpperCase()}/${idEvento}`),
+        payload: (event, email) => ({evento: event, userEmail: email})
+      }
+    }
+  }
+}
+
+const dateFormat = "eeee, dd 'de' MMMM'";
+const datetimeFormat = "eeee, dd 'de' MMMM 'às' HH:MM";
+
+const formattedDatetime = (date) => format(
+  date, 
+  datetimeFormat,
+  {locale: ptBR}
+);
 
 function buildDateLabel(dateStr) {
   var date = new Date(dateStr);
@@ -199,9 +216,9 @@ class ScheduleMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userEmail: undefined,
       loaded: false,
-      school: undefined,
+      errorMsg: 'Carregando...',
+      userInfo: undefined,
       psychologist: undefined,
       events: [],
       selectedEvent: '',
@@ -214,54 +231,73 @@ class ScheduleMenu extends React.Component {
 
   setPsychologist = (callback) => {
     var component = this;
-    backend.get(`${api.usuarios.gapsi}/${this.state.school.toUpperCase()}`)
+    backend.get(api.usuarios.gapsi.get.endpoint(this.state.userInfo.school))
       .then(res => {
+        console.log(res);
         component.setState({
           psychologist: {
             name: res.data.nomeatendente,
-            schoolName: Schools[res.data.institutoatendente.toUpperCase()],
+            schoolName: Schools[res.data.institutoatendente],
             email: res.data.emailatendente,
             image: res.data.imgatendente,
           }
         }, callback)
-      }); 
+      })
+      .catch(err => {
+        this.LoadingError(err, "não foi possível acessar os dados do psicólogo")
+      })
   }
     
   setEvents = (callback) => {
     var component = this;
-    backend.get(`${api.eventos}/${this.state.school.toUpperCase()}`)
-    .then(res => {
-      console.log(res.data);
-      component.setState({
-        events: populateEventOption(res.data)
-      }, callback);
-    })
-    .catch( err => {
-      console.log('ERROR');
-      console.log(err);
-      component.setState({
-        events: populateEventOption(Events)
-      }, callback);
-    });
+    backend.get(api.acolhimento.eventos.get.endpoint(this.state.userInfo.school))
+      .then(res => {
+        console.log(res.data);
+        component.setState({
+          events: populateEventOption(res.data)
+        }, callback);
+      })
+      .catch( err => {
+        this.LoadingError(err, "não foi possível acessar os dados dos eventos")
+              })
+  }
+
+  setUserInfo = (callback) => {
+    var component = this;
+    backend.get(api.auth.info.get.endpoint())
+      .then(res => {
+        component.setState({
+          userInfo: {
+            id: res.data.id,
+            name: res.data.name,
+            email: res.data.email,
+            school: 'icmc' // gambi
+          }
+        }, callback);
+      })
+      .catch( err => {
+        this.LoadingError(err, "não foi possível acessar os dados do usuário")
+      })
+  }
+z
+  LoadingError = (err, msg) => {
+    console.log(msg); console.log(err);
+    this.setState( {errorMsg: "Erro: "+msg} )
   }
 
   componentDidMount() {
+    window.localStorage.setItem("TOKEN", token);
+    
     var component = this;
-    this.setState({
-      userEmail: "pedro.pastorello@usp.br",
-      school: "icmc"
-    }, () => {
-        component.setPsychologist( () => {
-          component.setEvents( () => {
-            component.setState({loaded: true});
-            component.render();
-          });
+    component.setUserInfo(() => {
+      component.setPsychologist( () => {
+        component.setEvents( () => {
+          component.setState({loaded: true});
+          component.render();
         });
-      }
-    );
-
-    console.log(this.state);
-}
+      });
+    });
+  }
 
   selectEvent(event) {
     this.setState({selectedEvent: event.target.value});
@@ -284,32 +320,55 @@ class ScheduleMenu extends React.Component {
   }
 
   postCustomEvent = () => {
-    const payload = {
-      dataHoraIni: this.state.customDate,
-      flagUrgente: this.state.emergency
-    }
-    backend.post(`${api.acolhimento.eventos}/${this.state.school.toUpperCase()}`, payload)
-    .then(res => {
-      console.log(res);
-    }); 
+    var eventId = this.state.selectedEvent;
+
+    const endpoint = api.acolhimento.eventos.post.endpoint(this.state.userInfo.school);
+    const payload = api.acolhimento.eventos.post.payload(
+        this.state.customDate,
+        this.state.emergency
+    )
+
+    console.log(endpoint); console.log(payload);
+
+    backend.post(
+      endpoint,
+      payload
+      )
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      }) 
   }
 
   postNormalEvent = () => {
     var eventId = this.state.selectedEvent;
-    const payload = {
-      evento: this.state.events.find(e => e.id === eventId),
-      userEmail: this.state.userEmail
-    }
-    backend.put(`${api.eventos}/${this.state.school.toUpperCase()}/${eventId}`, payload)
-    .then(res => {
-      console.log(res);
-    });
+
+    const endpoint = api.acolhimento.eventos.put.endpoint(this.state.userInfo.school, this.state.selectedEvent);
+    const payload = api.acolhimento.eventos.put.payload(
+      this.state.events.find(e => e.id === eventId),
+      this.state.userEmail
+    )
+
+    console.log(endpoint); console.log(payload);
+
+    backend.put(
+      endpoint,
+      payload
+      )
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      }) 
   }
 
   handleSubmit = event => {
     event.preventDefault();
     const args = {
-      userEmail: "teste@usp.br",
+      userEmail: this.state.userInfo.email,
       event: this.state.selectedEvent,
       isCustomDate: this.state.isCustomDate,
       customDate: this.state.customDate,
@@ -415,7 +474,7 @@ class ScheduleMenu extends React.Component {
     } else {
       return (
         <div className={styles.ScheduleMenu}>
-          <p>Carregando...</p>
+          <p>{this.state.errorMsg}</p>
         </div>
       )
     }
@@ -423,7 +482,7 @@ class ScheduleMenu extends React.Component {
 }
 
 const AcolhimentoPage = () => (
-  <UiWrapper pageTitle='Acolhimentos' lastPage='/'>
+  <UiWrapper pageNeedsAuth='false' pageTitle='Acolhimentos' lastPage='/'>
     <ContentContainer title={pageHeader.title} text={pageHeader.text} bgColor={global.MainBlue}/>
     <ScheduleMenu/>
   </UiWrapper>

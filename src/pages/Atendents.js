@@ -225,7 +225,7 @@ class Atendents extends React.Component {
 
   render() {
     return (
-      <UiWrapper pageTitle="Lista de Atendentes" lastPage="/">
+      <UiWrapper pageNeedsAuth='true' pageTitle="Lista de Atendentes" lastPage="/">
         {/* <ImageWithDescription src={terapia} title={"Lista de Atendentes"} /> */}
         <div className={styles.AddBox}>
           <button className={styles.AddButton}>

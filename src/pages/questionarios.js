@@ -33,7 +33,7 @@ class FormSelectionPage extends React.Component {
 
   render() {
     return (
-      <UiWrapper pageTitle="Questionários" lastPage="/">
+      <UiWrapper pageNeedsAuth='true' pageTitle="Questionários" lastPage="/">
         <Layout>
           <ImageWithDescription
             title={this.state.title}
