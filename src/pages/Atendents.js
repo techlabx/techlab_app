@@ -64,7 +64,7 @@ class Atendents extends React.Component {
     const chatAPIAddr = process.env.CHAT_API_ADDR
     try {
       const res = await axios.delete(
-        `http://${chatAPIAddr}/usuarios/gapsi/${this.state.atendents[index].email}`,
+        `http://${chatAPIAddr}/usuarios/gapsi/${this.state.atendents[index].instituto}`,
         { headers: { "x-access-token": window.localStorage.getItem("TOKEN") } }
       )
 
