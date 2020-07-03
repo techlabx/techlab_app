@@ -34,7 +34,7 @@ const TextBox = styled.div`
 
 const TextDescriptionBox = styled.div`
   height: auto;
-  max-height: 120px;
+  max-height: 110px;
   overflow-x: hidden;
 `
 
