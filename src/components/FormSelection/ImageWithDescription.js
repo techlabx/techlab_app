@@ -9,9 +9,9 @@ const ImageBox = styled.div`
     min-height: 40%;
     z-index: 1;
     background-color: black;
-    background-image: url("terapia.jpg");
     background-position: center;
     background-size: cover;
+    max-height: 300px;
   }
 `
 
@@ -34,7 +34,7 @@ const TextBox = styled.div`
 
 const TextDescriptionBox = styled.div`
   height: auto;
-  max-height: 100px;
+  max-height: 110px;
   overflow-x: hidden;
 `
 

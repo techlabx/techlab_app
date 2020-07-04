@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import InfoIcon from "@material-ui/icons/Info"
 import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilledWhite"
 import styled from "styled-components"
+import { navigate } from "@reach/router"
 
 const StyledListItem = styled.button`
   width: 100%;
@@ -49,15 +50,17 @@ const ListItem = ({
   context,
   descricao,
 }) => {
-  const [playAvailable, setPlayAvailable] = useState(false)
+
+  const [playAvailable, setPlayAvailable] = useState(true)
 
   const handleInfoClick = () => {
     callback(context, apelido, descricao)
-    setPlayAvailable(true)
+    // setPlayAvailable(true)
     return null
   }
 
   const handlePlayClick = () => {
+    navigate(`/formpage?form=${apelido}`)
     //Vai para o formulário
   }
 

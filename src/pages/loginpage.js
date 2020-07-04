@@ -68,7 +68,7 @@ const ButtonBox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 `
 
@@ -106,6 +106,8 @@ const Overlay = styled.div`
 const StyledLink = styled.a`
   text-decoration: none;
   width: 70%;
+  display: flex;
+  justify-content: center;
 `
 
 const LoginPage = ComponentToWrap => props => (

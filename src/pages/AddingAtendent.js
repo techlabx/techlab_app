@@ -36,6 +36,7 @@ const AddingAtendents = () => {
         {
           nomeatendente: nome,
           emailatendente: email,
+          institutoatendente: instituto,
           linkagenda: link
         },
         {headers: {'x-access-token': window.localStorage.getItem("TOKEN")}})

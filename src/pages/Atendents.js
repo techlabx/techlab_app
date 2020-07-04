@@ -17,32 +17,6 @@ class Atendents extends React.Component {
     this.state = {
       removeDialogOpen: false,
       atendents: [],
-      //   {
-      //     nome: "Pedro Paulo Isnard Brando",
-      //     instituto: "ICMC",
-      //     status: "CONFIRMED",
-      //     email: "pedro@gmail.com",
-      //   },
-      //   {
-      //     nome: "Pedro Paulo Isnard Brando",
-      //     instituto: "EESC",
-      //     status: "WAITING",
-      //     email: "pedro@gmail.com",
-      //   },
-      //   {
-      //     id: 12111,
-      //     nome: "Pedro Paulo Isnard Brando",
-      //     instituto: "IQSC",
-      //     status: "WAITING",
-      //     email: "pedro@gmail.com",
-      //   },
-      //   {
-      //     nome: "Pedro Paulo Isnard Brando",
-      //     instituto: "IFSC",
-      //     status: "CONFIRMED",
-      //     email: "pedro@gmail.com",
-      //   },
-      //
     }
   }
 
@@ -53,13 +27,14 @@ class Atendents extends React.Component {
       const res = await axios.get(`http://${chatAPIAddr}/usuarios/gapsi/`, {
         headers: { "x-access-token": window.localStorage.getItem("TOKEN") },
       })
-
+      
+      console.log(res)
       this.setState({
         atendents: res.data.map(value => {
           return {
             nome: value.nomeatendente,
-            status: "CONFIRMED",
-            instituto: value.emailatendente,
+            status: value.statusatendente,
+            instituto: value.institutoatendente,
             email: value.emailatendente,
           }
         }),
@@ -193,10 +168,7 @@ class Atendents extends React.Component {
               <div className={styles.ActionBox}>
                 <button className={styles.WaitingRemoveButton}>
                   {/* Imagino q a rota que tenha de destino deva ser '/ConfirmingAtendent/atendentid' */}
-                  <a
-                    className={styles.Link}
-                    href={`/ConfirmingAtendent?${atendent.instituto}`}
-                  >
+                  <a className={styles.Link} href={`/ConfirmingAtendent?sigla=${atendent.instituto}`}>
                     <CheckIcon />
                   </a>
                 </button>
@@ -204,7 +176,7 @@ class Atendents extends React.Component {
                   {/* Imagino q a rota que tenha de destino deva ser '/ConfirmingAtendent/atendentid' */}
                   <a
                     className={styles.Link}
-                    href={`/EditingAtendent?${atendent.email}`}
+                    href={`/EditingAtendent?email=${atendent.email}`}
                   >
                     <EditIcon />
                   </a>
