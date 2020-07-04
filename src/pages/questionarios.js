@@ -11,6 +11,7 @@ const Layout = styled.div`
   flex-direction: column;
   align-items: flex-stretch;
   margin: 0;
+  display: -webkit-flex;
 `
 
 class FormSelectionPage extends React.Component {

@@ -62,7 +62,7 @@ const Signup = () => {
           <span className={styles.InputLabel}>Número USP</span>
           <input
             className={styles.InputField}
-            placeholder="nusp"
+            placeholder=" Número Usp"
             type="text"
             onChange={e => setNusp(e.target.value)}
           />
