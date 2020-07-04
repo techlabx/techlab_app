@@ -33,7 +33,7 @@ $inner-text-padding: $border-radius/6.19;
     text-align: center;
     font-family: $font;
     color: $font-color-dark;
-    padding: $inner-text-padding;
+    padding: $inner-text-padding 0px;
     
     h1 {
         margin: 0px;

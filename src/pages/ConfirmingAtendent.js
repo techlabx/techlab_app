@@ -68,7 +68,7 @@ const ConfirmingAtendent = () => {
     <Location>
     {({ location, navigate }) => {
       return (    
-        <UiWrapper pageTitle="Confirmação da Agenda" lastPage="/Atendents">
+        <UiWrapper pageNeedsAuth='true' pageTitle="Confirmação da Agenda" lastPage="/Atendents">
           <Dialog open={errorDialogOpen}>
             <DialogTitle>Código incorreto</DialogTitle>
             <DialogContent>

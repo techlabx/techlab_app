@@ -42,7 +42,7 @@ const StyledImage = styled.img`
   max-width: 100%;
   max-height: 100%;
   width: 100%;
-  overlay: hidden;
+  overflow: hidden;
   z-index: 0;
 `
 

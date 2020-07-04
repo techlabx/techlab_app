@@ -1,15 +1,17 @@
 @import 'global';
 
 .ContactBox {
-    font-size: 12px;
+    font-size: $small-font-size;
     margin: 0px;
-    padding: 0px $global-screen-padding;
-    padding-bottom: 8px;
+    padding: 0px $global-screen-padding 16px $global-screen-padding;
 
     h2 {
         font-size: $h2-font-size;
         text-align: center;
-        margin: 10px 0px;
+        margin: 6px 0px;
+    }
+    p {
+        padding: 2px 0px;;
     }
     a {
         text-decoration: none;
