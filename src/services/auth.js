@@ -21,7 +21,6 @@ export const isTokenValid = async (token) => {
 }
 
 async function isLoggedIn() {
-
     let token = window.localStorage.getItem("TOKEN")
     console.log('isLoggedIN', token)
     let res = await isTokenValid(token)

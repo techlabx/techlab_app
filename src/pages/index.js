@@ -5,7 +5,7 @@ import { navigate } from "gatsby"
 
 const IndexPage = () => {
   return (
-    <UiWrapper pageTitle="TechLab" lastPage="/">
+    <UiWrapper pageNeedsAuth='false' pageTitle="TechLab" lastPage="/">
       <ul style={{ listStyle: "none" }}>
         <li
           onClick={() => {

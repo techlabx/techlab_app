@@ -1,153 +1,93 @@
-import Button from "../components/Button"
-import EmailIcon from "@material-ui/icons/Email"
-import InputField from "../components/Login/InputField"
-import React from "react"
-import loginImage from "../images/login.jpg"
+import React, { useState } from "react"
+
+import UiWrapper from "../components/ui-wrapper"
+import axios from "axios"
 import { navigate } from "gatsby"
-import styled from "styled-components"
+import styles from "../styles/Signup.module.scss"
 
-const OuterBox = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  background-image: url("login.jpg");
-  background-position: center;
-  background-size: cover;
-`
+const Signup = () => {
+  const [nusp, setNusp] = useState("")
+  const [instituto, setInstituto] = useState("")
 
-const InnerBox = styled.div`
-  && {
-    height: 50%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 2;
-    margin-top: 150px;
+  const institutos = ["-", "ICMC", "EESQ", "IFSC", "IQSC"]
+
+  const options = institutos.map(instituto => {
+    return (
+      <option key={instituto} value={instituto}>
+        {instituto}
+      </option>
+    )
+  })
+
+  const handleSendClick = async () => {
+    console.log(nusp, instituto)
+    const chatAPIAddr = process.env.CHAT_API_ADDR
+    // try {
+    //   const [
+    //     userId,
+    //     userEmail,
+    //     userName,
+    //   ] = await axios.get(`http://${chatAPIAddr}/auth/info`, {
+    //     headers: { "x-access-token": window.localStorage.getItem("TOKEN") },
+    //   })
+
+    //   const res = await axios.post(
+    //     `http://${chatAPIAddr}/usuarios/aluno/`,
+    //     {
+    //       nusp: nusp,
+    //       instituto: instituto,
+    //       userId: userId,
+    //       userEmail: userEmail,
+    //       userName: userName,
+    //     },
+    //     { headers: { "x-access-token": window.localStorage.getItem("TOKEN") } }
+    //   )
+    // } catch (error) {
+    //   if (error.response.status == 401) {
+    //     navigate("/loginpage")
+    //     return
+    //   }
+    // }
   }
-`
 
-const StyledImage = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  max-width: 100%;
-  max-height: 100%;
-  width: 100%;
-  overlay: hidden;
-  z-index: 0;
-`
+  const handleCancelClick = () => {
+    navigate("/loginpage")
+  }
 
-const Title = styled.span`
-  color: white;
-  font-size: 50px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  border-sizing: border-box;
-`
-
-const InputBox = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 5px;
-  border-sizing: border-box;
-`
-
-const ButtonBox = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-`
-const BottomTextBox = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const BottomText = styled.span`
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-  margin-right: 5px;
-`
-
-const CreateAccountLink = styled.a`
-  font-size: 16px;
-  font-weight: bold;
-  color: #418694;
-  cursor: pointer;
-`
-
-const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(236, 121, 15, 0.3);
-  z-index: 1;
-`
-
-const signup = () => {
   return (
-    <OuterBox>
-      <Overlay />
-      <StyledImage src={loginImage}></StyledImage>
-      <InnerBox>
-        <Title>Cadastro</Title>
-        <InputBox>
-          <InputField
-            height="25px"
-            width="70%"
-            placeholder="Digite aqui seu nome completo"
-            borderColor="3px solid #418694"
+    <UiWrapper pageTitle="Cadastro" lastPage="/loginpage">
+      {/* <ImageWithDescription src={terapia} title={"Adicionar Atendente"} /> */}
+      <div className={styles.Form}>
+        <div className={styles.InputBox}>
+          <span className={styles.InputLabel}>Número USP</span>
+          <input
+            className={styles.InputField}
+            placeholder="nusp"
+            type="text"
+            onChange={e => setNusp(e.target.value)}
           />
-          <InputField
-            height="25px"
-            width="70%"
-            placeholder="Digite aqui seu e-mail"
-            borderColor="3px solid #418694"
-          />
-          <InputField
-            height="25px"
-            width="70%"
-            type="password"
-            placeholder="Digite aqui sua nova senha"
-            borderColor="3px solid #418694"
-          />
-          <InputField
-            height="25px"
-            width="70%"
-            type="password"
-            placeholder="Repita sua senha"
-            borderColor="3px solid #418694"
-          />
-        </InputBox>
-        <ButtonBox>
-          <Button height="50px" width="70%" backgroundColor="#418694">
-            Cadastrar
-          </Button>
-        </ButtonBox>
-        <BottomTextBox>
-          <BottomText>Já tem uma conta? </BottomText>
-          <CreateAccountLink onClick={() => navigate("/LoginPage")}>
-            Faça o login
-          </CreateAccountLink>
-        </BottomTextBox>
-      </InnerBox>
-    </OuterBox>
+        </div>
+        <div className={styles.InputBox}>
+          <span className={styles.InputLabel}>Instituto</span>
+          <select
+            className={styles.InputField}
+            placeholder="Instituto"
+            onChange={e => setInstituto(e.target.value)}
+          >
+            {options}
+          </select>
+        </div>
+      </div>
+      <div className={styles.ButtonBox}>
+        <button className={styles.AddButton} onClick={handleSendClick}>
+          ENVIAR
+        </button>
+        <a className={styles.Link} href={"/loginpage"}>
+          <button className={styles.CancelButton}>CANCELAR</button>
+        </a>
+      </div>
+    </UiWrapper>
   )
 }
 
-export default signup
+export default Signup

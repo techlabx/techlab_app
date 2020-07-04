@@ -64,7 +64,7 @@ const EditingAtendent = () => {
   }
 
   return (
-    <UiWrapper pageTitle="Editar Atendente" lastPage="/Atendents">
+    <UiWrapper pageNeedsAuth='true' pageTitle="Editar Atendente" lastPage="/Atendents">
       <Dialog open={errorDialogOpen}>
         <DialogTitle>Instituto Inválido</DialogTitle>
         <DialogContent>
