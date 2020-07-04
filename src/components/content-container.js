@@ -13,7 +13,6 @@ const sampleTitle= `
 const textBoxOpacity = parseFloat(styles.TextBoxOpacity);
 
 const TextBox = ({ color, textColor, name, children }) => {
-  console.log(color, name)
   return (
   <div className={styles.TextBox} style={{ backgroundColor: color, color: textColor == undefined ? "black" : textColor }}>
     {children}
@@ -21,7 +20,7 @@ const TextBox = ({ color, textColor, name, children }) => {
   );
 }
 
-const ContentContainer = ({title, text, color, textColor, bgImage}) => (
+const ContentContainer = ({title, text, color, textColor, bgImage, children}) => (
   <div className={styles.ContentContainer} style={bgImage!==null ? {backgroundImage: `url(${bgImage})`} : {}}>
     <TextBox color={color} textColor={textColor} name={text}>
       <div className={styles.Text}>
@@ -30,6 +29,7 @@ const ContentContainer = ({title, text, color, textColor, bgImage}) => (
           <p key={i}>{line}</p>
         ))}
       </div>
+      {children}
     </TextBox>
   </div>
 );

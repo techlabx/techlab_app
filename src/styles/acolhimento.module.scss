@@ -22,7 +22,7 @@
 }
 
 $photo-width: 80px;
-$photo-height: 90px;
+$photo-height: 96px;
 
 .ImagePortrait {
     display: block;
@@ -50,7 +50,7 @@ $photo-height: 90px;
     display: block;
     font-family: $font;
     color: $font-color-dark;
-    padding-left: 16px;
+    padding-left: 20px;
 
     h1 {
         font-size: 20px;
@@ -58,7 +58,7 @@ $photo-height: 90px;
         margin: 0px 0px 2px 0px;
     }
     p {
-        margin: 2px 0px;
+        margin: 4px 0px;
         font-weight: normal;
         font-size: 15px;
     }
@@ -70,15 +70,46 @@ $photo-height: 90px;
 
 .DateSelection {
     width: 100%;
-    height: 180px;
+    height: 80px;
+    padding: 8px 0px;
+
+    position: relative;
+    flex-direction: column;
+    display: flex;
+
 
     p {
+        font: $font;
+        font-size: $small-font-size;
+        position: absolute;
         margin: 0px;
-    
     }
 }
 
+.DatePicker {
+    position: absolute;
+    
+    p {
+        font: $font;
+        font-size: $small-font-size;
+        position: absolute;
+        margin: 0px;
+    }
+}
+
+.NormalDatePicker {
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    margin: 16px 0px;
+}
+
 .CustomDatePicker {
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    margin: 8px 0px;
+
     display: flex;
     flex-direction: row;
 }
@@ -93,10 +124,22 @@ $custom-picker-date-ratio: 75%;
     width: 100% - $custom-picker-date-ratio;
 }
 
+.EmergencyCheckbox {
+    position: absolute;
+    padding: 8px 0px;
+}
+
+.SwapCustomDateButton {
+    position: absolute;
+    p {
+        height: 30px;
+    }
+}
+
 .ConfirmButton {
     width: 100%;
     height: 20px;
     display: flex;
     flex-direction: column;
-    margin-top: 10px;
+    margin-top: 8px;
 }

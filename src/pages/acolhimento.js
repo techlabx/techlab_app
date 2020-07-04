@@ -9,7 +9,6 @@ import defaultImageFemale from "../images/default_user_photo_female.jpg"
 import 'react-dropdown/style.css';
 import Checkbox from '@material-ui/core/Checkbox';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Select from '@material-ui/core/Select';
@@ -24,6 +23,7 @@ import {
   DatePicker,
   TimePicker,
 } from '@material-ui/pickers';
+import { navigate } from "gatsby"
 
 const token = `
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwNDM3MDkzOTYyNDQxOTQ2NTgzNyIsIm5hbWUiOiJQZWRybyBQYXN0b3JlbGxvIEZlcm5hbmRlcyIsImVtYWlsIjoicGVkcm9wYXN0b3JmQHVzcC5iciIsImhkIjoidXNwLmJyIiwiaWF0IjoxNTkzODAwMTQ0LCJleHAiOjE1OTM4ODY1NDR9.8CHiY8ix03gpopV4mvEVrHrs1fUxFecOFQiNtDX0djQ
@@ -165,7 +165,7 @@ const pageHeader = {
   text: "Agende uma conversa com o psicólogo responsável pelo seu instituto."
 }
 
-const Schools = {
+const Institutos = {
   "IFSC": "IFSC - Instituto de Física de São Carlos",
   "ICMC": "ICMC - Instituto de Ciências Matemáticas e de Computação",
   "EESC": "EESC - Escola de Engenharia de São Carlos",
@@ -189,7 +189,7 @@ const PsychologistCard = ({ps}) => {
       <div className={styles.CardContent}>
         <h1>{ps.name}</h1>
         <p>Responsável pelo instituto:</p>
-        <p>{ps.schoolName}</p>
+        <p>{Institutos[ps.instituto.toUpperCase()]}</p>
       </div>
     </div>
   )
@@ -221,7 +221,7 @@ class ScheduleMenu extends React.Component {
       userInfo: undefined,
       psychologist: undefined,
       events: [],
-      selectedEvent: '',
+      selectedEvent: undefined,
       isCustomDate: false,
       customDate: new Date(),
       emergency: false
@@ -233,18 +233,27 @@ class ScheduleMenu extends React.Component {
     var component = this;
     backend.get(api.usuarios.gapsi.get.endpoint(this.state.userInfo.school))
       .then(res => {
-        console.log(res);
         component.setState({
           psychologist: {
             name: res.data.nomeatendente,
-            schoolName: Schools[res.data.institutoatendente],
+            instituto: res.data.institutoatendente,
             email: res.data.emailatendente,
             image: res.data.imgatendente,
           }
         }, callback)
       })
       .catch(err => {
-        this.LoadingError(err, "não foi possível acessar os dados do psicólogo")
+        this.LoadingError(err, "Não foi possível acessar os dados do psicólogo")
+
+        // Mock
+        component.setState({
+          psychologist: {
+            name: 'atendente',
+            instituto: 'ICMC',
+            email: 'atendente@icmc.usp.br',
+            image: null,
+          }
+        }, callback)
       })
   }
     
@@ -252,14 +261,18 @@ class ScheduleMenu extends React.Component {
     var component = this;
     backend.get(api.acolhimento.eventos.get.endpoint(this.state.userInfo.school))
       .then(res => {
-        console.log(res.data);
         component.setState({
           events: populateEventOption(res.data)
         }, callback);
       })
       .catch( err => {
-        this.LoadingError(err, "não foi possível acessar os dados dos eventos")
-              })
+        this.LoadingError(err, "Não foi possível acessar os dados dos eventos")
+
+        // Mock
+        component.setState({
+          events: populateEventOption(Events)
+        }, callback);
+      })
   }
 
   setUserInfo = (callback) => {
@@ -271,18 +284,18 @@ class ScheduleMenu extends React.Component {
             id: res.data.id,
             name: res.data.name,
             email: res.data.email,
-            school: 'icmc' // gambi
+            school: 'icmc' // mock
           }
         }, callback);
       })
       .catch( err => {
-        this.LoadingError(err, "não foi possível acessar os dados do usuário")
+        this.LoadingError(err, "Não foi possível acessar os dados do usuário")        
       })
   }
-z
+
   LoadingError = (err, msg) => {
     console.log(msg); console.log(err);
-    this.setState( {errorMsg: "Erro: "+msg} )
+    this.setState( {errorMsg: `Opa, algo deu errado! ${msg}`} )
   }
 
   componentDidMount() {
@@ -315,91 +328,97 @@ z
     this.setState({customDate: date});
   }
 
-  isValidDate = (date) => {
-    //
+  submitSuccess = () => {
+    alert("Seu acolhimento foi agendado com sucesso! Entraremos em contato com você pelo seu email USP para prosseguir.");
+    navigate('/');
   }
 
-  postCustomEvent = () => {
+  submitError = (err, msg) => {
+    const defaultErrorMsg = "Opa, algo deu errado! Não foi possível agendar seu acolhimento. Tente novamente mais tarde.";
+    if (msg == undefined)
+      msg = defaultErrorMsg;
+    
+    console.log(err);
+    alert(msg);
+  }
+
+  submitCustomEvent = args => {
     var eventId = this.state.selectedEvent;
 
-    const endpoint = api.acolhimento.eventos.post.endpoint(this.state.userInfo.school);
+    const endpoint = api.acolhimento.eventos.post.endpoint(args.instituto);
     const payload = api.acolhimento.eventos.post.payload(
-        this.state.customDate,
-        this.state.emergency
+        args.customDate,
+        args.emergency
     )
 
-    console.log(endpoint); console.log(payload);
+    console.log('POST '+endpoint); console.log(payload);
 
-    backend.post(
-      endpoint,
-      payload
-      )
+    backend.post(endpoint, payload)
       .then(res => {
-        console.log(res);
+        this.submitSuccess()
       })
       .catch(err => {
-        console.log(err);
+        this.submitError()
       }) 
   }
 
-  postNormalEvent = () => {
-    var eventId = this.state.selectedEvent;
-
-    const endpoint = api.acolhimento.eventos.put.endpoint(this.state.userInfo.school, this.state.selectedEvent);
+  submitNormalEvent = args => {
+    const endpoint = api.acolhimento.eventos.put.endpoint(args.instituto, args.eventId);
     const payload = api.acolhimento.eventos.put.payload(
-      this.state.events.find(e => e.id === eventId),
-      this.state.userEmail
+      this.state.events.find(e => e.id === args.eventId),
+      args.userEmail
     )
 
-    console.log(endpoint); console.log(payload);
+    console.log('PUT '+endpoint, payload);
 
-    backend.put(
-      endpoint,
-      payload
-      )
+    backend.put(endpoint, payload)
       .then(res => {
-        console.log(res);
+        this.submitSuccess()
       })
       .catch(err => {
-        console.log(err);
+        this.submitError()
       }) 
-  }
+}
 
   handleSubmit = event => {
     event.preventDefault();
     const args = {
+      instituto: this.state.userInfo.school,
       userEmail: this.state.userInfo.email,
-      event: this.state.selectedEvent,
       isCustomDate: this.state.isCustomDate,
+      eventId: this.state.selectedEvent,
       customDate: this.state.customDate,
       emergency: this.state.emergency
     }
-    
-    alert(JSON.stringify(args, null, 4));
-    
+        
     if (args.isCustomDate) {
-      this.postCustomEvent();
-    } else {
-      this.postNormalEvent();
+      this.submitCustomEvent(args);
+      return;
     }
+
+    if (args.eventId === undefined) {
+      this.submitError("", "Escolha um horário entre os disponíveis.");
+      return;
+    }  
+
+    this.submitNormalEvent(args);
   }
 
   render() {    
     let dateSelection;
     if (this.state.isCustomDate) {
       dateSelection = (
-        <FormGroup>
+        <div className={styles.DateSelection}>
           <FormControl className={styles.CustomDatePicker}>
             <InputLabel id="custom-date-picker"></InputLabel>
             <p>Escolha uma data e hora</p>
-            <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptBR}>
-              <div className={styles.CustomDatePicker}>
+            <div className={styles.CustomDatePicker}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptBR}>
                 <DatePicker
                   disableToolbar
                   margin="normal"
                   id="date-picker-inline"
                   disablePast="true"
-                  shouldDisableDate={date => this.isValidDate(date)}
                   format={dateFormat}
                   value={this.state.customDate}
                   onChange={this.setCustomDate}
@@ -414,39 +433,39 @@ z
                   onChange={this.setCustomDate}
                   className={styles.CustomDatePickerTime}
                   />
-              </div>
-            </MuiPickersUtilsProvider>
+              </MuiPickersUtilsProvider>
+            </div>
           </FormControl>
-          <FormControl className={styles.SwapCustomDateButton}>
-            <InputLabel id="swap-custom-date"></InputLabel>
-            <p>Obs: este horário é apenas uma sugestão. Entraremos em contato com você para continuar com o agendamento.</p>
-            <ColorButton onClick={() => this.swapCustomDate()}variant="contained" color="primary" style={{backgroundColor: Orange, height:'40px', marginBottom: '15px', marginRight: '10px'}}>Sessões pré-agendadas</ColorButton>
+          <FormControl>
+          <div className={styles.EmergencyCheckbox}>
+            <InputLabel id="ermergency-flag"></InputLabel>
+            <FormControlLabel
+              control={<Checkbox checked={this.state.emergency} onChange={this.handleChange} name="emergency"/>}
+              label="Solicitar atendimento emergencial"
+              />
+          </div>
           </FormControl>
-        </FormGroup>
+        </div>
       );
     } else {
       dateSelection = (
-        <FormGroup>
+        <div className={styles.DateSelection}>
           <FormControl className={styles.DatePicker}>
             <InputLabel id="date-picker"></InputLabel>
-            <p>Horário do acolhimento (sessões livres):</p>
+            <p>Escolha uma sessão livre:</p>
             <Select
               labelId="date-picker"
               id="date-picker-select"
-              value={this.state.selectedEvent}
+              value={this.state.selectedEvent ? this.state.selectedEvent : ''}
               onChange={e => this.selectEvent(e)}
+              className={styles.NormalDatePicker}
             >
               {this.state.events.map((e, i) => (
                 <MenuItem value={e.value} key={i}>{e.label}</MenuItem>
               ))}
             </Select>
           </FormControl>
-          <FormControl className={styles.SwapCustomDateButton}>
-            <InputLabel id="swap-custom-date"></InputLabel>
-            <p>Não encontrou nenhuma sessão boa para você?</p>
-            <ColorButton onClick={() => this.swapCustomDate()}variant="contained" color="primary" style={{backgroundColor: Orange, height:'40px', marginBottom: '15px', marginRight: '10px'}} >Sugerir outro horário</ColorButton>
-          </FormControl>
-        </FormGroup>
+        </div>
       );
     }
 
@@ -458,12 +477,10 @@ z
               <div className={styles.DateSelection}>
                 {dateSelection}
               </div>
-              <FormControl className={styles.EmergencyCheckbox}>
-                <InputLabel id="ermergency-flag"></InputLabel>
-                <FormControlLabel
-                  control={<Checkbox checked={this.state.emergency} onChange={this.handleChange} name="emergency"/>}
-                  label="Solicitar atendimento emergencial"
-                  />
+              <FormControl className={styles.SwapCustomDateButton}>
+                <InputLabel id="swap-custom-date"></InputLabel>
+                  <p>{this.state.isCustomDate ? "Obs: este horário é apenas uma sugestão." : "Não encontrou nenhuma sessão boa para você?"}</p>
+                <ColorButton onClick={() => this.swapCustomDate()}variant="contained" color="primary" style={{backgroundColor: Orange, height:'40px', marginBottom: '15px', marginRight: '10px'}}>{this.state.isCustomDate ? "Horários pré agendados" : "Sugerir outro horário"}</ColorButton>
               </FormControl>
               <FormControl className={styles.ConfirmButton}>
                 <ColorButton variant="contained" color="primary" style={{backgroundColor: Orange, height:'40px', marginBottom: '15px', marginRight: '10px'}} type="submit">Agendar</ColorButton>

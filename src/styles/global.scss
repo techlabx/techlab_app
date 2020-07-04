@@ -33,14 +33,15 @@ $chat-input-blackground: $white;
 $chat-internal-blackground: $gray2;
 
 $font1: Roboto, sans-serif;
-$default-font-size: 16px;
 
+$default-font-size: 16px;
 $global-screen-padding: 4%;
 $text-margin: $global-screen-padding + 4%;
 $border-radius: 35px;
 $h1-font-size: 22px;
 $h2-font-size: 16px;
-$text-font-size: $default-font-size;
+$text-font-size: 16px;
+$small-font-size: 14px;
 
 .container {
     font-family: $font1;
