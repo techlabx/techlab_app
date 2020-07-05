@@ -30,10 +30,6 @@ const pageHeader = {
   text: "Agende uma conversa com o psicólogo responsável pelo seu instituto."
 }
 
-const token = `
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwNDM3MDkzOTYyNDQxOTQ2NTgzNyIsIm5hbWUiOiJQZWRybyBQYXN0b3JlbGxvIEZlcm5hbmRlcyIsImVtYWlsIjoicGVkcm9wYXN0b3JmQHVzcC5iciIsImhkIjoidXNwLmJyIiwiaWF0IjoxNTkzOTczOTE0LCJleHAiOjE1OTQwNjAzMTR9.61DmeD4jSlnivDGjul-ttCtjZBVpbQIjmHppn3KZhO4
-`;
-
 
 const backend = axios.create({
   baseURL: "http://techlab-oauth.mooo.com",
@@ -249,7 +245,6 @@ class ScheduleMenu extends React.Component {
   }
 
   componentDidMount() {
-    window.localStorage.setItem("TOKEN", token);
     const component = this;
     component.setUserInfo(() => {
       component.setInstituto(() => {
