@@ -34,6 +34,7 @@ const token = `
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwNDM3MDkzOTYyNDQxOTQ2NTgzNyIsIm5hbWUiOiJQZWRybyBQYXN0b3JlbGxvIEZlcm5hbmRlcyIsImVtYWlsIjoicGVkcm9wYXN0b3JmQHVzcC5iciIsImhkIjoidXNwLmJyIiwiaWF0IjoxNTkzOTczOTE0LCJleHAiOjE1OTQwNjAzMTR9.61DmeD4jSlnivDGjul-ttCtjZBVpbQIjmHppn3KZhO4
 `;
 
+
 const backend = axios.create({
   baseURL: "http://techlab-oauth.mooo.com",
   timeout: 10000,
@@ -168,11 +169,17 @@ class ScheduleMenu extends React.Component {
       customDate: new Date(),
       emergency: false
     }
+    this.backend = axios.create({
+      baseURL: "http://techlab-oauth.mooo.com",
+      timeout: 10000,
+      headers: {'x-access-token': window.localStorage.getItem("TOKEN")}
+    })
   }
 
   setPsychologist = (callback) => {
-    const component = this;
-    backend.get(api.usuarios.gapsi.get.endpoint(this.state.userInfo.instituto))
+    var component = this;
+
+    this.backend.get(api.usuarios.gapsi.get.endpoint(this.state.userInfo.instituto))
       .then(res => {
         component.setState({
           psychologist: {
@@ -189,8 +196,8 @@ class ScheduleMenu extends React.Component {
   }
     
   setEvents = (callback) => {
-    const component = this;
-    backend.get(api.acolhimento.eventos.get.endpoint(this.state.userInfo.instituto))
+    var component = this;
+    this.backend.get(api.acolhimento.eventos.get.endpoint(this.state.userInfo.instituto))
       .then(res => {
         component.setState({
           events: populateEventOption(res.data)
@@ -202,15 +209,15 @@ class ScheduleMenu extends React.Component {
   }
 
   setUserInfo = (callback) => {
-    const component = this;
-    backend.get(api.auth.info.get.endpoint())
+    var component = this;
+    this.backend.get(api.auth.info.get.endpoint())
       .then(res => {
         component.setState({
           userInfo: {
             id: res.data.id,
             name: res.data.name,
             email: res.data.email,
-            instituto: 'icmc'.toUpperCase() // mock
+            instituto: 'ICMC'.toUpperCase() // mock
           }
         }, callback);
       })
@@ -243,7 +250,6 @@ class ScheduleMenu extends React.Component {
 
   componentDidMount() {
     window.localStorage.setItem("TOKEN", token);
-    
     const component = this;
     component.setUserInfo(() => {
       component.setInstituto(() => {
@@ -298,7 +304,7 @@ class ScheduleMenu extends React.Component {
 
     console.log('POST '+endpoint); console.log(payload);
 
-    backend.post(endpoint, payload)
+    this.backend.post(endpoint, payload)
       .then(res => {
         this.submitSuccess()
       })
@@ -314,9 +320,7 @@ class ScheduleMenu extends React.Component {
       args.userEmail
     )
 
-    console.log('PUT '+endpoint, payload);
-
-    backend.put(endpoint, payload)
+    this.backend.put(endpoint, payload)
       .then(res => {
         this.submitSuccess()
       })
@@ -374,7 +378,8 @@ class ScheduleMenu extends React.Component {
                   margin="normal"
                   id="time-picker"
                   disablePast="true"
-                  ampm="false"
+                  ampm={false}
+                  minutesStep={15}
                   value={this.state.customDate}
                   onChange={this.setCustomDate}
                   className={styles.CustomDatePickerTime}

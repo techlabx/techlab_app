@@ -17,37 +17,54 @@ const ConfirmingAtendent = () => {
   const [errorDialogOpen, setErrorDialogOpen] = useState(false)
   const [emailLink, setEmailLink] = useState("")
 
-  const handleSendClick = (sigla) => {
-    console.log(sigla)
-    //Se tiver sucesso
-    // navigate("/Atendents")
-    //Se estiver errado
-    //setErrorDialogOpen(true)
-  }
-
-  const handleGenerateLinkClick = async (sigla) => {
+  const handleSendClick = async (sigla) => {
 
     const chatAPIAddr = process.env.CHAT_API_ADDR
 
     try {
-      const res = await axios.post(
+      const res = await axios.put(
         `http://${chatAPIAddr}/acolhimento/token/${sigla}`,
+        {code: codigo},
         {headers: {'x-access-token': window.localStorage.getItem("TOKEN")
       }})
-      
-      console.log(res.data.authUrl)
-      setEmailLink(res.data.authUrl)
-      setCalendarLinkDialogOpen(true)
+      navigate('/Atendents');
+      return
+      // setCalendarLinkDialogOpen(true)
 
     }
     catch (error) {
       if (error.response.status == 401) {
         navigate('/loginpage');
         return;
-      } else if (error.response.status == 404) {
+      } else if (error.response.status == 500) {
         navigate('/Atendents');
         return;
       } 
+    }
+  }
+
+  const handleGenerateLinkClick = async (sigla) => {
+
+    const chatAPIAddr = process.env.CHAT_API_ADDR
+    try {
+      const res = await axios.post(
+        `http://${chatAPIAddr}/acolhimento/token/${sigla}`,
+        {},
+        {headers: {'x-access-token': window.localStorage.getItem("TOKEN")
+      }})
+      
+      setEmailLink(res.data.authUrl)
+      setCalendarLinkDialogOpen(true)
+
+    }
+    catch (error) {
+      // if (error.response.status === 401) {
+      //   navigate('/loginpage');
+      //   return;
+      // } else if (error.response.status === 404) {
+      //   navigate('/Atendents');
+      //   return;
+      // } 
     }
     //precisa ter acesso ao link da agenda cadastrado, nn sei como passar isso entre paginas do gatsby
   }
@@ -92,7 +109,7 @@ const ConfirmingAtendent = () => {
                 Copie esse link e peça para o atendente acessá-lo e enviar ao
                 administrador o código gerado após o login.
               </DialogContentText>
-              <a className={styles.LinkText} onClick={()=> window.open(emailLink, "_blank")}>seu link</a>
+              <a className={styles.LinkText} onClick={()=> window.open(emailLink, "_blank")}>{emailLink}</a>
             </DialogContent>
             <div className={styles.DialogButtonBox}>
               <button className={styles.Button} onClick={() => handleCloseDialog()}>
