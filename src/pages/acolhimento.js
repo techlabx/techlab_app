@@ -25,16 +25,6 @@ import {
 } from '@material-ui/pickers';
 import { navigate } from "gatsby"
 
-const token = `
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwNDM3MDkzOTYyNDQxOTQ2NTgzNyIsIm5hbWUiOiJQZWRybyBQYXN0b3JlbGxvIEZlcm5hbmRlcyIsImVtYWlsIjoicGVkcm9wYXN0b3JmQHVzcC5iciIsImhkIjoidXNwLmJyIiwiaWF0IjoxNTkzODAwMTQ0LCJleHAiOjE1OTM4ODY1NDR9.8CHiY8ix03gpopV4mvEVrHrs1fUxFecOFQiNtDX0djQ
-`;
-
-const backend = axios.create({
-  baseURL: "http://techlab-oauth.mooo.com",
-  timeout: 10000,
-  headers: {'x-access-token': window.localStorage.getItem("TOKEN")}
-})
-
 const Events = [
   {
       "kind": "calendar#event",
@@ -226,12 +216,19 @@ class ScheduleMenu extends React.Component {
       customDate: new Date(),
       emergency: false
     }
+    this.backend = axios.create({
+      baseURL: "http://techlab-oauth.mooo.com",
+      timeout: 10000,
+      headers: {'x-access-token': window.localStorage.getItem("TOKEN")}
+    })
+
     this.submitUrl = formUrl;
   }
 
   setPsychologist = (callback) => {
     var component = this;
-    backend.get(api.usuarios.gapsi.get.endpoint(this.state.userInfo.school))
+
+    this.backend.get(api.usuarios.gapsi.get.endpoint(this.state.userInfo.school))
       .then(res => {
         component.setState({
           psychologist: {
@@ -259,7 +256,7 @@ class ScheduleMenu extends React.Component {
     
   setEvents = (callback) => {
     var component = this;
-    backend.get(api.acolhimento.eventos.get.endpoint(this.state.userInfo.school))
+    this.backend.get(api.acolhimento.eventos.get.endpoint(this.state.userInfo.school))
       .then(res => {
         component.setState({
           events: populateEventOption(res.data)
@@ -277,14 +274,17 @@ class ScheduleMenu extends React.Component {
 
   setUserInfo = (callback) => {
     var component = this;
-    backend.get(api.auth.info.get.endpoint())
+    console.log(window.localStorage.getItem("TOKEN"))
+    console.log(api.auth.info.get.endpoint())
+    this.backend.get(api.auth.info.get.endpoint())
       .then(res => {
+        console.log(res.data)
         component.setState({
           userInfo: {
             id: res.data.id,
             name: res.data.name,
             email: res.data.email,
-            school: 'icmc' // mock
+            school: 'ICMC' // mock
           }
         }, callback);
       })
@@ -299,7 +299,6 @@ class ScheduleMenu extends React.Component {
   }
 
   componentDidMount() {
-    window.localStorage.setItem("TOKEN", token);
     
     var component = this;
     component.setUserInfo(() => {
@@ -353,7 +352,7 @@ class ScheduleMenu extends React.Component {
 
     console.log('POST '+endpoint); console.log(payload);
 
-    backend.post(endpoint, payload)
+    this.backend.post(endpoint, payload)
       .then(res => {
         this.submitSuccess()
       })
@@ -371,7 +370,7 @@ class ScheduleMenu extends React.Component {
 
     console.log('PUT '+endpoint, payload);
 
-    backend.put(endpoint, payload)
+    this.backend.put(endpoint, payload)
       .then(res => {
         this.submitSuccess()
       })

@@ -31,6 +31,7 @@ class Atendents extends React.Component {
       console.log(res)
       this.setState({
         atendents: res.data.map(value => {
+          console.log(value)
           return {
             nome: value.nomeatendente,
             status: value.statusatendente,
@@ -48,29 +49,40 @@ class Atendents extends React.Component {
   }
 
   handleRemoveClick = () => {
+
+    console.log('deleting')
     this.setState({
       removeDialogOpen: true,
     })
+
   }
 
-  handleCancelClick = () => {
+  handleCancelClick = (instituto) => {
+    
     console.log("cancel")
+    console.log(instituto)
     this.setState({
       removeDialogOpen: false,
     })
+
   }
 
-  handleConfirmClick = async index => {
+  handleConfirmClick = async (e) => {
+    
     const chatAPIAddr = process.env.CHAT_API_ADDR
+
+    let instituto = e.target.attributes.instituto.value
+    // console.log(instituto, typeof(instituto))
+    // return
     try {
       const res = await axios.delete(
-        `http://${chatAPIAddr}/usuarios/gapsi/${this.state.atendents[index].instituto}`,
+        `http://${chatAPIAddr}/usuarios/gapsi/${instituto}`,
         { headers: { "x-access-token": window.localStorage.getItem("TOKEN") } }
       )
 
       this.setState({
         atendents: this.state.atendents.filter(value =>
-          value.email === this.state.atendents[index].email ? false : true
+          value.instituto === instituto ? false : true
         ),
       })
     } catch (error) {
@@ -99,7 +111,8 @@ class Atendents extends React.Component {
                 <div className={styles.ButtonBox}>
                   <button
                     className={styles.Button}
-                    onClick={() => this.handleConfirmClick(index)}
+                    instituto={atendent.instituto}
+                    onClick={this.handleConfirmClick}
                   >
                     Confirmar
                   </button>
@@ -147,7 +160,8 @@ class Atendents extends React.Component {
                 <div className={styles.ButtonBox}>
                   <button
                     className={styles.Button}
-                    onClick={() => this.handleConfirmClick(index)}
+                    instituto={atendent.instituto}
+                    onClick={this.handleConfirmClick}
                   >
                     Confirmar
                   </button>
@@ -194,6 +208,7 @@ class Atendents extends React.Component {
       )
     })
   }
+
 
   render() {
     return (
