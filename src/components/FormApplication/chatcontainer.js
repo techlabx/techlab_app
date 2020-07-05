@@ -3,10 +3,10 @@ import React, { Fragment } from "react"
 import ButtonBox from "./buttonbox"
 import ChatBox from "./chatbox"
 import { MessageInput } from "./messageinput"
-import axios from "axios"
-import styles from "../../styles/chatcontainer.module.scss"
-import { navigate } from "gatsby"
 import UiWrapper from "../../components/ui-wrapper"
+import axios from "axios"
+import { navigate } from "gatsby"
+import styles from "../../styles/chatcontainer.module.scss"
 
 class ChatContainer extends React.Component {
   messagesEndRef = React.createRef()
@@ -30,9 +30,9 @@ class ChatContainer extends React.Component {
     try {
       const res = await axios.post(
         `http://${this.props.chatAddr}/questionarios/${this.props.form}/begin`,
-        {teste: 'teste'},
-        {headers: {'x-access-token': window.localStorage.getItem("TOKEN")
-      }})
+        { teste: "teste" },
+        { headers: { "x-access-token": window.localStorage.getItem("TOKEN") } }
+      )
 
       this.setState({
         sessionId: res.data.session_id,
@@ -41,58 +41,57 @@ class ChatContainer extends React.Component {
             direction: "server",
             message: msg,
             button: false,
-        }}),
-        options: res.data.options
+          }
+        }),
+        options: res.data.options,
       })
-    }
-    catch (error) {
+    } catch (error) {
       if (error.response.status == 401) {
-        navigate('/loginpage');
-        return;
-      } 
+        navigate("/loginpage")
+        return
+      }
     }
   }
 
   componentDidUpdate = () => {
     this.scrollToBottom()
   }
-  
+
   addMessage = messageText => {
     this.scrollToBottom()
 
     if (messageText == "Sair") {
-      navigate('/')
+      navigate("/")
       return
-    } 
+    }
 
     const message = {
       direction: "client",
       message: messageText,
       button: false,
     }
-  
+
     this.setState({
       messages: [...this.state.messages, message],
       blocked: true,
     })
-    
+
     this.getServerResponse(messageText)
-  
+
     // }
     this.setState({
-      messageNumber:this.state.messageNumber+1
+      messageNumber: this.state.messageNumber + 1,
     })
     this.scrollToBottom()
-    
   }
 
   getServerResponse = async messageText => {
-    
     try {
       const res = await axios.put(
         `http://${this.props.chatAddr}/questionarios/${this.props.form}/${this.state.sessionId}/proxima/`,
-        {answer: messageText},
-        {headers: {'x-access-token': window.localStorage.getItem("TOKEN")}})
+        { answer: messageText },
+        { headers: { "x-access-token": window.localStorage.getItem("TOKEN") } }
+      )
 
       let response_server = [
         {
@@ -101,15 +100,15 @@ class ChatContainer extends React.Component {
           button: false,
         },
       ]
-  
+
       if (res.data.options) {
         this.setState({ options: res.data.options })
       } else this.setState({ options: [] })
-  
+
       if (res.data.question === "" || res.data.question === undefined) {
         let messages = res.data.result
         let messagesObject = Array()
-  
+
         for (const idx in messages) {
           messagesObject.push({
             direction: "server",
@@ -117,19 +116,20 @@ class ChatContainer extends React.Component {
             button: false,
           })
         }
-  
+
         messagesObject.push({
           direction: "server",
-          message: "Se desejar, você pode marcar uma conversa com a gente! Só clicar no botão abaixo que você será redirecionado para a página de acolhimento.",
+          message:
+            "Se desejar, você pode marcar uma conversa com a gente! Só clicar no botão abaixo que você será redirecionado para a página de acolhimento.",
           button: false,
         })
-        
+
         messagesObject.push({
           direction: "server",
           message: "Clique aqui para ir para a aba de acolhimento",
           button: true,
         })
-  
+
         this.setState({
           blocked: true,
           messages: [...this.state.messages, ...messagesObject],
@@ -140,16 +140,14 @@ class ChatContainer extends React.Component {
           messages: [...this.state.messages, ...response_server],
         })
       }
-  
-      this.scrollToBottom()
-    }
-    catch (error) {
-      if (error.response.status == 401) {
-        navigate('/loginpage');
-        return;
-      } 
-    }
 
+      this.scrollToBottom()
+    } catch (error) {
+      if (error.response.status == 401) {
+        navigate("/loginpage")
+        return
+      }
+    }
   }
 
   renderMessage = (message, index) => {
@@ -173,7 +171,7 @@ class ChatContainer extends React.Component {
 
   render() {
     return (
-      <UiWrapper pageTitle={this.props.form} lastPage='/'>
+      <UiWrapper pageTitle={this.props.form} lastPage="/questionarios">
         <div className={styles.container}>
           {/* <Header siteTitle="SQR-20"/> */}
           {this.state.messages.map(this.renderMessage)}
