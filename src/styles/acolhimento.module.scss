@@ -22,7 +22,7 @@
 }
 
 $photo-width: 80px;
-$photo-height: 96px;
+$photo-height: 90px;
 
 .ImagePortrait {
     display: block;
@@ -77,7 +77,6 @@ $photo-height: 96px;
     flex-direction: column;
     display: flex;
 
-
     p {
         font: $font;
         font-size: $small-font-size;
@@ -127,6 +126,7 @@ $custom-picker-date-ratio: 75%;
 .EmergencyCheckbox {
     position: absolute;
     padding: 8px 0px;
+    margin: 8px 0px;
 }
 
 .SwapCustomDateButton {

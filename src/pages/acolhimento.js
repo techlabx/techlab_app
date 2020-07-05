@@ -25,8 +25,13 @@ import {
 } from '@material-ui/pickers';
 import { navigate } from "gatsby"
 
+const pageHeader = {
+  title: "Acolhimento GAPSI",
+  text: "Agende uma conversa com o psicólogo responsável pelo seu instituto."
+}
+
 const token = `
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwNDM3MDkzOTYyNDQxOTQ2NTgzNyIsIm5hbWUiOiJQZWRybyBQYXN0b3JlbGxvIEZlcm5hbmRlcyIsImVtYWlsIjoicGVkcm9wYXN0b3JmQHVzcC5iciIsImhkIjoidXNwLmJyIiwiaWF0IjoxNTkzODAwMTQ0LCJleHAiOjE1OTM4ODY1NDR9.8CHiY8ix03gpopV4mvEVrHrs1fUxFecOFQiNtDX0djQ
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwNDM3MDkzOTYyNDQxOTQ2NTgzNyIsIm5hbWUiOiJQZWRybyBQYXN0b3JlbGxvIEZlcm5hbmRlcyIsImVtYWlsIjoicGVkcm9wYXN0b3JmQHVzcC5iciIsImhkIjoidXNwLmJyIiwiaWF0IjoxNTkzOTczOTE0LCJleHAiOjE1OTQwNjAzMTR9.61DmeD4jSlnivDGjul-ttCtjZBVpbQIjmHppn3KZhO4
 `;
 
 const backend = axios.create({
@@ -34,67 +39,6 @@ const backend = axios.create({
   timeout: 10000,
   headers: {'x-access-token': window.localStorage.getItem("TOKEN")}
 })
-
-const Events = [
-  {
-      "kind": "calendar#event",
-      "etag": "\"3187061092716000\"",
-      "id": "0fnl6diudkvdc8446fvekra7a8",
-      "status": "confirmed",
-      "htmlLink": "https://www.google.com/calendar/event?eid=MGZubDZkaXVka3ZkYzg0NDZmdmVrcmE3YTggbGVvbmFyZG9naW92YW5uaXBAbQ",
-      "created": "2020-06-30T15:22:26.000Z",
-      "updated": "2020-06-30T15:22:26.358Z",
-      "summary": "Livre",
-      "creator": {
-          "email": "leonardogiovannip@gmail.com",
-          "self": true
-      },
-      "organizer": {
-          "email": "leonardogiovannip@gmail.com",
-          "self": true
-      },
-      "start": {
-          "dateTime": "2020-06-30T13:30:00-03:00"
-      },
-      "end": {
-          "dateTime": "2020-06-30T14:30:00-03:00"
-      },
-      "iCalUID": "0fnl6diudkvdc8446fvekra7a8@google.com",
-      "sequence": 0,
-      "reminders": {
-          "useDefault": true
-      }
-  },
-  {
-      "kind": "calendar#event",
-      "etag": "\"3187061098348000\"",
-      "id": "10upda0bqq31gglbepfs1ol8h9",
-      "status": "confirmed",
-      "htmlLink": "https://www.google.com/calendar/event?eid=MTB1cGRhMGJxcTMxZ2dsYmVwZnMxb2w4aDkgbGVvbmFyZG9naW92YW5uaXBAbQ",
-      "created": "2020-06-30T15:22:29.000Z",
-      "updated": "2020-06-30T15:22:29.174Z",
-      "summary": "Livre",
-      "creator": {
-          "email": "leonardogiovannip@gmail.com",
-          "self": true
-      },
-      "organizer": {
-          "email": "leonardogiovannip@gmail.com",
-          "self": true
-      },
-      "start": {
-          "dateTime": "2020-06-30T15:00:00-03:00"
-      },
-      "end": {
-          "dateTime": "2020-06-30T16:00:00-03:00"
-      },
-      "iCalUID": "10upda0bqq31gglbepfs1ol8h9@google.com",
-      "sequence": 0,
-      "reminders": {
-          "useDefault": true
-      }
-  }
-]
 
 const api = {
   auth: {
@@ -110,6 +54,12 @@ const api = {
       // GET usuarios/gapsi/:instituto - pegar psicologo do instituto
       get: {
         endpoint: (instituto) => (`usuarios/gapsi/${instituto.toUpperCase()}`)
+      }
+    },
+    instituto: {
+      // GET usuarios/instituto - pegar lista de institutos
+      get: {
+        endpoint: () => (`usuarios/instituto`)
       }
     }
   },
@@ -133,14 +83,17 @@ const api = {
   }
 }
 
-const dateFormat = "eeee, dd 'de' MMMM'";
-const datetimeFormat = "eeee, dd 'de' MMMM 'às' HH:MM";
+// Utils
 
-const formattedDatetime = (date) => format(
-  date, 
-  datetimeFormat,
-  {locale: ptBR}
-);
+const dateFormat = "eeee, dd 'de' MMMM'";
+
+const formattedDatetime = (date) => {
+  const datetimeFormat = "eeee, dd 'de' MMMM 'às' HH:MM";
+  return format(
+    date, 
+    datetimeFormat,
+    {locale: ptBR}
+)};
 
 function buildDateLabel(dateStr) {
   var date = new Date(dateStr);
@@ -156,23 +109,11 @@ function populateEventOption(events) {
   });
 }
 
-const Orange = global.MainOrange;
+// Components
 
-const formUrl = "";
+const Orange = global.MainOrange; 
 
-const pageHeader = {
-  title: "Acolhimento GAPSI",
-  text: "Agende uma conversa com o psicólogo responsável pelo seu instituto."
-}
-
-const Institutos = {
-  "IFSC": "IFSC - Instituto de Física de São Carlos",
-  "ICMC": "ICMC - Instituto de Ciências Matemáticas e de Computação",
-  "EESC": "EESC - Escola de Engenharia de São Carlos",
-  "IAU": "IAU - Instituto de Arquitetura e Urbanismo"
-}
-
-const PsychologistCard = ({ps}) => {
+const PsychologistCard = ({instituto, ps}) => {
   let image;
   if (ps.image == null) {
     image = defaultImageFemale;
@@ -189,7 +130,7 @@ const PsychologistCard = ({ps}) => {
       <div className={styles.CardContent}>
         <h1>{ps.name}</h1>
         <p>Responsável pelo instituto:</p>
-        <p>{Institutos[ps.instituto.toUpperCase()]}</p>
+        <p>{instituto.fullName}</p>
       </div>
     </div>
   )
@@ -218,6 +159,7 @@ class ScheduleMenu extends React.Component {
     this.state = {
       loaded: false,
       errorMsg: 'Carregando...',
+      instituto: undefined,
       userInfo: undefined,
       psychologist: undefined,
       events: [],
@@ -226,12 +168,11 @@ class ScheduleMenu extends React.Component {
       customDate: new Date(),
       emergency: false
     }
-    this.submitUrl = formUrl;
   }
 
   setPsychologist = (callback) => {
-    var component = this;
-    backend.get(api.usuarios.gapsi.get.endpoint(this.state.userInfo.school))
+    const component = this;
+    backend.get(api.usuarios.gapsi.get.endpoint(this.state.userInfo.instituto))
       .then(res => {
         component.setState({
           psychologist: {
@@ -244,22 +185,12 @@ class ScheduleMenu extends React.Component {
       })
       .catch(err => {
         this.LoadingError(err, "Não foi possível acessar os dados do psicólogo")
-
-        // Mock
-        component.setState({
-          psychologist: {
-            name: 'atendente',
-            instituto: 'ICMC',
-            email: 'atendente@icmc.usp.br',
-            image: null,
-          }
-        }, callback)
       })
   }
     
   setEvents = (callback) => {
-    var component = this;
-    backend.get(api.acolhimento.eventos.get.endpoint(this.state.userInfo.school))
+    const component = this;
+    backend.get(api.acolhimento.eventos.get.endpoint(this.state.userInfo.instituto))
       .then(res => {
         component.setState({
           events: populateEventOption(res.data)
@@ -267,16 +198,11 @@ class ScheduleMenu extends React.Component {
       })
       .catch( err => {
         this.LoadingError(err, "Não foi possível acessar os dados dos eventos")
-
-        // Mock
-        component.setState({
-          events: populateEventOption(Events)
-        }, callback);
       })
   }
 
   setUserInfo = (callback) => {
-    var component = this;
+    const component = this;
     backend.get(api.auth.info.get.endpoint())
       .then(res => {
         component.setState({
@@ -284,12 +210,29 @@ class ScheduleMenu extends React.Component {
             id: res.data.id,
             name: res.data.name,
             email: res.data.email,
-            school: 'icmc' // mock
+            instituto: 'icmc'.toUpperCase() // mock
           }
         }, callback);
       })
       .catch( err => {
         this.LoadingError(err, "Não foi possível acessar os dados do usuário")        
+      })
+  }
+
+  setInstituto = (callback) => {
+    const component = this;
+    backend.get(api.usuarios.instituto.get.endpoint())
+      .then(res => {
+        const inst = res.data.find(i => i.siglainstituto.toUpperCase() === component.state.userInfo.instituto);
+        component.setState({
+          instituto: {
+            id: inst.siglainstituto.toUpperCase(),
+            fullName: inst.nomeinstituto
+          }
+        }, callback)
+      })
+      .catch( err => {
+        this.LoadingError(err, "Não foi possível acessar os dados dos institutos")
       })
   }
 
@@ -301,12 +244,14 @@ class ScheduleMenu extends React.Component {
   componentDidMount() {
     window.localStorage.setItem("TOKEN", token);
     
-    var component = this;
+    const component = this;
     component.setUserInfo(() => {
-      component.setPsychologist( () => {
-        component.setEvents( () => {
-          component.setState({loaded: true});
-          component.render();
+      component.setInstituto(() => {
+        component.setPsychologist( () => {
+          component.setEvents( () => {
+            component.setState({loaded: true});
+            component.render();
+          });
         });
       });
     });
@@ -383,7 +328,7 @@ class ScheduleMenu extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     const args = {
-      instituto: this.state.userInfo.school,
+      instituto: this.state.userInfo.instituto,
       userEmail: this.state.userInfo.email,
       isCustomDate: this.state.isCustomDate,
       eventId: this.state.selectedEvent,
@@ -406,6 +351,7 @@ class ScheduleMenu extends React.Component {
 
   render() {    
     let dateSelection;
+
     if (this.state.isCustomDate) {
       dateSelection = (
         <div className={styles.DateSelection}>
@@ -460,9 +406,9 @@ class ScheduleMenu extends React.Component {
               onChange={e => this.selectEvent(e)}
               className={styles.NormalDatePicker}
             >
-              {this.state.events.map((e, i) => (
+              { this.state.events.length > 0 ? this.state.events.map((e, i) => (
                 <MenuItem value={e.value} key={i}>{e.label}</MenuItem>
-              ))}
+              )) : <MenuItem value={undefined}>Desculpe, não temos nenhuma sessão vaga.</MenuItem>}
             </Select>
           </FormControl>
         </div>
@@ -472,7 +418,7 @@ class ScheduleMenu extends React.Component {
     if (this.state.loaded) {
       return (
         <div className={styles.ScheduleMenu}>
-          <PsychologistCard ps={this.state.psychologist}/>
+          <PsychologistCard instituto={this.state.instituto} ps={this.state.psychologist}/>
             <form onSubmit={this.handleSubmit} className={styles.ScheduleForm}>
               <div className={styles.DateSelection}>
                 {dateSelection}
