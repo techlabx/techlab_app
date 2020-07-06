@@ -3,15 +3,12 @@
 .ContactBox {
     font-size: $small-font-size;
     margin: 0px;
-    padding: 0px $global-screen-padding 16px $global-screen-padding;
+    padding: 0px $global-screen-padding 12px $global-screen-padding;
 
     h2 {
         font-size: $h2-font-size;
         text-align: center;
-        margin: 6px 0px;
-    }
-    p {
-        padding: 2px 0px;;
+        margin: 0px 0px 12px 0px;
     }
     a {
         text-decoration: none;
@@ -29,7 +26,6 @@
     color: $font-color-dark;
     
     p {
-        padding: 0px;
         font-size: smaller;
         margin: 0px 0px 0px 6px;
     }
@@ -42,14 +38,11 @@
     justify-content: center;
     text-align: center;
     color: $font-color-dark;
+    margin: 12px 0px;
 
     p {
-        margin: 0px 0px 0px 4px;
+        margin: 6px 0px;
         font-size: $text-font-size;
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-font-smoothing: antialiased !important;
-        -moz-font-smoothing: antialiased !important;
-        text-rendering: optimizelegibility !important;
         line-height: 1.25em;
         text-align: left;
     }

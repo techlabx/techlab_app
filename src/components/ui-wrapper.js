@@ -8,7 +8,6 @@ import React from "react"
 import isLoggedIn from "../services/auth"
 import { navigate } from "gatsby"
 import styles from "../styles/ui-wrapper.module.scss"
-import { string } from "prop-types"
 
 const appTitle = "GAPSI USP São Carlos"
 
@@ -52,11 +51,7 @@ const Navbar = () => (
   </div>
 )
 
-class UiWrapper extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-  
+class UiWrapper extends React.Component {  
   async componentDidMount() {
     var needsAuth = false;
     if (typeof this.props.pageNeedsAuth === 'string' &&
@@ -67,7 +62,11 @@ class UiWrapper extends React.Component {
     if (needsAuth) {
       let isLogged = await isLoggedIn()
       if (!isLogged) {
-        navigate("/loginpage")
+        if (window.confirm("Você precisa estar logado para acessar isso!")) {
+          navigate("/loginpage");
+        } else {
+          navigate("/");
+        }
         return null
       } else {
       }

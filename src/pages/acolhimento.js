@@ -62,7 +62,7 @@ const api = {
       // POST /:instituto - sugerir evento novo
       post: { 
         endpoint: instituto => (`acolhimento/eventos/${instituto.toUpperCase()}`),
-        payload: (date, emergency) => ({dataHoraIni: date, flagUrgente: emergency})
+        payload: (name, email, date, urgente) => ({userName: name, userEmail: email, dataHoraIni: date, flagUrgente: urgente})
       },
       // PUT /:instituto/:idEvento - selecionar evento existente
       put: {
@@ -147,9 +147,11 @@ class ScheduleMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loaded: false,
-      errorMsg: 'Carregando...',
-      instituto: undefined,
+      phase: 'loading',
+      error: false,
+      errorMsg: undefined,
+      institutos: undefined,
+      selectedInstituto: undefined,
       userInfo: undefined,
       psychologist: undefined,
       events: [],
@@ -166,7 +168,7 @@ class ScheduleMenu extends React.Component {
   }
 
   setPsychologist = (callback) => {
-    this.backend.get(api.usuarios.gapsi.get.endpoint(this.state.userInfo.instituto))
+    this.backend.get(api.usuarios.gapsi.get.endpoint(this.state.selectedInstituto))
       .then(res => {
         this.setState({
           psychologist: {
@@ -183,7 +185,7 @@ class ScheduleMenu extends React.Component {
   }
     
   setEvents = (callback) => {
-    this.backend.get(api.acolhimento.eventos.get.endpoint(this.state.userInfo.instituto))
+    this.backend.get(api.acolhimento.eventos.get.endpoint(this.state.selectedInstituto))
       .then(res => {
         this.setState({
           events: populateEventOption(res.data)
@@ -201,8 +203,7 @@ class ScheduleMenu extends React.Component {
           userInfo: {
             id: res.data.id,
             name: res.data.name,
-            email: res.data.email,
-            instituto: 'ICMC'.toUpperCase() // mock
+            email: res.data.email
           }
         }, callback);
       })
@@ -211,15 +212,14 @@ class ScheduleMenu extends React.Component {
       })
   }
 
-  setInstituto = (callback) => {
+  setInstitutos = (callback) => {
     this.backend.get(api.usuarios.instituto.get.endpoint())
       .then(res => {
-        const inst = res.data.find(i => i.siglainstituto.toUpperCase() === this.state.userInfo.instituto);
         this.setState({
-          instituto: {
-            id: inst.siglainstituto.toUpperCase(),
-            fullName: inst.nomeinstituto
-          }
+            institutos: res.data.map(inst => ({
+              id: inst.siglainstituto.toUpperCase(),
+              fullName: inst.nomeinstituto
+            }))
         }, callback)
       })
       .catch( err => {
@@ -229,15 +229,14 @@ class ScheduleMenu extends React.Component {
 
   LoadingError = (err, msg) => {
     console.log(msg); console.log(err);
-    this.setState( {errorMsg: `Opa, algo deu errado! ${msg}`} )
+    this.setState( {error: true, errorMsg: `Opa, algo deu errado! ${msg}`} )
   }
 
-  componentDidMount() {
-    this.setUserInfo(() => {
-      this.setInstituto(() => {
-        this.setPsychologist(() => {
-          this.setEvents(() => {
-            this.setState({loaded: true});
+  loadPhase1 = () => {
+    this.setState({phase: 'loading'}, () => {
+      this.setUserInfo(() => {
+        this.setInstitutos(() => {
+          this.setState({phase: 'set-instituto'}, () => {
             this.render();
           });
         });
@@ -245,8 +244,28 @@ class ScheduleMenu extends React.Component {
     });
   }
 
+  loadPhase2 = () => {
+    this.setState({phase: 'loading'}, () => {
+      this.setPsychologist(() => {
+        this.setEvents(() => {
+          this.setState({phase: 'loaded'}, () => {
+            this.render();
+          });
+        });
+      });
+    });
+  }
+
+  componentDidMount() {
+    this.loadPhase1();
+  }
+
   selectEvent(event) {
     this.setState({selectedEvent: event.target.value});
+  }
+
+  selectInstituto(event) {
+    this.setState({selectedInstituto: event.target.value});
   }
 
   handleChange = (event) => {
@@ -267,13 +286,13 @@ class ScheduleMenu extends React.Component {
   }
 
   submitError = (err, msg) => {
-    const defaultErrorMsg = "Opa, algo deu errado! Não foi possível agendar seu acolhimento. Tente novamente mais tarde.";
-    if (msg == undefined) {
-      msg = defaultErrorMsg;
+    const renderMsg = "Opa, algo deu errado! Não foi possível agendar seu acolhimento. Tente novamente mais tarde.";
+    if (msg === undefined) {
+      msg = renderMsg;
     }
-
-    console.log(err);
+    this.setState( {error: true, errorMsg: msg} )
     alert(msg);
+    console.log(err);
   }
 
   submitCustomEvent = args => {
@@ -281,11 +300,11 @@ class ScheduleMenu extends React.Component {
 
     const endpoint = api.acolhimento.eventos.post.endpoint(args.instituto);
     const payload = api.acolhimento.eventos.post.payload(
+        args.userName,
+        args.userEmail,
         args.customDate,
         args.emergency
     )
-
-    console.log('POST '+endpoint); console.log(payload);
 
     this.backend.post(endpoint, payload)
       .then(res => {
@@ -315,8 +334,9 @@ class ScheduleMenu extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     const args = {
-      instituto: this.state.userInfo.instituto,
+      userName: this.state.userInfo.name,
       userEmail: this.state.userInfo.email,
+      instituto: this.state.selectedInstituto,
       isCustomDate: this.state.isCustomDate,
       eventId: this.state.selectedEvent,
       customDate: this.state.customDate,
@@ -336,77 +356,125 @@ class ScheduleMenu extends React.Component {
     this.submitNormalEvent(args);
   }
 
-  render() {    
-    let dateSelection;
-
-    if (this.state.isCustomDate) {
-      dateSelection = (
-        <div className={styles.DateSelection}>
-          <FormControl className={styles.CustomDatePicker}>
-            <InputLabel id="custom-date-picker"></InputLabel>
-            <p>Escolha uma data e hora</p>
-            <div className={styles.CustomDatePicker}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptBR}>
-                <DatePicker
-                  disableToolbar
-                  margin="normal"
-                  id="date-picker-inline"
-                  disablePast="true"
-                  format={dateFormat}
-                  value={this.state.customDate}
-                  onChange={this.setCustomDate}
-                  className={styles.CustomDatePickerDate}
-                />
-                <TimePicker
-                  margin="normal"
-                  id="time-picker"
-                  disablePast="true"
-                  ampm={false}
-                  minutesStep={15}
-                  value={this.state.customDate}
-                  onChange={this.setCustomDate}
-                  className={styles.CustomDatePickerTime}
-                  />
-              </MuiPickersUtilsProvider>
-            </div>
-          </FormControl>
-          <FormControl>
-          <div className={styles.EmergencyCheckbox}>
-            <InputLabel id="ermergency-flag"></InputLabel>
-            <FormControlLabel
-              control={<Checkbox checked={this.state.emergency} onChange={this.handleChange} name="emergency"/>}
-              label="Solicitar atendimento emergencial"
-              />
-          </div>
-          </FormControl>
-        </div>
-      );
-    } else {
-      dateSelection = (
-        <div className={styles.DateSelection}>
-          <FormControl className={styles.DatePicker}>
-            <InputLabel id="date-picker"></InputLabel>
-            <p>Escolha uma sessão livre:</p>
-            <Select
-              labelId="date-picker"
-              id="date-picker-select"
-              value={this.state.selectedEvent ? this.state.selectedEvent : ''}
-              onChange={e => this.selectEvent(e)}
-              className={styles.NormalDatePicker}
-            >
-              { this.state.events.length > 0 ? this.state.events.map((e, i) => (
-                <MenuItem value={e.value} key={i}>{e.label}</MenuItem>
-              )) : <MenuItem value={undefined}>Desculpe, não temos nenhuma sessão vaga.</MenuItem>}
-            </Select>
-          </FormControl>
-        </div>
-      );
-    }
-
-    if (this.state.loaded) {
+  render() {
+    if (this.state.error) {
       return (
         <div className={styles.ScheduleMenu}>
-          <PsychologistCard instituto={this.state.instituto} ps={this.state.psychologist}/>
+          <p className={styles.ErrorMessage}>{this.state.errorMsg}</p>
+        </div>
+      )
+    }
+
+    let rendered;
+    switch (this.state.phase) {
+      case 'loading':
+        rendered = (
+          <div className={styles.ScheduleMenu}>
+            <p className={styles.LoadingMessage}>{'Carregando...'}</p>
+          </div>
+        )
+        break;
+
+      case 'set-instituto':
+        rendered = (
+          <div className={styles.ScheduleMenu}>
+            <form onSubmit={this.loadPhase2}>
+              <FormControl className={styles.ScheduleForm}>
+                <InputLabel id="instituto-select"></InputLabel>
+                <p>Escolha o instituto que você estuda:</p>
+                <Select
+                  labelId="instituto-select"
+                  id="instituto-select"
+                  value={this.state.selectedInstituto ? this.state.selectedInstituto : ''}
+                  onChange={e => this.selectInstituto(e)}
+                  className={styles.InstitutoPicker}
+                >
+                  { this.state.institutos.length > 0 ? this.state.institutos.map((v, i) => (
+                  <MenuItem value={v.id} key={i}>{v.fullName}</MenuItem>
+                  )) : <MenuItem value={undefined}>Desculpe, algo deu errado!.</MenuItem>}
+                </Select>
+              </FormControl>
+              <FormControl className={styles.ConfirmButton}>
+                  <ColorButton variant="contained" color="primary" style={{backgroundColor: Orange, height:'40px', marginBottom: '15px', marginRight: '10px'}} type="submit">Confirmar</ColorButton>
+              </FormControl>
+            </form>
+          </div>
+        )
+        break;
+
+      case 'loaded':
+        const customDateSelection = (
+          <div className={styles.DateSelection}>
+            <FormControl className={styles.CustomDatePicker}>
+              <InputLabel id="custom-date-picker"></InputLabel>
+              <p>Escolha uma data e hora</p>
+              <div className={styles.CustomDatePicker}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptBR}>
+                  <DatePicker
+                    disableToolbar
+                    margin="normal"
+                    id="date-picker-inline"
+                    disablePast="true"
+                    format={dateFormat}
+                    value={this.state.customDate}
+                    onChange={this.setCustomDate}
+                    className={styles.CustomDatePickerDate}
+                  />
+                  <TimePicker
+                    margin="normal"
+                    id="time-picker"
+                    disablePast="true"
+                    ampm={false}
+                    minutesStep={15}
+                    value={this.state.customDate}
+                    onChange={this.setCustomDate}
+                    className={styles.CustomDatePickerTime}
+                    />
+                </MuiPickersUtilsProvider>
+              </div>
+            </FormControl>
+            <FormControl>
+            <div className={styles.EmergencyCheckbox}>
+              <InputLabel id="ermergency-flag"></InputLabel>
+              <FormControlLabel
+                control={<Checkbox checked={this.state.emergency} onChange={this.handleChange} name="emergency"/>}
+                label="Solicitar atendimento emergencial"
+                />
+            </div>
+            </FormControl>
+          </div>
+        )
+        
+        const normalDateSelection = (
+          <div className={styles.DateSelection}>
+            <FormControl className={styles.DatePicker}>
+              <InputLabel id="date-picker"></InputLabel>
+              <p>Escolha uma sessão livre:</p>
+              <Select
+                labelId="date-picker"
+                id="date-picker-select"
+                value={this.state.selectedEvent ? this.state.selectedEvent : ''}
+                onChange={e => this.selectEvent(e)}
+                className={styles.NormalDatePicker}
+              >
+                { this.state.events.length > 0 ? this.state.events.map((v, i) => (
+                  <MenuItem value={v.value} key={i}>{v.label}</MenuItem>
+                )) : <MenuItem value={undefined}>Desculpe, não temos nenhuma sessão vaga.</MenuItem>}
+              </Select>
+            </FormControl>
+          </div>
+        )
+    
+        let dateSelection;
+        if (this.state.isCustomDate) {
+          dateSelection = customDateSelection
+        } else {
+          dateSelection = normalDateSelection;
+        }
+
+        rendered = (
+          <div className={styles.ScheduleMenu}>
+            <PsychologistCard instituto={this.state.institutos.find( inst => inst.id.toUpperCase() === this.state.selectedInstituto)} ps={this.state.psychologist}/>
             <form onSubmit={this.handleSubmit} className={styles.ScheduleForm}>
               <div className={styles.DateSelection}>
                 {dateSelection}
@@ -420,15 +488,11 @@ class ScheduleMenu extends React.Component {
                 <ColorButton variant="contained" color="primary" style={{backgroundColor: Orange, height:'40px', marginBottom: '15px', marginRight: '10px'}} type="submit">Agendar</ColorButton>
               </FormControl>
             </form>
-        </div>
-      );      
-    } else {
-      return (
-        <div className={styles.ScheduleMenu}>
-          <p>{this.state.errorMsg}</p>
-        </div>
-      )
+          </div>
+        )
+        break;
     }
+    return rendered;
   }
 }
 

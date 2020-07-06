@@ -22,7 +22,7 @@ $inner-text-padding: $border-radius/6.19;
     border-radius: $border-radius 0px 0px $border-radius;
     min-height: 120px;
     
-    margin-left: $box-margin;
+    margin: 0px 0px 0px $box-margin;
     padding: 0px $text-margin 0px $text-margin - $box-margin;
     
     background-color: $white-background;
@@ -37,22 +37,15 @@ $inner-text-padding: $border-radius/6.19;
     
     h1 {
         margin: 0px;
-        padding-top: $title-vertical-padding;
-        padding-bottom: $title-vertical-padding;
+        padding: $title-vertical-padding 0px;
         font-size: $h1-font-size;
     }
 
     p {
         text-align: justify;
-        padding-bottom: $text-padding-bottom;
-        margin: 0px 0px 10px 0px;
-        padding: 0px;
         font-size: $text-font-size;
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-font-smoothing: antialiased !important;
-        -moz-font-smoothing: antialiased !important;
-        text-rendering: optimizelegibility !important;
         line-height: 1.25em;
+        margin: 4px 0px;
         vertical-align: middle;
     }
 }
