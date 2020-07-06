@@ -147,6 +147,7 @@ class ScheduleMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      backend: undefined,
       phase: 'loading',
       error: false,
       errorMsg: undefined,
@@ -163,7 +164,7 @@ class ScheduleMenu extends React.Component {
   }
 
   setPsychologist = (callback) => {
-    this.backend.get(api.usuarios.gapsi.get.endpoint(this.state.selectedInstituto))
+    this.state.backend.get(api.usuarios.gapsi.get.endpoint(this.state.selectedInstituto))
       .then(res => {
         this.setState({
           psychologist: {
@@ -180,7 +181,7 @@ class ScheduleMenu extends React.Component {
   }
     
   setEvents = (callback) => {
-    this.backend.get(api.acolhimento.eventos.get.endpoint(this.state.selectedInstituto))
+    this.state.backend.get(api.acolhimento.eventos.get.endpoint(this.state.selectedInstituto))
       .then(res => {
         this.setState({
           events: populateEventOption(res.data)
@@ -192,7 +193,7 @@ class ScheduleMenu extends React.Component {
   }
 
   setUserInfo = (callback) => {
-    this.backend.get(api.auth.info.get.endpoint())
+    this.state.backend.get(api.auth.info.get.endpoint())
       .then(res => {
         this.setState({
           userInfo: {
@@ -208,7 +209,7 @@ class ScheduleMenu extends React.Component {
   }
 
   setInstitutos = (callback) => {
-    this.backend.get(api.usuarios.instituto.get.endpoint())
+    this.state.backend.get(api.usuarios.instituto.get.endpoint())
       .then(res => {
         this.setState({
             institutos: res.data.map(inst => ({
@@ -252,14 +253,16 @@ class ScheduleMenu extends React.Component {
   }
 
   componentDidMount() {
-    
-    const chatAPIAddr = process.env.CHAT_API_ADDR
-    this.backend = axios.create({
-      baseURL: chatAPIAddr,
-      timeout: 10000,
-      headers: {'x-access-token': window.localStorage.getItem("TOKEN")}
-    })
-    this.loadPhase1();
+    console.log(process.env.CHAT_API_ADDR);
+    this.setState({
+      backend: axios.create({
+        baseURL: process.env.CHAT_API_ADDR,
+        timeout: 10000,
+        headers: {'x-access-token': window.localStorage.getItem("TOKEN")}
+      })
+    }, () => {
+      this.loadPhase1();
+    });
   }
 
   selectEvent(event) {
@@ -308,7 +311,7 @@ class ScheduleMenu extends React.Component {
         args.emergency
     )
 
-    this.backend.post(endpoint, payload)
+    this.state.backend.post(endpoint, payload)
       .then(res => {
         this.submitSuccess()
       })
@@ -324,7 +327,7 @@ class ScheduleMenu extends React.Component {
       args.userEmail
     )
 
-    this.backend.put(endpoint, payload)
+    this.state.backend.put(endpoint, payload)
       .then(res => {
         this.submitSuccess()
       })

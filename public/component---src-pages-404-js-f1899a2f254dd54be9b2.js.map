@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack:///./src/pages/404.js"],"names":["p404"],"mappings":"2FAAA,gCAMeA,UAJF,kBACT","file":"component---src-pages-404-js-f1899a2f254dd54be9b2.js","sourcesContent":["import React from \"react\"\n\nconst p404 = () => (\n    <p>404 not found bro</p>\n)\n\nexport default p404\n"],"sourceRoot":""}
