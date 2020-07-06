@@ -7,7 +7,7 @@ import global from "../styles/global.scss"
 
 const header = {
   title: `Perguntas Frequentes`,
-  text: `Tem mais alguma dúvia que não foi respondida aqui? Entre em contato conosco pelo nosso email, telefones ou redes sociais!`
+  text: `Tem mais alguma dúvida que não foi respondida aqui? Entre em contato conosco pelo nosso email, telefones ou redes sociais!`
 }
 
 const theme1 = { 

@@ -25,66 +25,10 @@ import {
 } from '@material-ui/pickers';
 import { navigate } from "gatsby"
 
-const Events = [
-  {
-      "kind": "calendar#event",
-      "etag": "\"3187061092716000\"",
-      "id": "0fnl6diudkvdc8446fvekra7a8",
-      "status": "confirmed",
-      "htmlLink": "https://www.google.com/calendar/event?eid=MGZubDZkaXVka3ZkYzg0NDZmdmVrcmE3YTggbGVvbmFyZG9naW92YW5uaXBAbQ",
-      "created": "2020-06-30T15:22:26.000Z",
-      "updated": "2020-06-30T15:22:26.358Z",
-      "summary": "Livre",
-      "creator": {
-          "email": "leonardogiovannip@gmail.com",
-          "self": true
-      },
-      "organizer": {
-          "email": "leonardogiovannip@gmail.com",
-          "self": true
-      },
-      "start": {
-          "dateTime": "2020-06-30T13:30:00-03:00"
-      },
-      "end": {
-          "dateTime": "2020-06-30T14:30:00-03:00"
-      },
-      "iCalUID": "0fnl6diudkvdc8446fvekra7a8@google.com",
-      "sequence": 0,
-      "reminders": {
-          "useDefault": true
-      }
-  },
-  {
-      "kind": "calendar#event",
-      "etag": "\"3187061098348000\"",
-      "id": "10upda0bqq31gglbepfs1ol8h9",
-      "status": "confirmed",
-      "htmlLink": "https://www.google.com/calendar/event?eid=MTB1cGRhMGJxcTMxZ2dsYmVwZnMxb2w4aDkgbGVvbmFyZG9naW92YW5uaXBAbQ",
-      "created": "2020-06-30T15:22:29.000Z",
-      "updated": "2020-06-30T15:22:29.174Z",
-      "summary": "Livre",
-      "creator": {
-          "email": "leonardogiovannip@gmail.com",
-          "self": true
-      },
-      "organizer": {
-          "email": "leonardogiovannip@gmail.com",
-          "self": true
-      },
-      "start": {
-          "dateTime": "2020-06-30T15:00:00-03:00"
-      },
-      "end": {
-          "dateTime": "2020-06-30T16:00:00-03:00"
-      },
-      "iCalUID": "10upda0bqq31gglbepfs1ol8h9@google.com",
-      "sequence": 0,
-      "reminders": {
-          "useDefault": true
-      }
-  }
-]
+const pageHeader = {
+  title: "Acolhimento GAPSI",
+  text: "Agende uma conversa com o psicólogo responsável pelo seu instituto."
+}
 
 const api = {
   auth: {
@@ -101,6 +45,12 @@ const api = {
       get: {
         endpoint: (instituto) => (`usuarios/gapsi/${instituto.toUpperCase()}`)
       }
+    },
+    instituto: {
+      // GET usuarios/instituto - pegar lista de institutos
+      get: {
+        endpoint: () => (`usuarios/instituto`)
+      }
     }
   },
   acolhimento: {
@@ -112,7 +62,7 @@ const api = {
       // POST /:instituto - sugerir evento novo
       post: { 
         endpoint: instituto => (`acolhimento/eventos/${instituto.toUpperCase()}`),
-        payload: (date, emergency) => ({dataHoraIni: date, flagUrgente: emergency})
+        payload: (name, email, date, urgente) => ({userName: name, userEmail: email, dataHoraIni: date, flagUrgente: urgente})
       },
       // PUT /:instituto/:idEvento - selecionar evento existente
       put: {
@@ -123,14 +73,17 @@ const api = {
   }
 }
 
-const dateFormat = "eeee, dd 'de' MMMM'";
-const datetimeFormat = "eeee, dd 'de' MMMM 'às' HH:MM";
+// Utils
 
-const formattedDatetime = (date) => format(
-  date, 
-  datetimeFormat,
-  {locale: ptBR}
-);
+const dateFormat = "eeee, dd 'de' MMMM'";
+
+const formattedDatetime = (date) => {
+  const datetimeFormat = "eeee, dd 'de' MMMM 'às' HH:MM";
+  return format(
+    date, 
+    datetimeFormat,
+    {locale: ptBR}
+)};
 
 function buildDateLabel(dateStr) {
   var date = new Date(dateStr);
@@ -146,23 +99,11 @@ function populateEventOption(events) {
   });
 }
 
-const Orange = global.MainOrange;
+// Components
 
-const formUrl = "";
+const Orange = global.MainOrange; 
 
-const pageHeader = {
-  title: "Acolhimento GAPSI",
-  text: "Agende uma conversa com o psicólogo responsável pelo seu instituto."
-}
-
-const Institutos = {
-  "IFSC": "IFSC - Instituto de Física de São Carlos",
-  "ICMC": "ICMC - Instituto de Ciências Matemáticas e de Computação",
-  "EESC": "EESC - Escola de Engenharia de São Carlos",
-  "IAU": "IAU - Instituto de Arquitetura e Urbanismo"
-}
-
-const PsychologistCard = ({ps}) => {
+const PsychologistCard = ({instituto, ps}) => {
   let image;
   if (ps.image == null) {
     image = defaultImageFemale;
@@ -179,7 +120,7 @@ const PsychologistCard = ({ps}) => {
       <div className={styles.CardContent}>
         <h1>{ps.name}</h1>
         <p>Responsável pelo instituto:</p>
-        <p>{Institutos[ps.instituto.toUpperCase()]}</p>
+        <p>{instituto.fullName}</p>
       </div>
     </div>
   )
@@ -206,8 +147,11 @@ class ScheduleMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loaded: false,
-      errorMsg: 'Carregando...',
+      phase: 'loading',
+      error: false,
+      errorMsg: undefined,
+      institutos: undefined,
+      selectedInstituto: undefined,
       userInfo: undefined,
       psychologist: undefined,
       events: [],
@@ -216,16 +160,17 @@ class ScheduleMenu extends React.Component {
       customDate: new Date(),
       emergency: false
     }
-
-    this.submitUrl = formUrl;
+    this.backend = axios.create({
+      baseURL: "http://techlab-oauth.mooo.com",
+      timeout: 10000,
+      headers: {'x-access-token': window.localStorage.getItem("TOKEN")}
+    })
   }
 
   setPsychologist = (callback) => {
-    var component = this;
-
-    this.backend.get(api.usuarios.gapsi.get.endpoint(this.state.userInfo.school))
+    this.backend.get(api.usuarios.gapsi.get.endpoint(this.state.selectedInstituto))
       .then(res => {
-        component.setState({
+        this.setState({
           psychologist: {
             name: res.data.nomeatendente,
             instituto: res.data.institutoatendente,
@@ -236,50 +181,29 @@ class ScheduleMenu extends React.Component {
       })
       .catch(err => {
         this.LoadingError(err, "Não foi possível acessar os dados do psicólogo")
-
-        // Mock
-        component.setState({
-          psychologist: {
-            name: 'atendente',
-            instituto: 'ICMC',
-            email: 'atendente@icmc.usp.br',
-            image: null,
-          }
-        }, callback)
       })
   }
     
   setEvents = (callback) => {
-    var component = this;
-    this.backend.get(api.acolhimento.eventos.get.endpoint(this.state.userInfo.school))
+    this.backend.get(api.acolhimento.eventos.get.endpoint(this.state.selectedInstituto))
       .then(res => {
-        component.setState({
+        this.setState({
           events: populateEventOption(res.data)
         }, callback);
       })
       .catch( err => {
         this.LoadingError(err, "Não foi possível acessar os dados dos eventos")
-
-        // Mock
-        component.setState({
-          events: populateEventOption(Events)
-        }, callback);
       })
   }
 
   setUserInfo = (callback) => {
-    var component = this;
-    console.log(window.localStorage.getItem("TOKEN"))
-    console.log(api.auth.info.get.endpoint())
     this.backend.get(api.auth.info.get.endpoint())
       .then(res => {
-        console.log(res.data)
-        component.setState({
+        this.setState({
           userInfo: {
             id: res.data.id,
             name: res.data.name,
-            email: res.data.email,
-            school: 'ICMC' // mock
+            email: res.data.email
           }
         }, callback);
       })
@@ -288,32 +212,60 @@ class ScheduleMenu extends React.Component {
       })
   }
 
-  LoadingError = (err, msg) => {
-    console.log(msg); console.log(err);
-    this.setState( {errorMsg: `Opa, algo deu errado! ${msg}`} )
+  setInstitutos = (callback) => {
+    this.backend.get(api.usuarios.instituto.get.endpoint())
+      .then(res => {
+        this.setState({
+            institutos: res.data.map(inst => ({
+              id: inst.siglainstituto.toUpperCase(),
+              fullName: inst.nomeinstituto
+            }))
+        }, callback)
+      })
+      .catch( err => {
+        this.LoadingError(err, "Não foi possível acessar os dados dos institutos")
+      })
   }
 
-  componentDidMount() {
-    
-    this.backend = axios.create({
-      baseURL: "http://techlab-oauth.mooo.com",
-      timeout: 10000,
-      headers: {'x-access-token': window.localStorage.getItem("TOKEN")}
-    })
+  LoadingError = (err, msg) => {
+    console.log(msg); console.log(err);
+    this.setState( {error: true, errorMsg: `Opa, algo deu errado! ${msg}`} )
+  }
 
-    var component = this;
-    component.setUserInfo(() => {
-      component.setPsychologist( () => {
-        component.setEvents( () => {
-          component.setState({loaded: true});
-          component.render();
+  loadPhase1 = () => {
+    this.setState({phase: 'loading'}, () => {
+      this.setUserInfo(() => {
+        this.setInstitutos(() => {
+          this.setState({phase: 'set-instituto'}, () => {
+            this.render();
+          });
         });
       });
     });
   }
 
+  loadPhase2 = () => {
+    this.setState({phase: 'loading'}, () => {
+      this.setPsychologist(() => {
+        this.setEvents(() => {
+          this.setState({phase: 'loaded'}, () => {
+            this.render();
+          });
+        });
+      });
+    });
+  }
+
+  componentDidMount() {
+    this.loadPhase1();
+  }
+
   selectEvent(event) {
     this.setState({selectedEvent: event.target.value});
+  }
+
+  selectInstituto(event) {
+    this.setState({selectedInstituto: event.target.value});
   }
 
   handleChange = (event) => {
@@ -334,12 +286,13 @@ class ScheduleMenu extends React.Component {
   }
 
   submitError = (err, msg) => {
-    const defaultErrorMsg = "Opa, algo deu errado! Não foi possível agendar seu acolhimento. Tente novamente mais tarde.";
-    if (msg == undefined)
-      msg = defaultErrorMsg;
-    
-    console.log(err);
+    const renderMsg = "Opa, algo deu errado! Não foi possível agendar seu acolhimento. Tente novamente mais tarde.";
+    if (msg === undefined) {
+      msg = renderMsg;
+    }
+    this.setState( {error: true, errorMsg: msg} )
     alert(msg);
+    console.log(err);
   }
 
   submitCustomEvent = args => {
@@ -347,11 +300,11 @@ class ScheduleMenu extends React.Component {
 
     const endpoint = api.acolhimento.eventos.post.endpoint(args.instituto);
     const payload = api.acolhimento.eventos.post.payload(
+        args.userName,
+        args.userEmail,
         args.customDate,
         args.emergency
     )
-
-    console.log('POST '+endpoint); console.log(payload);
 
     this.backend.post(endpoint, payload)
       .then(res => {
@@ -369,8 +322,6 @@ class ScheduleMenu extends React.Component {
       args.userEmail
     )
 
-    console.log('PUT '+endpoint, payload);
-
     this.backend.put(endpoint, payload)
       .then(res => {
         this.submitSuccess()
@@ -383,8 +334,9 @@ class ScheduleMenu extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     const args = {
-      instituto: this.state.userInfo.school,
+      userName: this.state.userInfo.name,
       userEmail: this.state.userInfo.email,
+      instituto: this.state.selectedInstituto,
       isCustomDate: this.state.isCustomDate,
       eventId: this.state.selectedEvent,
       customDate: this.state.customDate,
@@ -404,75 +356,125 @@ class ScheduleMenu extends React.Component {
     this.submitNormalEvent(args);
   }
 
-  render() {    
-    let dateSelection;
-    if (this.state.isCustomDate) {
-      dateSelection = (
-        <div className={styles.DateSelection}>
-          <FormControl className={styles.CustomDatePicker}>
-            <InputLabel id="custom-date-picker"></InputLabel>
-            <p>Escolha uma data e hora</p>
-            <div className={styles.CustomDatePicker}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptBR}>
-                <DatePicker
-                  disableToolbar
-                  margin="normal"
-                  id="date-picker-inline"
-                  disablePast="true"
-                  format={dateFormat}
-                  value={this.state.customDate}
-                  onChange={this.setCustomDate}
-                  className={styles.CustomDatePickerDate}
-                />
-                <TimePicker
-                  margin="normal"
-                  id="time-picker"
-                  disablePast="true"
-                  ampm="false"
-                  value={this.state.customDate}
-                  onChange={this.setCustomDate}
-                  className={styles.CustomDatePickerTime}
-                  />
-              </MuiPickersUtilsProvider>
-            </div>
-          </FormControl>
-          <FormControl>
-          <div className={styles.EmergencyCheckbox}>
-            <InputLabel id="ermergency-flag"></InputLabel>
-            <FormControlLabel
-              control={<Checkbox checked={this.state.emergency} onChange={this.handleChange} name="emergency"/>}
-              label="Solicitar atendimento emergencial"
-              />
-          </div>
-          </FormControl>
-        </div>
-      );
-    } else {
-      dateSelection = (
-        <div className={styles.DateSelection}>
-          <FormControl className={styles.DatePicker}>
-            <InputLabel id="date-picker"></InputLabel>
-            <p>Escolha uma sessão livre:</p>
-            <Select
-              labelId="date-picker"
-              id="date-picker-select"
-              value={this.state.selectedEvent ? this.state.selectedEvent : ''}
-              onChange={e => this.selectEvent(e)}
-              className={styles.NormalDatePicker}
-            >
-              {this.state.events.map((e, i) => (
-                <MenuItem value={e.value} key={i}>{e.label}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div>
-      );
-    }
-
-    if (this.state.loaded) {
+  render() {
+    if (this.state.error) {
       return (
         <div className={styles.ScheduleMenu}>
-          <PsychologistCard ps={this.state.psychologist}/>
+          <p className={styles.ErrorMessage}>{this.state.errorMsg}</p>
+        </div>
+      )
+    }
+
+    let rendered;
+    switch (this.state.phase) {
+      case 'loading':
+        rendered = (
+          <div className={styles.ScheduleMenu}>
+            <p className={styles.LoadingMessage}>{'Carregando...'}</p>
+          </div>
+        )
+        break;
+
+      case 'set-instituto':
+        rendered = (
+          <div className={styles.ScheduleMenu}>
+            <form onSubmit={this.loadPhase2}>
+              <FormControl className={styles.ScheduleForm}>
+                <InputLabel id="instituto-select"></InputLabel>
+                <p>Escolha o instituto que você estuda:</p>
+                <Select
+                  labelId="instituto-select"
+                  id="instituto-select"
+                  value={this.state.selectedInstituto ? this.state.selectedInstituto : ''}
+                  onChange={e => this.selectInstituto(e)}
+                  className={styles.InstitutoPicker}
+                >
+                  { this.state.institutos.length > 0 ? this.state.institutos.map((v, i) => (
+                  <MenuItem value={v.id} key={i}>{v.fullName}</MenuItem>
+                  )) : <MenuItem value={undefined}>Desculpe, algo deu errado!.</MenuItem>}
+                </Select>
+              </FormControl>
+              <FormControl className={styles.ConfirmButton}>
+                  <ColorButton variant="contained" color="primary" style={{backgroundColor: Orange, height:'40px', marginBottom: '15px', marginRight: '10px'}} type="submit">Confirmar</ColorButton>
+              </FormControl>
+            </form>
+          </div>
+        )
+        break;
+
+      case 'loaded':
+        const customDateSelection = (
+          <div className={styles.DateSelection}>
+            <FormControl className={styles.CustomDatePicker}>
+              <InputLabel id="custom-date-picker"></InputLabel>
+              <p>Escolha uma data e hora</p>
+              <div className={styles.CustomDatePicker}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptBR}>
+                  <DatePicker
+                    disableToolbar
+                    margin="normal"
+                    id="date-picker-inline"
+                    disablePast="true"
+                    format={dateFormat}
+                    value={this.state.customDate}
+                    onChange={this.setCustomDate}
+                    className={styles.CustomDatePickerDate}
+                  />
+                  <TimePicker
+                    margin="normal"
+                    id="time-picker"
+                    disablePast="true"
+                    ampm={false}
+                    minutesStep={15}
+                    value={this.state.customDate}
+                    onChange={this.setCustomDate}
+                    className={styles.CustomDatePickerTime}
+                    />
+                </MuiPickersUtilsProvider>
+              </div>
+            </FormControl>
+            <FormControl>
+            <div className={styles.EmergencyCheckbox}>
+              <InputLabel id="ermergency-flag"></InputLabel>
+              <FormControlLabel
+                control={<Checkbox checked={this.state.emergency} onChange={this.handleChange} name="emergency"/>}
+                label="Solicitar atendimento emergencial"
+                />
+            </div>
+            </FormControl>
+          </div>
+        )
+        
+        const normalDateSelection = (
+          <div className={styles.DateSelection}>
+            <FormControl className={styles.DatePicker}>
+              <InputLabel id="date-picker"></InputLabel>
+              <p>Escolha uma sessão livre:</p>
+              <Select
+                labelId="date-picker"
+                id="date-picker-select"
+                value={this.state.selectedEvent ? this.state.selectedEvent : ''}
+                onChange={e => this.selectEvent(e)}
+                className={styles.NormalDatePicker}
+              >
+                { this.state.events.length > 0 ? this.state.events.map((v, i) => (
+                  <MenuItem value={v.value} key={i}>{v.label}</MenuItem>
+                )) : <MenuItem value={undefined}>Desculpe, não temos nenhuma sessão vaga.</MenuItem>}
+              </Select>
+            </FormControl>
+          </div>
+        )
+    
+        let dateSelection;
+        if (this.state.isCustomDate) {
+          dateSelection = customDateSelection
+        } else {
+          dateSelection = normalDateSelection;
+        }
+
+        rendered = (
+          <div className={styles.ScheduleMenu}>
+            <PsychologistCard instituto={this.state.institutos.find( inst => inst.id.toUpperCase() === this.state.selectedInstituto)} ps={this.state.psychologist}/>
             <form onSubmit={this.handleSubmit} className={styles.ScheduleForm}>
               <div className={styles.DateSelection}>
                 {dateSelection}
@@ -486,15 +488,11 @@ class ScheduleMenu extends React.Component {
                 <ColorButton variant="contained" color="primary" style={{backgroundColor: Orange, height:'40px', marginBottom: '15px', marginRight: '10px'}} type="submit">Agendar</ColorButton>
               </FormControl>
             </form>
-        </div>
-      );      
-    } else {
-      return (
-        <div className={styles.ScheduleMenu}>
-          <p>{this.state.errorMsg}</p>
-        </div>
-      )
+          </div>
+        )
+        break;
     }
+    return rendered;
   }
 }
 

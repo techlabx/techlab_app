@@ -22,7 +22,7 @@
 }
 
 $photo-width: 80px;
-$photo-height: 96px;
+$photo-height: 90px;
 
 .ImagePortrait {
     display: block;
@@ -53,19 +53,26 @@ $photo-height: 96px;
     padding-left: 20px;
 
     h1 {
-        font-size: 20px;
+        font-size: 30px;
+        font-size: 5.0vw;
         font-weight: bold;
         margin: 0px 0px 2px 0px;
     }
     p {
         margin: 4px 0px;
         font-weight: normal;
-        font-size: 15px;
+        font-size: 30px;
+        font-size: 3.5vw;
     }
 }
 
 .ScheduleForm {
+    width: 100%;
     display: block;
+
+    p {
+        width: 100%;
+    }
 }
 
 .DateSelection {
@@ -76,7 +83,6 @@ $photo-height: 96px;
     position: relative;
     flex-direction: column;
     display: flex;
-
 
     p {
         font: $font;
@@ -96,6 +102,14 @@ $photo-height: 96px;
         margin: 0px;
     }
 }
+
+.InstitutoPicker {
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    margin: 16px 0px;
+}
+
 
 .NormalDatePicker {
     position: absolute;
@@ -127,6 +141,7 @@ $custom-picker-date-ratio: 75%;
 .EmergencyCheckbox {
     position: absolute;
     padding: 8px 0px;
+    margin: 8px 0px;
 }
 
 .SwapCustomDateButton {
@@ -142,4 +157,13 @@ $custom-picker-date-ratio: 75%;
     display: flex;
     flex-direction: column;
     margin-top: 8px;
+}
+
+.LoadingMessage {
+    text-align: center;
+}
+
+.ErrorMessage {
+    text-align: center;
+    color: red;
 }
