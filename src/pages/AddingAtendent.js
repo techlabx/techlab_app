@@ -28,12 +28,26 @@ class AddingAtendents extends React.Component {
     }
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
+    const chatAPIAddr = process.env.CHAT_API_ADDR
+
+    try {
+      const res = await axios.get(`http://${chatAPIAddr}/usuarios/instituto`, {
+        headers: { "x-access-token": window.localStorage.getItem("TOKEN") },
+      })
+      this.setState({ institutos: res.data })
+    } catch (error) {
+      console.log(error)
+    }
+
     this.setState({
       options: this.state.institutos.map(instituto => {
         return (
-          <option key={instituto} value={instituto}>
-            {instituto}
+          <option
+            key={instituto.siglainstituto}
+            value={instituto.siglainstituto}
+          >
+            {instituto.siglainstituto}
           </option>
         )
       }),
@@ -123,7 +137,9 @@ class AddingAtendents extends React.Component {
               e peça para o atendente acessá-lo e enviar ao administrador o
               código gerado após o login.
             </DialogContentText>
-            <a className={styles.LinkText}>{this.state.responseLink}</a>
+            <div className={styles.LinkBox}>
+              <a className={styles.LinkText}>{this.state.responseLink}</a>
+            </div>
           </DialogContent>
           <div className={styles.ButtonBox}>
             <button
@@ -180,16 +196,18 @@ class AddingAtendents extends React.Component {
           </div>
           <div className={styles.InputBox}>
             <span className={styles.InputLabel}>Instituto</span>
-            <select
-              className={styles.InputField}
-              placeholder="Instituto"
-              onChange={e => {
-                console.log(e.target)
-                this.setState({ instituto: e.target.value })
-              }}
-            >
-              {this.state.options}
-            </select>
+            <div className={styles.wrapper}>
+              <select
+                className={styles.InputField}
+                placeholder="Instituto"
+                onChange={e => {
+                  console.log(e.target)
+                  this.setState({ instituto: e.target.value })
+                }}
+              >
+                {this.state.options}
+              </select>
+            </div>
           </div>
         </div>
         <div className={styles.ButtonBox}>
