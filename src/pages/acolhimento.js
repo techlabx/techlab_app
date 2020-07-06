@@ -160,11 +160,6 @@ class ScheduleMenu extends React.Component {
       customDate: new Date(),
       emergency: false
     }
-    this.backend = axios.create({
-      baseURL: "http://techlab-oauth.mooo.com",
-      timeout: 10000,
-      headers: {'x-access-token': window.localStorage.getItem("TOKEN")}
-    })
   }
 
   setPsychologist = (callback) => {
@@ -257,6 +252,11 @@ class ScheduleMenu extends React.Component {
   }
 
   componentDidMount() {
+    this.backend = axios.create({
+      baseURL: "http://techlab-oauth.mooo.com",
+      timeout: 10000,
+      headers: {'x-access-token': window.localStorage.getItem("TOKEN")}
+    })
     this.loadPhase1();
   }
 
@@ -497,7 +497,7 @@ class ScheduleMenu extends React.Component {
 }
 
 const AcolhimentoPage = () => (
-  <UiWrapper pageNeedsAuth='false' pageTitle='Acolhimentos' lastPage='/'>
+  <UiWrapper pageNeedsAuth='true' pageTitle='Acolhimentos' lastPage='/'>
     <ContentContainer title={pageHeader.title} text={pageHeader.text} bgColor={global.MainBlue}/>
     <ScheduleMenu/>
   </UiWrapper>
