@@ -23,7 +23,7 @@ class AddingAtendents extends React.Component {
       imagem: "",
       calendarLinkDialogOpen: false,
       errorDialogOpen: false,
-      responseLink: "zé",
+      responseLink: "",
       institutos: ["-", "ICMC", "EESC", "IFSC", "IQSC"],
     }
   }
@@ -116,11 +116,12 @@ class AddingAtendents extends React.Component {
         </Dialog>
 
         <Dialog open={this.state.calendarLinkDialogOpen}>
-          <DialogTitle>Link Google Agenda</DialogTitle>
+          <DialogTitle>Atendente Parcialmente Cadastrado</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Copie esse link e peça para o atendente acessá-lo e enviar ao
-              administrador o código gerado após o login.
+              Para finalizar e confirmar o cadastro do atendente copie esse link
+              e peça para o atendente acessá-lo e enviar ao administrador o
+              código gerado após o login.
             </DialogContentText>
             <a className={styles.LinkText}>{this.state.responseLink}</a>
           </DialogContent>
