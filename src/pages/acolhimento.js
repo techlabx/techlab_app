@@ -216,11 +216,6 @@ class ScheduleMenu extends React.Component {
       customDate: new Date(),
       emergency: false
     }
-    this.backend = axios.create({
-      baseURL: "http://techlab-oauth.mooo.com",
-      timeout: 10000,
-      headers: {'x-access-token': window.localStorage.getItem("TOKEN")}
-    })
 
     this.submitUrl = formUrl;
   }
@@ -300,6 +295,12 @@ class ScheduleMenu extends React.Component {
 
   componentDidMount() {
     
+    this.backend = axios.create({
+      baseURL: "http://techlab-oauth.mooo.com",
+      timeout: 10000,
+      headers: {'x-access-token': window.localStorage.getItem("TOKEN")}
+    })
+
     var component = this;
     component.setUserInfo(() => {
       component.setPsychologist( () => {
