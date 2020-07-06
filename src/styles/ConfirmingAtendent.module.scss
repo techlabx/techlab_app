@@ -13,10 +13,16 @@
 .Link {
   color: inherit;
   width: 40%;
+  overflow: hidden;
 }
 
 .LinkText {
   color: $color2;
+  overflow: hidden;
+}
+
+.LinkBox {
+  overflow: hidden;
 }
 
 .InputBox {

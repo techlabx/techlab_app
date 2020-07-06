@@ -17,6 +17,7 @@ class Atendents extends React.Component {
     this.state = {
       removeDialogOpen: false,
       atendents: [],
+      removingItem: "",
     }
   }
 
@@ -49,10 +50,11 @@ class Atendents extends React.Component {
     }
   }
 
-  handleRemoveClick = () => {
+  handleRemoveClick = index => {
     console.log("deleting")
     this.setState({
       removeDialogOpen: true,
+      removingItem: index,
     })
   }
 
@@ -61,24 +63,26 @@ class Atendents extends React.Component {
     console.log(instituto)
     this.setState({
       removeDialogOpen: false,
+      removingItem: "",
     })
   }
 
-  handleConfirmClick = async e => {
+  handleConfirmClick = async () => {
     const chatAPIAddr = process.env.CHAT_API_ADDR
-
-    let instituto = e.target.attributes.instituto.value
-    // console.log(instituto, typeof(instituto))
+    const removingInstituto = this.state.atendents[this.state.removingItem]
+      .instituto
+    // let instituto = e.target.attributes.instituto.value
+    console.log(removingInstituto)
     // return
     try {
       const res = await axios.delete(
-        `http://${chatAPIAddr}/usuarios/gapsi/${instituto}`,
+        `http://${chatAPIAddr}/usuarios/gapsi/${removingInstituto}`,
         { headers: { "x-access-token": window.localStorage.getItem("TOKEN") } }
       )
 
       this.setState({
         atendents: this.state.atendents.filter(value =>
-          value.instituto === instituto ? false : true
+          value.instituto === removingInstituto ? false : true
         ),
       })
     } catch (error) {
@@ -108,9 +112,9 @@ class Atendents extends React.Component {
                   <button
                     className={styles.Button}
                     instituto={atendent.instituto}
-                    onClick={this.handleConfirmClick}
+                    onClick={() => this.handleConfirmClick()}
                   >
-                    Confirmar
+                    CONFIRMAR
                   </button>
                   <button
                     className={styles.Button}
@@ -131,14 +135,14 @@ class Atendents extends React.Component {
                   {/* Imagino q a rota que tenha de destino deva ser '/ConfirmingAtendent/atendentid' */}
                   <a
                     className={styles.Link}
-                    href={`/EditingAtendent?${atendent.email}`}
+                    href={`/EditingAtendent?instituto=${atendent.instituto}`}
                   >
                     <EditIcon />
                   </a>
                 </button>
                 <button
                   className={styles.ConfirmedRemoveButton}
-                  onClick={() => this.handleRemoveClick()}
+                  onClick={() => this.handleRemoveClick(index)}
                 >
                   <DeleteIcon />
                 </button>
@@ -157,7 +161,7 @@ class Atendents extends React.Component {
                   <button
                     className={styles.Button}
                     instituto={atendent.instituto}
-                    onClick={this.handleConfirmClick}
+                    onClick={() => this.handleConfirmClick()}
                   >
                     Confirmar
                   </button>
@@ -189,14 +193,14 @@ class Atendents extends React.Component {
                   {/* Imagino q a rota que tenha de destino deva ser '/ConfirmingAtendent/atendentid' */}
                   <a
                     className={styles.Link}
-                    href={`/EditingAtendent?email=${atendent.email}`}
+                    href={`/EditingAtendent?instituto=${atendent.instituto}`}
                   >
                     <EditIcon />
                   </a>
                 </button>
                 <button
                   className={styles.WaitingRemoveButton}
-                  onClick={() => this.handleRemoveClick()}
+                  onClick={() => this.handleRemoveClick(index)}
                 >
                   <DeleteIcon />
                 </button>
