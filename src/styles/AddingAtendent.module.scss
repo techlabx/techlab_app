@@ -13,6 +13,7 @@
 .Link {
   color: inherit;
   width: 40%;
+  overflow: hidden;
 }
 
 .LinkText {
@@ -32,6 +33,10 @@
   font-weight: bold;
   margin-bottom: 5px;
   margin-left: 2px;
+}
+
+.LinkBox {
+  overflow: hidden;
 }
 
 .InputField {

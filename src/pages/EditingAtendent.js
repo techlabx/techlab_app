@@ -9,6 +9,7 @@ import UiWrapper from "../components/ui-wrapper"
 import axios from "axios"
 import copy from "copy-to-clipboard"
 import { navigate } from "gatsby"
+import queryString from "query-string"
 import styles from "../styles/AddingAtendent.module.scss"
 import terapia from "../images/terapia.jpg"
 
@@ -28,12 +29,26 @@ class EditingAtendents extends React.Component {
     }
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
+    const chatAPIAddr = process.env.CHAT_API_ADDR
+
+    try {
+      const res = await axios.get(`http://${chatAPIAddr}/usuarios/instituto`, {
+        headers: { "x-access-token": window.localStorage.getItem("TOKEN") },
+      })
+      this.setState({ institutos: res.data })
+    } catch (error) {
+      console.log(error)
+    }
+
     this.setState({
       options: this.state.institutos.map(instituto => {
         return (
-          <option key={instituto} value={instituto}>
-            {instituto}
+          <option
+            key={instituto.siglainstituto}
+            value={instituto.siglainstituto}
+          >
+            {instituto.siglainstituto}
           </option>
         )
       }),
@@ -42,38 +57,24 @@ class EditingAtendents extends React.Component {
 
   handleAddingClick = async () => {
     const chatAPIAddr = process.env.CHAT_API_ADDR
-    // const teste = await qs.parse(this.props.location.search, {
-    //   ignoreQueryPrefix: true,
-    // }).instituto
-    // console.log(teste)
-    // try {
-    //   const res = await axios.post(
-    //     `http://${chatAPIAddr}/gapsi/`,
-    //     {
-    //       nomeatendente: this.state.nome,
-    //       emailatendente: this.state.email,
-    //       institutoatendente: this.state.instituto,
-    //     },
-    //     { headers: { "x-access-token": window.localStorage.getItem("TOKEN") } }
-    //   )
+    const value = queryString.parse(this.props.location.search)
+    const institutoAtual = value.instituto
 
-    //   console.log(res.data)
-    //   let url = res.data.authUrl
-    //   // instituto: instituto
+    try {
+      const res = await axios.put(
+        `http://${chatAPIAddr}/gapsi/${institutoAtual}`,
+        {
+          nomeatendente: this.state.nome,
+          emailatendente: this.state.email,
+          institutoatendente: this.state.instituto,
+        },
+        { headers: { "x-access-token": window.localStorage.getItem("TOKEN") } }
+      )
 
-    //   this.setState({
-    //     calendarLinkDialogOpen: true,
-    //     responseLink: url,
-    //   })
-    // } catch (error) {
-    //   if (error.response.status == 401) {
-    //     navigate("/loginpage")
-    //     return
-    //   }
-    //   this.setState({
-    //     errorDialogOpen: false,
-    //   })
-    // }
+      console.log(res)
+    } catch (error) {
+      console.log("erro", error)
+    }
   }
 
   handleCopyClick = () => {
