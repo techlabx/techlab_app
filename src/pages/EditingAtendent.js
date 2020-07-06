@@ -62,7 +62,7 @@ class EditingAtendents extends React.Component {
 
     try {
       const res = await axios.put(
-        `http://${chatAPIAddr}/gapsi/${institutoAtual}`,
+        `http://${chatAPIAddr}/usuarios/gapsi/${institutoAtual}`,
         {
           nomeatendente: this.state.nome,
           emailatendente: this.state.email,
