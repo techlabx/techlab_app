@@ -23,11 +23,12 @@ class Atendents extends React.Component {
   componentDidMount = async () => {
     const chatAPIAddr = process.env.CHAT_API_ADDR
     console.log("getting usuarios")
+
     try {
       const res = await axios.get(`http://${chatAPIAddr}/usuarios/gapsi/`, {
         headers: { "x-access-token": window.localStorage.getItem("TOKEN") },
       })
-      
+
       console.log(res)
       this.setState({
         atendents: res.data.map(value => {
@@ -49,26 +50,21 @@ class Atendents extends React.Component {
   }
 
   handleRemoveClick = () => {
-
-    console.log('deleting')
+    console.log("deleting")
     this.setState({
       removeDialogOpen: true,
     })
-
   }
 
-  handleCancelClick = (instituto) => {
-    
+  handleCancelClick = instituto => {
     console.log("cancel")
     console.log(instituto)
     this.setState({
       removeDialogOpen: false,
     })
-
   }
 
-  handleConfirmClick = async (e) => {
-    
+  handleConfirmClick = async e => {
     const chatAPIAddr = process.env.CHAT_API_ADDR
 
     let instituto = e.target.attributes.instituto.value
@@ -182,7 +178,10 @@ class Atendents extends React.Component {
               <div className={styles.ActionBox}>
                 <button className={styles.WaitingRemoveButton}>
                   {/* Imagino q a rota que tenha de destino deva ser '/ConfirmingAtendent/atendentid' */}
-                  <a className={styles.Link} href={`/ConfirmingAtendent?sigla=${atendent.instituto}`}>
+                  <a
+                    className={styles.Link}
+                    href={`/ConfirmingAtendent?sigla=${atendent.instituto}`}
+                  >
                     <CheckIcon />
                   </a>
                 </button>
@@ -209,10 +208,13 @@ class Atendents extends React.Component {
     })
   }
 
-
   render() {
     return (
-      <UiWrapper pageNeedsAuth='true' pageTitle="Lista de Atendentes" lastPage="/">
+      <UiWrapper
+        pageNeedsAuth="true"
+        pageTitle="Lista de Atendentes"
+        lastPage="/"
+      >
         {/* <ImageWithDescription src={terapia} title={"Lista de Atendentes"} /> */}
         <div className={styles.AddBox}>
           <button className={styles.AddButton}>

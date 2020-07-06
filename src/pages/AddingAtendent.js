@@ -5,33 +5,39 @@ import DialogContent from "@material-ui/core/DialogContent"
 import DialogContentText from "@material-ui/core/DialogContentText"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import ImageWithDescription from "../components/FormSelection/ImageWithDescription"
+import UiWrapper from "../components/ui-wrapper"
+import axios from "axios"
+import copy from "copy-to-clipboard"
 import { navigate } from "gatsby"
 import styles from "../styles/AddingAtendent.module.scss"
 import terapia from "../images/terapia.jpg"
-import UiWrapper from "../components/ui-wrapper"
-import axios from "axios"
 
 class AddingAtendents extends React.Component {
-
-  constructor (props) {
-    super(props);
+  constructor(props) {
+    super(props)
     this.state = {
       nome: "",
       email: "",
       instituto: "",
       link: "",
+      imagem: "",
       calendarLinkDialogOpen: false,
       errorDialogOpen: false,
-      responseLink: "",
-      institutos: ["-", "ICMC", "EESC", "IFSC", "IQSC"]
+      responseLink: "zé",
+      institutos: ["-", "ICMC", "EESC", "IFSC", "IQSC"],
     }
   }
 
   componentDidMount = () => {
     this.setState({
       options: this.state.institutos.map(instituto => {
-      return <option key={instituto} value={instituto}>{instituto}</option>
-    })})
+        return (
+          <option key={instituto} value={instituto}>
+            {instituto}
+          </option>
+        )
+      }),
+    })
   }
 
   handleAddingClick = async () => {
@@ -43,46 +49,55 @@ class AddingAtendents extends React.Component {
           nomeatendente: this.state.nome,
           emailatendente: this.state.email,
           institutoatendente: this.state.instituto,
-          linkagenda: this.state.link
+          imgatendente: this.state.imagem,
+          linkagenda: this.state.link,
         },
-        {headers: {'x-access-token': window.localStorage.getItem("TOKEN")}})
-      
+        { headers: { "x-access-token": window.localStorage.getItem("TOKEN") } }
+      )
+
       console.log(res.data)
       let url = res.data.authUrl
       // instituto: instituto
-      
+
       this.setState({
         calendarLinkDialogOpen: true,
-        responseLink: url
+        responseLink: url,
       })
-    }
-    catch (error) {
+    } catch (error) {
       if (error.response.status == 401) {
-        navigate('/loginpage');
-        return;
-      } 
+        navigate("/loginpage")
+        return
+      }
       this.setState({
-        errorDialogOpen: false
+        errorDialogOpen: false,
       })
     }
   }
 
+  handleCopyClick = () => {
+    copy(this.state.responseLink)
+  }
+
   handleCloseDialog = () => {
     this.setState({
-      calendarLinkDialogOpen: false
+      calendarLinkDialogOpen: false,
     })
     navigate("/Atendents")
   }
 
   handleCloseErrorDialog = () => {
     this.setState({
-      errorDialogOpen: false
+      errorDialogOpen: false,
     })
   }
 
-  render () {
+  render() {
     return (
-      <UiWrapper pageNeedsAuth='true' pageTitle="Adicionar Atendente" lastPage="/Atendents">
+      <UiWrapper
+        pageNeedsAuth="true"
+        pageTitle="Adicionar Atendente"
+        lastPage="/Atendents"
+      >
         <Dialog open={this.state.errorDialogOpen}>
           <DialogTitle>Instituto Inválido</DialogTitle>
           <DialogContent>
@@ -99,7 +114,7 @@ class AddingAtendents extends React.Component {
             </button>
           </div>
         </Dialog>
-  
+
         <Dialog open={this.state.calendarLinkDialogOpen}>
           <DialogTitle>Link Google Agenda</DialogTitle>
           <DialogContent>
@@ -110,7 +125,16 @@ class AddingAtendents extends React.Component {
             <a className={styles.LinkText}>{this.state.responseLink}</a>
           </DialogContent>
           <div className={styles.ButtonBox}>
-            <button className={styles.Button} onClick={() => this.handleCloseDialog()}>
+            <button
+              className={styles.Button}
+              onClick={() => this.handleCopyClick()}
+            >
+              Copiar
+            </button>
+            <button
+              className={styles.Button}
+              onClick={() => this.handleCloseDialog()}
+            >
               Fechar
             </button>
           </div>
@@ -123,7 +147,7 @@ class AddingAtendents extends React.Component {
               className={styles.InputField}
               placeholder="Nome"
               type="text"
-              onChange={e => this.setState({nome: e.target.value})}
+              onChange={e => this.setState({ nome: e.target.value })}
             />
           </div>
           <div className={styles.InputBox}>
@@ -132,7 +156,7 @@ class AddingAtendents extends React.Component {
               className={styles.InputField}
               placeholder="Email"
               type="email"
-              onChange={e => this.setState({email: e.target.value})}
+              onChange={e => this.setState({ email: e.target.value })}
             />
           </div>
           <div className={styles.InputBox}>
@@ -141,7 +165,16 @@ class AddingAtendents extends React.Component {
               className={styles.InputField}
               placeholder="Link"
               type="text"
-              onChange={e => this.setState({link: e.target.value})}
+              onChange={e => this.setState({ link: e.target.value })}
+            />
+          </div>
+          <div className={styles.InputBox}>
+            <span className={styles.InputLabel}>Link para Foto de Perfil</span>
+            <input
+              className={styles.InputField}
+              placeholder="Link da Foto"
+              type="text"
+              onChange={e => this.setState({ imagem: e.target.value })}
             />
           </div>
           <div className={styles.InputBox}>
@@ -151,7 +184,7 @@ class AddingAtendents extends React.Component {
               placeholder="Instituto"
               onChange={e => {
                 console.log(e.target)
-                this.setState({instituto: e.target.value})
+                this.setState({ instituto: e.target.value })
               }}
             >
               {this.state.options}
@@ -159,7 +192,10 @@ class AddingAtendents extends React.Component {
           </div>
         </div>
         <div className={styles.ButtonBox}>
-          <button className={styles.AddButton} onClick={this.handleAddingClick}>
+          <button
+            className={styles.AddButton}
+            onClick={() => this.handleAddingClick()}
+          >
             ADICIONAR
           </button>
           <a className={styles.Link} href={"/Atendents"}>
