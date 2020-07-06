@@ -256,7 +256,7 @@ class ScheduleMenu extends React.Component {
     console.log(process.env.CHAT_API_ADDR);
     this.setState({
       backend: axios.create({
-        baseURL: process.env.CHAT_API_ADDR,
+        baseURL: `http://techlab-oauth.mooo.com`, //${process.env.CHAT_API_ADDR}`,
         timeout: 10000,
         headers: {'x-access-token': window.localStorage.getItem("TOKEN")}
       })
