@@ -30,13 +30,6 @@ const pageHeader = {
   text: "Agende uma conversa com o psicólogo responsável pelo seu instituto."
 }
 
-
-const backend = axios.create({
-  baseURL: "http://techlab-oauth.mooo.com",
-  timeout: 10000,
-  headers: {'x-access-token': window.localStorage.getItem("TOKEN")}
-})
-
 const api = {
   auth: {
     // GET auth/info/ - informações do usuário logado
@@ -173,11 +166,9 @@ class ScheduleMenu extends React.Component {
   }
 
   setPsychologist = (callback) => {
-    var component = this;
-
     this.backend.get(api.usuarios.gapsi.get.endpoint(this.state.userInfo.instituto))
       .then(res => {
-        component.setState({
+        this.setState({
           psychologist: {
             name: res.data.nomeatendente,
             instituto: res.data.institutoatendente,
@@ -192,10 +183,9 @@ class ScheduleMenu extends React.Component {
   }
     
   setEvents = (callback) => {
-    var component = this;
     this.backend.get(api.acolhimento.eventos.get.endpoint(this.state.userInfo.instituto))
       .then(res => {
-        component.setState({
+        this.setState({
           events: populateEventOption(res.data)
         }, callback);
       })
@@ -205,10 +195,9 @@ class ScheduleMenu extends React.Component {
   }
 
   setUserInfo = (callback) => {
-    var component = this;
     this.backend.get(api.auth.info.get.endpoint())
       .then(res => {
-        component.setState({
+        this.setState({
           userInfo: {
             id: res.data.id,
             name: res.data.name,
@@ -223,11 +212,10 @@ class ScheduleMenu extends React.Component {
   }
 
   setInstituto = (callback) => {
-    const component = this;
-    backend.get(api.usuarios.instituto.get.endpoint())
+    this.backend.get(api.usuarios.instituto.get.endpoint())
       .then(res => {
-        const inst = res.data.find(i => i.siglainstituto.toUpperCase() === component.state.userInfo.instituto);
-        component.setState({
+        const inst = res.data.find(i => i.siglainstituto.toUpperCase() === this.state.userInfo.instituto);
+        this.setState({
           instituto: {
             id: inst.siglainstituto.toUpperCase(),
             fullName: inst.nomeinstituto
@@ -245,13 +233,12 @@ class ScheduleMenu extends React.Component {
   }
 
   componentDidMount() {
-    const component = this;
-    component.setUserInfo(() => {
-      component.setInstituto(() => {
-        component.setPsychologist( () => {
-          component.setEvents( () => {
-            component.setState({loaded: true});
-            component.render();
+    this.setUserInfo(() => {
+      this.setInstituto(() => {
+        this.setPsychologist(() => {
+          this.setEvents(() => {
+            this.setState({loaded: true});
+            this.render();
           });
         });
       });
@@ -281,9 +268,10 @@ class ScheduleMenu extends React.Component {
 
   submitError = (err, msg) => {
     const defaultErrorMsg = "Opa, algo deu errado! Não foi possível agendar seu acolhimento. Tente novamente mais tarde.";
-    if (msg == undefined)
+    if (msg == undefined) {
       msg = defaultErrorMsg;
-    
+    }
+
     console.log(err);
     alert(msg);
   }

@@ -4,7 +4,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import IconButton from "@material-ui/core/IconButton";
 
-const contactHeader = "Entre em contato por";
+const contactHeader = "Entre em contato!";
 const phone = "Nosso telefone: (16) 3373-8905";
 const email = "Nosso email: ";
 const contactMails = ['apoia-sc@usp.br', 'gapsi@icmc.usp.br'];
