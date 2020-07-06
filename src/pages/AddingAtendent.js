@@ -123,7 +123,9 @@ class AddingAtendents extends React.Component {
               e peça para o atendente acessá-lo e enviar ao administrador o
               código gerado após o login.
             </DialogContentText>
-            <a className={styles.LinkText}>{this.state.responseLink}</a>
+            <div className={styles.LinkBox}>
+              <a className={styles.LinkText}>{this.state.responseLink}</a>
+            </div>
           </DialogContent>
           <div className={styles.ButtonBox}>
             <button

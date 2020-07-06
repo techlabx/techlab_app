@@ -135,7 +135,7 @@ class Atendents extends React.Component {
                   {/* Imagino q a rota que tenha de destino deva ser '/ConfirmingAtendent/atendentid' */}
                   <a
                     className={styles.Link}
-                    href={`/EditingAtendent?${atendent.email}`}
+                    href={`/EditingAtendent?instituto=${atendent.instituto}`}
                   >
                     <EditIcon />
                   </a>
@@ -193,7 +193,7 @@ class Atendents extends React.Component {
                   {/* Imagino q a rota que tenha de destino deva ser '/ConfirmingAtendent/atendentid' */}
                   <a
                     className={styles.Link}
-                    href={`/EditingAtendent?email=${atendent.email}`}
+                    href={`/EditingAtendent?intituto=${atendent.instituto}`}
                   >
                     <EditIcon />
                   </a>
