@@ -166,7 +166,7 @@ class LoginPageUnwrapped extends React.Component {
                 fontSize="16px"
               >
                 <EmailIcon />
-                Entrar com email USP
+                Entrar
               </Button>
             </StyledLink>
           </ButtonBox>
