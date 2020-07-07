@@ -50,8 +50,28 @@ const theme5 = {
   Nesse sentido, é preciso entender que “ser produtivo” não é trabalhar um número maior de horas, mas sim trabalhar menos e da melhor forma possível, com qualidade e no prazo estabelecido, possibilitando que o tempo seja dividido com outras áreas da vida.
   Não existe um caminho linear para produtividade, nem dicas prontas que nos façam ser mais produtivos, pois a produtividade seria a consequência do equilíbrio entre as várias atividades da vida cotidiana.
   É preciso que sejamos mais flexíveis e compreensivos com os nossas emoções e limitações, estando sempre em constante reflexão sobre a prática de nossas atividades.
-  Ah, e lembre-se, você sempre poderá  pedir ajuda quando se sentir angustiado com essas questões.`,
+  Ah, e lembre-se, você sempre poderá  pedir ajuda quando se sentir angustiado com essas questões.`
 }
+
+const theme6 = {
+  title: `Sobre esse aplicativo`,
+  text: `Esse aplicativo foi desenvolvido com carinho por alunos da disciplina de Engenharia de Software, do campus da USP de São Carços.
+  - Professora responsável pela disciplina: Simone Rocio Senger de Souza
+  - Time de Gestão: 
+    Felipe Moreira Neves de Souza, Scrum Master - Sistemas de Informação (USP)
+    João Pedro Almeida Santos Secundino, product owner - Ciências da Computação (USP)
+  - Time do Back-End:
+    Gabriel Santos Nicolau, Desenvolvedor - Ciências da Computação (USP)
+    Giovana Daniele da Silva, Desenvolvedora - Ciências da Computação (USP)
+    Leonardo Giovanni Prati, desenvolvedor - Sistemas de Informação (USP)
+  - Time do Front-End: 
+    Iago Elias de Faria Barbosa, desenvolvedor - Engenharia da Computação (UFSCar)
+    Matheus Godoy Bolsarini, desenvolvedor - Sistemas de Informação (USP)
+    Pedro Pastorelo
+    Pedro Paulo Isnard Brando, desenvolvedor - Sistemas de Informação (USP)  
+    :)`
+}
+
 
 const InfoPage = () => (
   <UiWrapper
@@ -68,19 +88,20 @@ const InfoPage = () => (
     >
       <ContactBox />
     </ContentContainer>
-    <ContentContainer title={theme1.title} text={theme1.text} />
+    <ContentContainer title={theme1.title} text={theme1.text}/>
     <ContentContainer
       title={theme2.title}
       text={theme2.text}
       color={global.MainOrange}
     />
-    <ContentContainer title={theme3.title} text={theme3.text} />
+    <ContentContainer title={theme3.title} text={theme3.text}/>
     <ContentContainer
       title={theme4.title}
       text={theme4.text}
       color={global.MainBlue}
     />
-    <ContentContainer title={theme5.title} text={theme5.text} />
+    <ContentContainer title={theme5.title} text={theme5.text}/>
+    <ContentContainer title={theme6.title} text={theme6.text} color={global.MainOrange}/>
     <ShareBox />
   </UiWrapper>
 )
