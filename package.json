@@ -34,7 +34,7 @@
     "react-helmet": "^6.1.0",
     "react-search-box": "^2.0.2",
     "react_google_calendar": "^2.2.4444",
-    "sharp": "^0.25.3",
+    "sharp": "^0.30.5",
     "styled-components": "^5.1.0"
   },
   "devDependencies": {
